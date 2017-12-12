@@ -61,6 +61,8 @@ public class Solution {
 		Customer.getTotalFunds();
 		System.out.println();
 		
+		
+		// OOP: Question 9
 		System.out.println("Question 9: \n-----");
 		Animal one = new Oop.Human();
 		Mammal two = new Oop.Human();
@@ -83,7 +85,26 @@ public class Solution {
 		three.move();
 		// Calling static method from class
 		Human.walk(6);
-		System.out.println();		
+		System.out.println();	
+		
+		// Exceptions: Questions 10-15
+		System.out.println("Question 10-15: \n-----");
+		ThrowsMyCustomException test_my_exception = new ThrowsMyCustomException();
+		
+		// Normal try catch
+		test_my_exception.myTryCatch();
+
+		// Uses duckMyException() throws and ducks an exception, so in order to not break our main() method
+		// We need to use another try catch here. We could have also set our main to duck this exception.
+		try {
+			// This line ducks an exception
+			test_my_exception.duckMyException();
+		}
+		catch (MyCustomException e) {
+			System.out.println("Ducked!");
+		}
+		System.out.println();
+		
 		
 	}
 	
