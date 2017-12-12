@@ -1,17 +1,17 @@
-package com.revature.assignment1;
+package com.revature.assignment1.syntax;
 
-public class Q1 {
+public class Q5P1_Main {
 
 	public static void main(String[] args) {
 
-		int number1 = 17;
+		int number1 = 23;
 		int number2 = 9;
 
-		int numbersAdded = number1 + number2;
-		int numbersSubtracted = number1 - number2;
-		int numbersMultiplied = number1 * number2;
-		float numbersDivided = (float) number1 / (float) number2;
-
+		int numbersAdded = Q5P2_Math.add(number1, number2);
+		int numbersSubtracted = Q5P2_Math.subtract(number1, number2);
+		int numbersMultiplied = Q5P2_Math.multiply(number1, number2);
+		float numbersDivided = Q5P2_Math.divide(number1, number2);
+		
 		System.out.println(number1 + " and " + number2 + " added is " + numbersAdded);
 		System.out.println(number1 + " and " + number2 + " subtracted is " + numbersSubtracted);
 		System.out.println(number1 + " and " + number2 + " multiplied is " + numbersMultiplied);

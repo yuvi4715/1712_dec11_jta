@@ -1,4 +1,4 @@
-package com.revature.assignment1;
+package com.revature.assignment1.syntax;
 
 public class Q4 {
 	

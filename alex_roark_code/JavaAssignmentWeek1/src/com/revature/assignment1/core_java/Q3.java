@@ -1,4 +1,4 @@
-package com.revature.assignment1;
+package com.revature.assignment1.core_java;
 
 public class Q3 {
 
