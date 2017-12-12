@@ -2,6 +2,7 @@ package com.revature.day1;
 
 public class Variables {
 
+	//instance variables - object scope
 	int a;
 	short s;
 	long l;
@@ -31,7 +32,7 @@ public class Variables {
 	}
 	
 	void localVariables() {
-		int x =10, y =20;
+		int x =10, y =20; //local variables - method scope
 		System.out.println("value of x " + x);
 		System.out.printf("value of y %d", y);
 	}
