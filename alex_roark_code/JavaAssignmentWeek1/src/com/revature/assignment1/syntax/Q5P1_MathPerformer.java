@@ -1,6 +1,6 @@
 package com.revature.assignment1.syntax;
 
-public class Q5P1_Main {
+public class Q5P1_MathPerformer {
 
 	public static void main(String[] args) {
 
