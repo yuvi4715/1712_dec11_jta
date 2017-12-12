@@ -10,7 +10,7 @@ public class AnimalExecutor {
 		
 		one.eat();
 		one.move();
-		one.walk();
+		// one.walk();
 		
 		two.eat();
 		two.move();
