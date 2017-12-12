@@ -1,11 +1,13 @@
 package com.revature.assignment1.exceptions;
 
-public class Q12 {
+public class Q15 {
 
 	public static void main(String[] args) {
 
 		try {
 			System.out.println("Starting try block");
+			
+			System.exit(0);
 			
 			for (int i = 0; i < 10; i++) {
 				if (i == 5) {
@@ -22,5 +24,9 @@ public class Q12 {
 			
 			System.out.println("Ending catch block");
 		}
+		finally {
+			System.out.println("Exception has been caught. Goodbye!");
+		}
 	}
+
 }
