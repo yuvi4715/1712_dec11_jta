@@ -1,6 +1,6 @@
 package com.revature.week1_jason_shen;
 
-public class syntax {
+public class Syntax {
 	
 	
 	// 4. Write a program to add, subtract, multiply and divide two numbers using methods with 

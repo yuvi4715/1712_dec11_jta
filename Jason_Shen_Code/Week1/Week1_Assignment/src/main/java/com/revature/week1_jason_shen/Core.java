@@ -5,7 +5,7 @@ package com.revature.week1_jason_shen;
 
 // ==== Core Java ====
 
-public class core {
+public class Core {
 	
 	// 1. Write a program to add, subtract, multiply and divide two non-zero hard-coded numbers.	
 	static void basicOps() {

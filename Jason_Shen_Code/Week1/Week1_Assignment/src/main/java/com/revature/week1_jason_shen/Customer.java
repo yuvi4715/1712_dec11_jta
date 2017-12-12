@@ -8,7 +8,7 @@ package com.revature.week1_jason_shen;
 //    -At least 1 final variable
 
 
-public class customer {
+public class Customer {
 	private int age;
 	private int shares;
 	private static String bank;
@@ -16,26 +16,26 @@ public class customer {
 	private final String company;
 	
 	// Constructor with age input
-	public customer(int age, String comp) {
+	public Customer(int age, String comp) {
 		this.age = age;
 		this.shares = 0;
-		customer.bank = "Citi";
+		Customer.bank = "Citi";
 		company = comp;
 		return;
 	}
 	
 	// Blank constructor
-	public customer() {
+	public Customer() {
 		this.age = 0;
 		this.shares = 0;
-		customer.bank = "Citi";
+		Customer.bank = "Citi";
 		company = "Revature";
 		return;
 	}
 	// Static methods for bank and funds
 	public static void setBank(String bank) {
 		System.out.println("Setting customer bank to: " + bank);
-		customer.bank = bank;
+		Customer.bank = bank;
 		return;
 	}
 	
