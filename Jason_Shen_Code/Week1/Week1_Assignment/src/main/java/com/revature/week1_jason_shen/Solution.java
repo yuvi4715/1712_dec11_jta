@@ -6,7 +6,7 @@ import com.revature.week1_jason_shen.Oop.Mammal;
 public class Solution {
 	public static void main(String args[]) {
 		
-		// Core Java: Questions 1-3
+		// CORE JAVA -- QUESTIONS 1-3
 		System.out.println("Question 1: \n-----");
 		Core.basicOps();
 		
@@ -17,7 +17,7 @@ public class Solution {
 		Core.checkBools();
 		
 		
-		// Syntax: Questions 4-6
+		// SYNTAX -- QUESTIONS 4-6
 		System.out.println("Questions 4 and 5: \n-----");
 		Syntax.basicOps_2.add(1,2);
 		Syntax.basicOps_2.subtract(6, 3);
@@ -29,7 +29,7 @@ public class Solution {
 		Syntax.controls(100, 3);
 		System.out.println();
 		
-		// Class Members: Questions 7-8
+		// CLASS MEMBERS -- QUESTIONS 7-8
 		System.out.println("Question 7 and 8: \n-----");
 		Customer Jason = new Customer(22, "Revature");
 		Customer Yuvi = new Customer();
@@ -62,7 +62,7 @@ public class Solution {
 		System.out.println();
 		
 		
-		// OOP: Question 9
+		// OOP -- Question 9
 		System.out.println("Question 9: \n-----");
 		Animal one = new Oop.Human();
 		Mammal two = new Oop.Human();
@@ -87,7 +87,7 @@ public class Solution {
 		Human.walk(6);
 		System.out.println();	
 		
-		// Exceptions: Questions 10-15
+		// EXCEPTIONS -- Questions 10-15
 		System.out.println("Question 10-15: \n-----");
 		ThrowsMyCustomException test_my_exception = new ThrowsMyCustomException();
 		
@@ -105,7 +105,22 @@ public class Solution {
 		}
 		System.out.println();
 		
+		// ADVANCED CONCEPTS -- QUESTIONS 16-20
+		System.out.println("Question 16: \n-----");
+		AdvancedConcepts.stringBuilding();
+		System.out.println();
 		
+		System.out.println("Question 17: \n-----");		
+		AdvancedConcepts.tokens();
+		System.out.println();
+		
+		System.out.println("Question 18 and 19: \n-----");		
+		AdvancedConcepts.addStrings("15", "30");
+		System.out.println();
+		
+		System.out.println("Question 20: \n-----");		
+		AdvancedConcepts.myRuntime();
+		System.out.println();
 	}
 	
 }
