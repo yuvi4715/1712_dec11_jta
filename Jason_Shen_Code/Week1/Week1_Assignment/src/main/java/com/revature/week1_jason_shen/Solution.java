@@ -168,6 +168,9 @@ public class Solution {
 		// How do I wait for these threads to finish before starting main again???
 		
 		System.out.println("All threads complete, continuing main");
+		
+		// EASY CODING EXERCISES -- QUESTIONS 32-37
+		
 	}
 	
 }
