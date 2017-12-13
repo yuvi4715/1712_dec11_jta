@@ -150,8 +150,14 @@ public class Solution {
 		t2_async.start();
 		t3_async.start();
 		
-//		System.out.println(t1.getTotalRunCOunt());
-		System.out.println();
+		MultithreadingSynced t1_sync = new MultithreadingSynced("Thread 1 Synced");
+		MultithreadingSynced t2_sync = new MultithreadingSynced("Thread 2 Synced");
+		MultithreadingSynced t3_sync = new MultithreadingSynced("Thread 3 Synced");
+		t1_sync.start();
+		t2_sync.start();
+		t3_sync.start();
+
+		// How do I wait for these threads to finish before starting main again???
 	}
 	
 }
