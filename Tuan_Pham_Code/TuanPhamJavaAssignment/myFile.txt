@@ -1,0 +1,3 @@
+1000:Tuan:Pham:Programmer
+1001:John:Smith:Consultant
+1003:Bob:White:Engineer
