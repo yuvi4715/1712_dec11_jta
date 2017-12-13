@@ -51,6 +51,9 @@ public class AdvancedConcepts {
 		return x + y;
 	}
 	
+	
+	// 20. Create a Runtime object and note at least three methods. Imagine how you would use them.
+
 	static void myRuntime() {
 		Runtime my_runtime_object = Runtime.getRuntime();
 		

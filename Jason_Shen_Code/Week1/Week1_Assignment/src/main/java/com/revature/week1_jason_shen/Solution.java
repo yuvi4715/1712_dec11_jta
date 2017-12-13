@@ -121,6 +121,20 @@ public class Solution {
 		System.out.println("Question 20: \n-----");		
 		AdvancedConcepts.myRuntime();
 		System.out.println();
+		
+		// COLLECTIONS -- QUESTIONS 21-23
+		
+		System.out.println("Question 21-23: \n-----");
+		MyCollections.myArrayList();
+		System.out.println();
+		MyCollections.myLinkedList();
+		System.out.println();
+		MyCollections.myHashMap();
+		System.out.println();
+		MyCollections.myTreeSet();		
+		System.out.println();
+		MyCollections.myHashSet();	
+		
 	}
 	
 }
