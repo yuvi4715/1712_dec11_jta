@@ -40,14 +40,6 @@ public class MultithreadingSynced implements Runnable {
 
 	}
 	
-	public void start() {
-		System.out.println("Starting " + thread_name);
-		if (t == null) {
-			t = new Thread(this, thread_name);
-			t.start();
-		}
-	}
-	
 	public int getTotalRunCOunt() {
 		return total_run_count.get();
 	}

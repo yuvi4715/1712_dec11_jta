@@ -36,15 +36,7 @@ public class Multithreading implements Runnable {
 			System.out.println("Total run count: " + total_run_count + " (" + thread_name +  " ending)\n");
 		}
 
-	}
-	
-	public void start() {
-		System.out.println("Starting " + thread_name);
-		if (t == null) {
-			t = new Thread(this, thread_name);
-			t.start();
-		}
-	}
+	}	
 	
 	public int getTotalRunCOunt() {
 		return total_run_count;
