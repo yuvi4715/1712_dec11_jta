@@ -4,7 +4,7 @@ import com.revature.week1_jason_shen.Oop.Human;
 import com.revature.week1_jason_shen.Oop.Mammal;
 
 public class Solution {
-	public static void main(String args[]) {
+	public static void main(String args[]) throws Exception {
 		
 		// CORE JAVA -- QUESTIONS 1-3
 		System.out.println("Question 1: \n-----");
@@ -134,7 +134,14 @@ public class Solution {
 		MyCollections.myTreeSet();		
 		System.out.println();
 		MyCollections.myHashSet();	
+		System.out.println();
 		
+		// FILE I/O -- QUESTIONS 24-28
+		System.out.println("Question 24-28: \n-----");
+		FileIO.parseFile("fileio.txt");
+		System.out.println();
+		
+		// MULTITHREADING -- QUESTIONS 29-31
 	}
 	
 }
