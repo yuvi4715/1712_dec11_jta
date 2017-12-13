@@ -143,21 +143,31 @@ public class Solution {
 		
 		// MULTITHREADING -- QUESTIONS 29-31
 		System.out.println("Question 29-31: \n-----");
-		Multithreading t1_async = new Multithreading("Thread 1");
-		Multithreading t2_async = new Multithreading("Thread 2");
-		Multithreading t3_async = new Multithreading("Thread 3");
+		Thread t1_async = new Thread(new Multithreading("Thread 1"));
+		Thread t2_async = new Thread(new Multithreading("Thread 2"));
+		Thread t3_async = new Thread(new Multithreading("Thread 3"));
 		t1_async.start();
 		t2_async.start();
 		t3_async.start();
 		
-		MultithreadingSynced t1_sync = new MultithreadingSynced("Thread 1 Synced");
-		MultithreadingSynced t2_sync = new MultithreadingSynced("Thread 2 Synced");
-		MultithreadingSynced t3_sync = new MultithreadingSynced("Thread 3 Synced");
+		t1_async.join();
+		t2_async.join();
+		t3_async.join();
+		
+		System.out.println("All asynchronous threads done, starting synchronized threads.");
+		Thread t1_sync = new Thread(new MultithreadingSynced("Thread 1 Synced"));
+		Thread t2_sync = new Thread (new MultithreadingSynced("Thread 2 Synced"));
+		Thread t3_sync = new Thread (new MultithreadingSynced("Thread 3 Synced"));
 		t1_sync.start();
 		t2_sync.start();
 		t3_sync.start();
 
+		t1_sync.join();
+		t2_sync.join();
+		t3_sync.join();
 		// How do I wait for these threads to finish before starting main again???
+		
+		System.out.println("All threads complete, continuing main");
 	}
 	
 }
