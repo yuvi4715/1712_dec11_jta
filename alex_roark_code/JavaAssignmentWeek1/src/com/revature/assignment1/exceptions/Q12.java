@@ -9,13 +9,13 @@ public class Q12 {
 			
 			for (int i = 0; i < 10; i++) {
 				if (i == 5) {
-					throw new Q10_CustomException("Loop counter equals 5!");
+					throw new Q10_LoopCounterEqualsFiveException();
 				}
 			}
 			
 			System.out.println("Ending try block");
 		}
-		catch (Q10_CustomException customException) {
+		catch (Q10_LoopCounterEqualsFiveException customException) {
 			System.out.println("Starting catch block");
 			
 			System.out.println(customException.getMessage());
