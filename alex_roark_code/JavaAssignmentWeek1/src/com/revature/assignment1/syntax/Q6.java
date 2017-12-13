@@ -36,6 +36,7 @@ public class Q6 {
 			break;
 		default:
 			numberSpelled = "not yet in the program!";
+			break;
 		}
 		System.out.println(number + " spelled is " + numberSpelled);
 
