@@ -1,9 +1,11 @@
 package com.revature.strings;
 
 import java.util.StringTokenizer;
+import org.apache.log4j.Logger;
 
 public class StringExample {
 
+	final static Logger logger = Logger.getLogger(Logger.class);
 	public static void main(String[] args) {
 		//stringExample();
 		//performanceCheck();
@@ -109,7 +111,9 @@ public class StringExample {
 				+ "Also we learnt the differences between string, sting buffer and string builder";
 		StringTokenizer tokens = new StringTokenizer(s10, " ");
 		while(tokens.hasMoreElements()) {
-			System.out.println(tokens.nextElement());
+			Object s11 = tokens.nextElement();
+			System.out.println(s11);
+			logger.info("messing with string tokenizer " + s11);
 		}
 	}
 }
