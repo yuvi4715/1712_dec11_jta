@@ -4,7 +4,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MultithreadingSynced implements Runnable {
 
-	private Thread t;
 	private int thread_run_count;
 	private static AtomicInteger total_run_count = new AtomicInteger(0); 
 	private String thread_name;

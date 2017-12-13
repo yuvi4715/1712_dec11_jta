@@ -2,7 +2,6 @@ package com.revature.week1_jason_shen;
 
 public class Multithreading implements Runnable {
 
-	private Thread t;
 	private int thread_run_count;
 	private static int total_run_count = 0; 
 	private String thread_name;
