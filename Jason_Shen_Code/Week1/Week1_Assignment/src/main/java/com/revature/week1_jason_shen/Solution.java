@@ -142,6 +142,16 @@ public class Solution {
 		System.out.println();
 		
 		// MULTITHREADING -- QUESTIONS 29-31
+		System.out.println("Question 29-31: \n-----");
+		Multithreading t1_async = new Multithreading("Thread 1");
+		Multithreading t2_async = new Multithreading("Thread 2");
+		Multithreading t3_async = new Multithreading("Thread 3");
+		t1_async.start();
+		t2_async.start();
+		t3_async.start();
+		
+//		System.out.println(t1.getTotalRunCOunt());
+		System.out.println();
 	}
 	
 }
