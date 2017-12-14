@@ -9,7 +9,7 @@ public class Oop {
 	//    Animal one = new Human(); 	Mammal two = new Human(); 	Human three = new Human();
 	//    Call each of the methods for each of the objects: eat(), move(), walk(). Note the results.
 
-	public static class Mammal implements Animal {
+	public class Mammal implements Animal {
 
 		public void eat(String food) {
 			System.out.println(food + " is delicious!");
@@ -21,21 +21,21 @@ public class Oop {
 			
 		}
 		
-		public static void walk(int num_steps) {
+		public void walk(int num_steps) {
 			System.out.println("Walked " + num_steps + " steps!");
 			return;
 		}
 
 	}
 	
-	public static class Human extends Mammal {
+	public class Human extends Mammal {
 		
 		public void eat(String food) {
 			System.out.println("Overriden - " + food + " is nomz");
 			return;
 		}
 		
-		public static void walk(int num_steps) {
+		public void walk(int num_steps) {
 			System.out.println("I'm a human. Walking " + num_steps + " steps.");
 			return;
 		}

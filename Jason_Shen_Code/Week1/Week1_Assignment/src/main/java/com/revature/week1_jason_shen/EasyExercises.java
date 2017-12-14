@@ -8,10 +8,10 @@ public class EasyExercises {
 	//     if the int variable "mark" is more than or equal to 50; or prints "FAIL" otherwise.
 	static void CheckPassFail(int mark) {
 		if (mark >= 50) {
-			System.out.println("PASS");
+			System.out.println(mark + ": PASS");
 		}
 		else {
-			System.out.println("FAIL");
+			System.out.println(mark + ": FAIL");
 		}
 		
 	}
@@ -21,10 +21,10 @@ public class EasyExercises {
 
 	static void CheckOddEven (int number) {
 		if (number % 2 == 0) {
-			System.out.println("Even number");
+			System.out.println(number + ": Even number");
 		}
 		else {
-			System.out.println("Odd number");
+			System.out.println(number + ": Odd number");
 		}
 	}
 	
@@ -34,25 +34,25 @@ public class EasyExercises {
 	//     statement; (b) a "switch-case" statement.
 	static void PrintNumberInWord(int number) {
 		if (number == 1)
-			System.out.println("ONE");
+			System.out.println(number + ": ONE");
 		else if (number == 2)
-			System.out.println("TWO");
+			System.out.println(number + ": TWO");
 		else if (number == 3)
-			System.out.println("THREE");
+			System.out.println(number + ": THREE");
 		else if (number == 4)
-			System.out.println("FOUR");
+			System.out.println(number + ": FOUR");
 		else if (number == 5)
-			System.out.println("FIVE");
+			System.out.println(number + ": FIVE");
 		else if (number == 6)
-			System.out.println("SIX");
+			System.out.println(number + ": " +"SIX");
 		else if (number == 7)
-			System.out.println("SEVEN");
+			System.out.println(number + ": SEVEN");
 		else if (number == 8)
-			System.out.println("EIGHT");
+			System.out.println(number + ": EIGHT");
 		else if (number == 9)
-			System.out.println("NINE");
+			System.out.println(number + ": NINE");
 		else
-			System.out.println("OTHER");
+			System.out.println(number + ": OTHER");
 		
 //		Using switch cases:
 //		switch(number) {

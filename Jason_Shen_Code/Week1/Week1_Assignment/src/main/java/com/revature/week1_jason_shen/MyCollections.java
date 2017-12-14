@@ -19,6 +19,7 @@ public class MyCollections {
 		}
 		
 		System.out.println("Sorting arraylist...");
+		@SuppressWarnings("unchecked")
 		ArrayList<Integer> sorted_list = (ArrayList<Integer>) my_array_list.clone();
 		Collections.sort(sorted_list);
 		System.out.println("Sorted arraylist: " + sorted_list);
@@ -32,6 +33,7 @@ public class MyCollections {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	static void myLinkedList() {
 		System.out.println("Initializing new linkedlist of strings...");
 		LinkedList<String> student_names = new LinkedList<String>();

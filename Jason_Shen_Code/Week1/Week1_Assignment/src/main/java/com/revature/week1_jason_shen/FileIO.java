@@ -69,7 +69,9 @@ public class FileIO {
 			}
 		} finally {
 			if (inputStream != null) {
+				System.out.println("Closing file...");
 				inputStream.close();
+				System.out.println("Closed!");
 			}
 			
 			System.out.println("Resulting HashMap: " + employee_map);

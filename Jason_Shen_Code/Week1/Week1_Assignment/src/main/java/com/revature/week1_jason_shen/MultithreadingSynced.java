@@ -34,7 +34,7 @@ public class MultithreadingSynced implements Runnable {
 			System.out.println("Thread " + thread_name + " was interrupted.");
 		} finally {
 			System.out.println("Thread " + thread_name + " run count: " + this.thread_run_count);
-			System.out.println("Total run count: " + total_run_count + " (" + thread_name +  " ending)\n");
+			System.out.println("Total run count: " + total_run_count + " (" + thread_name +  " ending)");
 		}
 
 	}

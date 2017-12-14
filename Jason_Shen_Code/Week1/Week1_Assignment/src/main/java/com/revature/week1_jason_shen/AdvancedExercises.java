@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 public class AdvancedExercises {
 
-	// Cache for question 40 - Recursive fibonacci with memoization
+	// Cache to be used for question 40 - Recursive fibonacci with memoization
 	public static long[] fibonacci_cache = new long[500];
 	
 	// 38. Write a method to replace a given character in a String with another character.
@@ -251,7 +251,8 @@ public class AdvancedExercises {
 			new_string.append(s.charAt(i));
 		}
 		String string = new_string.toString();
-		System.out.println(string);
+		System.out.println("Original string: " + s);
+		System.out.println("Reversed: " + string);
 		return string;
 	}	
 	

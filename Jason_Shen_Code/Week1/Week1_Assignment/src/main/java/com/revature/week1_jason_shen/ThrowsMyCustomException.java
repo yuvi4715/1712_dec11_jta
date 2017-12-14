@@ -25,7 +25,7 @@ public class ThrowsMyCustomException {
 		}
 		
 		public void duckMyException() throws MyCustomException {
-			System.out.println("Entering try...");
+			System.out.println("Ducking exception...");
 			throw new MyCustomException();
 		}
 	

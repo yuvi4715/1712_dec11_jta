@@ -19,28 +19,28 @@ public class Syntax {
 		// I chose to use void functions here since I'm not really using these for any purpose other than
 		// printing out the result. In some other scenario I might want the method to return the result.
 		
-		static void add(int x, int y) {
+		public static int add(int x, int y) {
 			int sum = x + y;
 			System.out.println("Sum of " + x + " and " + y + ": " + sum);
-			return;
+			return sum;
 		}
 		
-		static void subtract(int x, int y) {
+		public static int subtract(int x, int y) {
 			int diff = x - y;
 			System.out.println("Difference of " + x + " and " + y + ": " + diff);
-			return;
+			return diff;
 		}
 		
-		static void multiply(int x, int y) {
+		public static int multiply(int x, int y) {
 			int prod = x * y;
 			System.out.println("Product of " + x + " and " + y + ": " + prod);
-			return;
+			return prod;
 		}
 		
-		static void divide(int x, int y) {
+		public static int divide(int x, int y) {
 			int quot = x / y;
 			System.out.println("Quotient of " + x + " and " + y + ": " + quot);			
-			return;
+			return quot; 
 		}
 	}
 	

@@ -25,7 +25,6 @@ public class Core {
 		System.out.println("Difference: " + diff);
 		System.out.println("Product: " + prod);
 		System.out.println("Quotient: " + quot);
-		System.out.println();
 		
 		return;
 	}
@@ -40,7 +39,6 @@ public class Core {
 		
 
 		System.out.println("Greatest of " + x + " " + y + " " + z + ": " + greatest);
-		System.out.println();
 		
 		return greatest;
 			
@@ -59,7 +57,6 @@ public class Core {
 		System.out.println("!a: " + !a);
 		System.out.println("(a | b): " + (a | b));
 		System.out.println("(!a & b) | (a & !b): " + ((!a & b) | (a & !b)));
-		System.out.println();
 		
 		return;		
 			

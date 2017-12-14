@@ -23,11 +23,13 @@ public class AdvancedConcepts {
 		my_string_builder.delete(1, 3);
 		// New string should now be "oeh"
 		System.out.println("Deleting some chars...\nNew string: " + my_string_builder);
+		
+		return;
 	}
 	
 	// 17. Create a new String with delimited tokens, such as “pickles:ketchup:mustard:onion” 
 	//     and use StringTokenizer to parse out and print each token.
-	static void tokens() {
+	static void printTokens() {
 		String s = "Revature-Yuvi-Jason";
 		System.out.println("To be parsed: " + s);
 		System.out.println("Parsed: ");
