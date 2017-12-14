@@ -3,9 +3,6 @@ package com.revature.week1_jason_shen;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.PrintWriter;
-import java.lang.reflect.Field;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 

@@ -1,5 +1,13 @@
 package com.revature.week1_jason_shen;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+
+import com.revature.week1_jason_shen.AdvancedExercises.CompareEmployeeByAge;
+import com.revature.week1_jason_shen.AdvancedExercises.CompareEmployeeByName;
+import com.revature.week1_jason_shen.AdvancedExercises.CompareEmployeeByDepartment;
+import com.revature.week1_jason_shen.AdvancedExercises.Employee;
 import com.revature.week1_jason_shen.Oop.Human;
 import com.revature.week1_jason_shen.Oop.Mammal;
 
@@ -167,10 +175,110 @@ public class Solution {
 		t3_sync.join();
 		// How do I wait for these threads to finish before starting main again???
 		
-		System.out.println("All threads complete, continuing main");
+		System.out.println("All threads complete, continuing main\n");
 		
 		// EASY CODING EXERCISES -- QUESTIONS 32-37
+		System.out.println("Question 32: \n-----");
+		EasyExercises.CheckPassFail(20);
+		EasyExercises.CheckPassFail(80);
+		System.out.println();
 		
+		System.out.println("Question 33: \n-----");
+		EasyExercises.CheckOddEven(17);
+		EasyExercises.CheckOddEven(10);
+		System.out.println();
+		
+		System.out.println("Question 34: \n-----");
+		EasyExercises.PrintNumberInWord(15);
+		EasyExercises.PrintNumberInWord(2);
+		System.out.println();
+		
+		System.out.println("Question 35: \n-----");
+//		Just uncomment the line below to run Question 35, I just left it commented so that it wouldn't
+//			interrupt the console outputs for the other questions while working.
+//		EasyExercises.KeyboardScanner();
+		System.out.println();
+		
+		System.out.println("Question 36: \n-----");
+		String[] args36 = {"10", "5", "*"};
+		EasyExercises.Arithmetic(args36);
+		System.out.println();
+		
+		System.out.println("Question 37: \n-----");
+		int[] grades = {50,15,80,95,100,40};
+		System.out.print("Grades to be entered: ");
+		for (int grade : grades) {
+			System.out.print(grade + " ");
+		}
+		System.out.println();
+		EasyExercises.GradesStatistics.grade(grades);
+		System.out.println();
+		
+		// ADVANCED CODING EXERCISES -- QUESTIONS 38-45
+		System.out.println("Question 38: \n-----");
+		AdvancedExercises.replaceCharInString("hello world!", 'l', 'c');
+		System.out.println();
+		
+		System.out.println("Question 39: \n-----");
+		Calendar dob = Calendar.getInstance();
+		// Months are 0 indexed apparently
+		dob.set(1995, Calendar.DECEMBER, 13);
+		
+		AdvancedExercises.happyBirthday(dob);
+		System.out.println();	
+		
+		System.out.println("Question 40: \n-----");
+		System.out.println("Fibonacci iterative: ");
+		AdvancedExercises.fibonacciIter(100);
+		System.out.println();
+		
+		System.out.println("Fibonacci recursive: ");
+		AdvancedExercises.printFib(30);
+		System.out.println();
+		
+		System.out.println("Fibonacci top-down dynamic programming: ");
+	    AdvancedExercises.printFibDP(100);
+	    System.out.println();
+	    
+		System.out.println("Question 41: \n----- ");
+	    AdvancedExercises.fizzBuzz(50);
+	    System.out.println();
+	    
+	    System.out.println("Question 42: \n-----");
+	    Employee jason = new Employee("Jason", "JTA", 22);
+	    Employee amin = new Employee("Amin", "JTA", 25);
+	    ArrayList<Employee> list = new ArrayList<Employee>();
+	    list.add(jason);
+	    list.add(amin);
+	    
+	    Collections.sort(list, new CompareEmployeeByAge());
+	    for(Employee e : list) {
+	    	System.out.println(e.getAge());
+	    }
+	    System.out.println();
+	    Collections.sort(list, new CompareEmployeeByName());
+	    for(Employee e : list) {
+	    	System.out.println(e.getName());
+	    }
+	    System.out.println();
+	    Collections.sort(list, new CompareEmployeeByDepartment());
+	    for(Employee e : list) {
+	    	System.out.println(e.getDepartment());
+	    }
+	    System.out.println();
+	    
+	    System.out.println("Question 43: \n-----");
+	    AdvancedExercises.checkArmstrong(153);
+	    System.out.println();
+	    
+	    System.out.println("Question 44: \n-----");
+	    AdvancedExercises.reverseString("hello world");
+	    System.out.println();
+
+	    System.out.println("Question 45: \n-----");
+	    AdvancedExercises.isPrime(7);
+	    AdvancedExercises.isPrime(64);
+	    System.out.println();	
 	}
 	
 }

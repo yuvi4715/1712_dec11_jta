@@ -4,6 +4,11 @@ package com.revature.week1_jason_shen;
 public class MyCustomException extends Exception {
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public String getMessage() {
 		return "My custom exception was thrown!";
