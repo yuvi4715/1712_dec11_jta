@@ -1,5 +1,7 @@
 package com.revature.question5;
 
+//5.	In one project, create two classes. One class should contain only methods (add, subtract, multiply and divide). 
+//The other class should contain only the main() method which calls each of the methods from the previous class.
 public class Question5B {
 
 	public static void main(String[] args) {

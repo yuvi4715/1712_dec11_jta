@@ -3,7 +3,7 @@ package com.revature.question6;
 //6.	Create an example for each control statement.
 public class Question6 {
 
-	// method demonstrating the if control statement
+	// method demonstrating the if/else control statement
 	public void ifStatement() {
 		int a = 2;
 		
@@ -56,6 +56,7 @@ public class Question6 {
 	public void doWhileStatement() {
 		int count = 3;
 		
+		// The do portion will always run first at least once
 		do {
 			System.out.println(count);
 			count--;

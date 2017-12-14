@@ -10,13 +10,16 @@ e.	At least 1 final variable
  */
 
 public class Customer {
-
-	final int age = 21;
+	
+	final String company = "Revature";
+	public String name;
+	public int age;
 	static int balance = 100;
+	
 
 	public Customer() {
 	}
-	public Customer(int balance) {
+	public Customer(String name, int age, int balance) {
 		Customer.balance = balance;
 	}
 	

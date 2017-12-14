@@ -23,6 +23,7 @@ public class Question2 {
 	}
 	public static void main(String[] args) {
 		// Choose three numbers to check which is the greatest
+		
 		int first = -6;
 		int second = -1;
 		int third = -3;
