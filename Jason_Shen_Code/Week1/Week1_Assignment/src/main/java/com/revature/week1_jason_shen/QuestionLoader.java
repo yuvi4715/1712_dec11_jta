@@ -1,8 +1,9 @@
 package com.revature.week1_jason_shen;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.LinkedList;
 
 import com.revature.week1_jason_shen.AdvancedExercises.CompareEmployeeByAge;
 import com.revature.week1_jason_shen.AdvancedExercises.CompareEmployeeByDepartment;
@@ -175,16 +176,17 @@ public class QuestionLoader {
 		t3_async.join();
 		
 		System.out.println("\nAll asynchronous threads done, starting synchronized threads...\n");
-		Thread t1_sync = new Thread(new MultithreadingSynced("Thread 1 Synced"));
-		Thread t2_sync = new Thread (new MultithreadingSynced("Thread 2 Synced"));
-		Thread t3_sync = new Thread (new MultithreadingSynced("Thread 3 Synced"));
+		MultithreadingSynced t1_sync = new MultithreadingSynced("Thread 1 Synced");
+		MultithreadingSynced t2_sync = new MultithreadingSynced("Thread 2 Synced");
+		MultithreadingSynced t3_sync = new MultithreadingSynced("Thread 3 Synced");
 		t1_sync.start();
 		t2_sync.start();
 		t3_sync.start();
 
-		t1_sync.join();
-		t2_sync.join();
-		t3_sync.join();
+//		t1_sync.join();
+//		t2_sync.join();
+//		t3_sync.join();
+		
 		// How do I wait for these threads to finish before starting main again???
 		// Used AtomicIntegers for this^
 		
@@ -308,5 +310,19 @@ public class QuestionLoader {
 	    AdvancedExercises.isPrime(7);
 	    AdvancedExercises.isPrime(64);
 	    System.out.println();	
+	}
+	public static void question46() {
+	    System.out.println("Question 46: \n-----");
+	    BonusExercises.swapIntegers(-10, 5);
+	    System.out.println();	
+	}
+	public static void question47() {
+	    System.out.println("Question 47: \n-----");
+	    LinkedList<Integer> list = new LinkedList<Integer>();
+	    for (int i = 0; i < 10; i++) {
+	    	list.add(i);
+	    }
+	    BonusExercises.findMiddleNode(list);
+	    System.out.println();		
 	}
 }

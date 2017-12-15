@@ -7,22 +7,16 @@ public class Helper {
 	
 	// Running without arguments runs all the questions
 	public static void run() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		
-		QuestionLoader q_loader = new QuestionLoader();
-		int NUM_QUESTIONS = 45;	
+
+		int NUM_QUESTIONS = 46;	
 		
 		for (int i = 1; i < NUM_QUESTIONS + 1; i++) {
-			try {
-				if (i == 35) {
-					System.out.println("Please run question 35 separately.\n");
-					continue;
-				}
-				Method method = q_loader.getClass().getMethod("question"+i);
-				method.invoke(q_loader);	
 
-			} catch(NoSuchMethodException e) {
+			if (i == 35) {
+				System.out.println("Please run question 35 separately.\n");
 				continue;
 			}
+			Helper.run(i);	
 
 		}
 
@@ -60,6 +54,7 @@ public class Helper {
 					method_name = "question29_31";
 					break;
 			}
+			
 			method = q_loader.getClass().getMethod(method_name);
 			method.invoke(q_loader, (Object[]) null);	
 				

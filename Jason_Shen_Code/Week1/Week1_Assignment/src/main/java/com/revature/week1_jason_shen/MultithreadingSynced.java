@@ -1,11 +1,11 @@
 package com.revature.week1_jason_shen;
 
-import java.util.concurrent.atomic.AtomicInteger;
+//import java.util.concurrent.atomic.AtomicInteger;
 
-public class MultithreadingSynced implements Runnable {
+public class  MultithreadingSynced implements Runnable {
 
 	private int thread_run_count;
-	private static AtomicInteger total_run_count = new AtomicInteger(0); 
+	private static int total_run_count = 0; 
 	private String thread_name;
 	
 	public MultithreadingSynced(String name) {
@@ -13,16 +13,16 @@ public class MultithreadingSynced implements Runnable {
 		System.out.println("Creating " + thread_name);
 	}
 
-	private synchronized void update_run_counts() {
+	private void update_run_counts() {
 		this.thread_run_count += 1;
 //		System.out.println("Thread " + thread_name + " run count: " + thread_run_count);
 		
-		total_run_count.incrementAndGet();
+		total_run_count+=1;
 //		System.out.println("Total run count: " + total_run_count + "\n");
 		return;
 	}			
 	
-	public void run() {
+	public synchronized void run() {
 
 		System.out.println("Running thread " + thread_name);
 		try {
@@ -39,7 +39,11 @@ public class MultithreadingSynced implements Runnable {
 
 	}
 	
+	public void start() {
+		run();
+	}
+	
 	public int getTotalRunCOunt() {
-		return total_run_count.get();
+		return total_run_count;
 	}
 }
