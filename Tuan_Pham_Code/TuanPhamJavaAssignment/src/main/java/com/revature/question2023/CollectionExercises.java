@@ -82,7 +82,8 @@ public class CollectionExercises {
 		Collections.sort(ll);
 		
 		// Sorting HashMap
-		// HashMap sorts keys by default
+		// HashMap cannot be sorted but could be if converted toTreeMap
+		System.out.println("HashMap cannot be sorted");
 		
 		// Sorting TreeSet
 		// TreeSet sorts by default

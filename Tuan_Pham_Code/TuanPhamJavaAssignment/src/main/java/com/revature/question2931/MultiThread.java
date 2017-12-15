@@ -52,6 +52,18 @@ public class MultiThread extends Thread{
 		this.count = counter;
 		count+=1;
 	}
+	
+	/*
+	 * sleep() - This makes the thread to stop or "sleep" for a specified amount of time in milliseconds
+	 * wait() - Makes the thread wait until it is called again using notify
+	 * yield() - Notify the system that the thread is willing to let another thread go
+	 * suspend() - Puts the thread on lock and is extremely dangerous to use as it is prone to deadlock
+	 * stop() - Stops the thread by unlocking all monitors it locked
+	 * resume() - Resumes the thread after using suspend
+	 * interrupt() - Interrupts the thread
+	 * notify() - Wakes up a thread that is currently waiting
+	 * notifyAll() - Wakes up all threads that are waiting 
+	 */
 	public static void main(String[] args) {
 		MultiThread T1 = new MultiThread("Thread 1", 50);
 		T1.start();
