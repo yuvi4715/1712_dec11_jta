@@ -1,6 +1,10 @@
 package coreJava;
 
 public class CoreJava1 {
+	/*
+	 * Write a program to add, subtract, multiply and divide two non-zero hard-coded numbers.
+	 */
+	
 	public static void main(String[] args) {
 		mathStuff(13.5d, 15.2d);
 	}

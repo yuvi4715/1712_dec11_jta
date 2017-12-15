@@ -6,15 +6,15 @@ public class Tester9 {
 		Animal9 one = new Human();
 		one.eat();
 		one.move();
-		one.walk();
+		// one.walk(); // this will NOT work - animal9 interface does not have a walk method
 		Mammal9 two = new Human();
 		two.eat();
 		two.move();
-		two.walk();
+		// two.walk(); // this should be called like: Mammal9.walk()
 		Human three = new Human();
 		three.eat();
 		three.move();
-		three.walk();
+		// three.walk(); // this should be called like: Human.walk()
 	}
 
 }

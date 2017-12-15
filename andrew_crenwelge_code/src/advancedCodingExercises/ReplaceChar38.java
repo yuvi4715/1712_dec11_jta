@@ -1,6 +1,9 @@
 package advancedCodingExercises;
 
 public class ReplaceChar38 {
+	/*
+	 * Write a method to replace a given character in a String with another character.
+	 */
 
 	public static void main(String[] args) {
 		System.out.println(replaceCharInStr("hello",2,'y'));

@@ -10,6 +10,7 @@ public class ArmStrong43 {
 		// Definition of Armstrong/narcissistic number:
 		// a number that is the sum of its own digits each raised to the power of the number of digits
 		System.out.println(checkArmstrong(371));
+		System.out.println(checkArmstrong(461));
 	}
 	
 	private static boolean checkArmstrong(int n) {

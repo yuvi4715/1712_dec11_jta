@@ -5,10 +5,14 @@ import java.util.Calendar.Builder;
 import java.util.Date;
 
 public class DateOfBirth39 {
+	/*
+	 * Write a method that takes a date of birth via Calendar object and returns 
+	 * your age. If it is your birthday, print the Happy Birthday song!
+	 */
 
 	public static void main(String[] args) {
 		Builder b = new Builder();
-		b.setDate(1995, 4, 1);
+		b.setDate(1994, 11, 5);
 		Calendar c = b.build();
 		getAge(c);
 	}

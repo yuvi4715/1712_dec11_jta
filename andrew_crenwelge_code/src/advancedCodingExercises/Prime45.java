@@ -6,7 +6,9 @@ public class Prime45 {
 		/*
 		 * Write a method to determine if a number is prime. 
 		 */
-		for (int n=1;n<20;n++) {
+		
+		// determine whether each number 1-20 is prime
+		for (int n=1;n<=20;n++) {
 			System.out.println(n+": "+isPrime(n));
 		}
 	}

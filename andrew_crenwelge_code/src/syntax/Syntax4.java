@@ -1,6 +1,10 @@
 package syntax;
 
 public class Syntax4 {
+	/*
+	 * Write a program to add, subtract, multiply and divide 
+	 * two numbers using methods with parameters using only one class.
+	 */
 
 	public static void main(String[] args) {
 		double x = 1;

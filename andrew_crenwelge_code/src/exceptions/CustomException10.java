@@ -1,6 +1,9 @@
 package exceptions;
 
 public class CustomException10 extends Exception {
+	/*
+	 * Create a custom exception class that overrides the getMessage() method
+	 */
 
 	/**
 	 * 

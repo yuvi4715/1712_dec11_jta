@@ -8,14 +8,12 @@ public class ReverseString44 {
 		 */
 		System.out.println(reverseStr("hello, world!"));
 	}
-	
-	public static String reverseStr(String str) {
-		String[] forward = str.split("");
-		String[] backward = new String[forward.length];
-		for (int a=0;a<forward.length;a++) {
-			backward[forward.length-a-1] = forward[a];
-		}
-		return String.join("", backward);
+
+	static String reverseStr(String s) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = s.length() - 1; i >= 0; --i)
+			sb.append(s.charAt(i));
+		return sb.toString();
 	}
 
 }

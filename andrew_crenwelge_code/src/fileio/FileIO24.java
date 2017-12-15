@@ -1,77 +1,60 @@
 package fileio;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.StringTokenizer;
-import java.util.stream.Stream;
 
 public class FileIO24 {
-	public static void main(String[] args) throws IOException {
-		new FileIO24().parseFile();
+	/*
+	 * Consider a text file has the following colon-separated lines: 
+	 * 		Employee id:First Name:Last Name:Role 
+	 * Read the file, and parse(tokenize) the fields
+	 * using StringTokenizer with delimiter(:) While parsing the file, place the
+	 * information in an object, which should have four instance variables: 
+	 * 		Employee Id, First Name, Last Name, Role.
+	 * Place these objects in a HashMap with the key as employee id and value 
+	 * as the object i.e HashMap should have
+	 * 		Key: 01 Value : Object representing first line 
+	 * 		Key: the 02 Value: Object representing second line
+	 */
+	public static void main(String[] args) {
+		FileIO24.parseFile();
 	}
 
-	private class Employee {
-		private String employeeID;
-		private String firstName;
-		private String lastName;
-		private String role;
-
-		public Employee() {
-		}
-
-		public String getEmployeeID() {
-			return employeeID;
-		}
-
-		public void setEmployeeID(String employeeID) {
-			this.employeeID = employeeID;
-		}
-
-		public String getFirstName() {
-			return firstName;
-		}
-
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-
-		public String getLastName() {
-			return lastName;
-		}
-
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
-		}
-
-		public String getRole() {
-			return role;
-		}
-
-		public void setRole(String role) {
-			this.role = role;
-		}
-	}
-
-	private void parseFile() throws IOException {
+	private static void parseFile() {
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader("text.txt"));
-			Stream<String> str = br.lines();
-			HashMap<String, Object> empData = new HashMap<String, Object>();
-			str.forEachOrdered((line) -> {
+			br = new BufferedReader(new FileReader("src/resources/text.txt"));
+			HashMap<String, Employee> empData = new HashMap<>();
+			String l;
+			while((l = br.readLine()) != null) {
 				Employee emp = new Employee();
-				StringTokenizer st = new StringTokenizer(line, ":");
+				StringTokenizer st = new StringTokenizer(l, ":");
 				emp.setEmployeeID(st.nextToken());
 				emp.setFirstName(st.nextToken());
 				emp.setLastName(st.nextToken());
 				emp.setRole(st.nextToken());
 				empData.put(emp.getEmployeeID(), emp);
-			});
+			}
+			// see the hashmap
 			System.out.println(empData.toString());
+			// see all the individual values in the employee objects
+			for (Employee e : empData.values()) {
+				System.out.println(e.getEmployeeID());
+				System.out.println(e.getFirstName());
+				System.out.println(e.getLastName());
+				System.out.println(e.getRole());
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			br.close();
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

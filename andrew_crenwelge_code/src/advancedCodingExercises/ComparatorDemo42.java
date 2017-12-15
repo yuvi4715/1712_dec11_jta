@@ -17,8 +17,8 @@ public class ComparatorDemo42 {
 		Comparator<Employee42> cmp1 = new Comparators42ByName();
 		Comparator<Employee42> cmp2 = new Comparators42ByDept();
 		Comparator<Employee42> cmp3 = new Comparators42ByAge();
-		System.out.println("By name: " + cmp1.compare(e1, e2));
-		System.out.println("By name: " + cmp2.compare(e1, e2));
-		System.out.println("By name: " + cmp3.compare(e1, e2));
+		System.out.println("By name: " + cmp1.compare(e1, e2)); // "alice" comes before "bob, so this should print a negative value
+		System.out.println("By name: " + cmp2.compare(e1, e2)); // "hr" comes before "sales", so this should print a positive value
+		System.out.println("By name: " + cmp3.compare(e1, e2)); // 41 > 35 so this should print a positive value
 	}
 }

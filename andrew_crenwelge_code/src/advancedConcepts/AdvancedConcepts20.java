@@ -2,6 +2,11 @@ package advancedConcepts;
 
 public class AdvancedConcepts20 {
 	public static void main(String[] args) {
+		/*
+		 * Create a Runtime object and note at least three methods. 
+		 * Imagine how you would use them
+		 */
+		
 		// get a runtime object
 		Runtime runTimeObj = Runtime.getRuntime();
 		// get the number of processors available to the JVM
