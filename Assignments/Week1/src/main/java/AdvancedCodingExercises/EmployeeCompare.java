@@ -1,18 +1,13 @@
 package AdvancedCodingExercises;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class EmployeeCompare {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		/*
-		 * Write Comparators to compare two employees based on their name, department, and age.
-		 * */
-		
+
 		Employees employees[] = new Employees[2];
 		
 		employees[0] = new Employees();
@@ -41,9 +36,6 @@ public class EmployeeCompare {
 			System.out.println("Employee: " + employees[i].getEmployeeName() + " is " + employees[i].getEmployeeAge() + " years old"
 					+ " and is a " + employees[i].getEmployeeDept());
 		}
-		
-		
-
 	}
 
 }

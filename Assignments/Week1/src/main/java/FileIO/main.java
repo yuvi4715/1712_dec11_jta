@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 public class main {
 	static Employee emp1 = new Employee();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		//application is not meant for multiple employees, just a proof of concept
 
@@ -20,11 +20,13 @@ public class main {
 
 	}
 	
-	private void fileReader(String file) {
+	private void fileReader(String file) throws IOException {
 		String line = null;
+		BufferedReader bufreader = null;
+		FileReader reader = null;
 		try {
-			FileReader reader = new FileReader(file);
-			BufferedReader bufreader = new BufferedReader(reader);
+			reader = new FileReader(file);
+			bufreader = new BufferedReader(reader);
 			
 			while((line = bufreader.readLine()) != null) {
 				StringTokenizer stringToken = new StringTokenizer(line, ":");
@@ -53,15 +55,22 @@ public class main {
 					
 				}
 
-			}
-			bufreader.close();
-			
+			}			
 		}
 		catch(FileNotFoundException  ex){
 			System.out.println(ex.getMessage());
 		}
 		catch(IOException ex){
 			System.out.println(ex.getMessage());
+		}
+		finally {
+			if(bufreader != null) {
+				bufreader.close();
+			}
+			if(reader != null) {
+				reader.close();
+			}
+
 		}
 
 	}

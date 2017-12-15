@@ -4,16 +4,16 @@ public class main {
 
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
-				
-		MultiThread mt1 = new MultiThread();
 		
-		Thread threadJob1 = new Thread(mt1);
-		Thread threadJob2 = new Thread(mt1);
-		Thread threadJob3 = new Thread(mt1);
+		Thread thread = new Thread(new MultiThread("One"));
+		Thread thread2 = new Thread(new MultiThread("Two"));
+		Thread thread3 = new Thread(new MultiThread("Three"));
 		
-		new main().letsRun(threadJob1);
-		new main().letsRun(threadJob2);
-		new main().letsRun(threadJob3);
+		new main().letsRun(thread);
+		new main().letsRun(thread2);
+		new main().letsRun(thread3);
+
+
 	}
 	
 	private void letsRun(Thread thread) throws InterruptedException {
@@ -21,6 +21,7 @@ public class main {
 			thread.start();
 			thread.wait();
 		}
+	
 	}
 
 }
