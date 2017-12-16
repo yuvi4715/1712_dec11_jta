@@ -1,0 +1,4 @@
+E= element
+T = Type
+N = Numer
+K = key
