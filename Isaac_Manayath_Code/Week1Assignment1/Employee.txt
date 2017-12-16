@@ -1,0 +1,5 @@
+1234:Isaac:Manayath:Rebel
+2345:Luke:Skywalker:Rebel
+3456:Han:Solo:Rebel
+4567:Leia:Skywalker:Rebel
+5678:Anakin:Skywalker:Imperialist
