@@ -19,11 +19,11 @@ public class Main {
 		greekAlphabet.add("Beta");
 		greekAlphabet.add("Gamma");
 		
-		collegeFootballRankings.put(7, "Clemson");
+		collegeFootballRankings.put(1, "Clemson");
 		collegeFootballRankings.put(2, "Oklahoma");
 		collegeFootballRankings.put(3, "Georgia");
 		
-		treeSet.add(45.1);
+		treeSet.add(45.0);
 		treeSet.add(100.89);
 		treeSet.add(45.0);
 		
