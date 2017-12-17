@@ -1,12 +1,12 @@
 package bonusExercises;
 
-public class LiveLock51 {
+public class LiveLock {
 
 	public static void main(String[] args) {
 		/*
 		 * Write a program that creates livelock between two threads. 
 		 */
-		LiveLock51 l = new LiveLock51();
+		LiveLock l = new LiveLock();
 		final Worker worker1 = l.new Worker("Worker 1", true);
         final Worker worker2 = l.new Worker("Worker 2", true);
 

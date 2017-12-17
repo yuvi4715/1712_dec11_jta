@@ -1,6 +1,6 @@
 package bonusExercises;
 
-public class DeadLock50 {
+public class DeadLock {
 	String str1 = "Hello";
     String str2 = "World";
     
@@ -8,7 +8,7 @@ public class DeadLock50 {
 		/*
 		 * Write a program that creates deadlock between two threads.
 		 */
-	    DeadLock50 dl = new DeadLock50();
+	    DeadLock dl = new DeadLock();
         dl.trd1.start();
         dl.trd2.start();
 	}

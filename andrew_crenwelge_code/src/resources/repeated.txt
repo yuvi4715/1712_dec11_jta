@@ -1,0 +1,3 @@
+hey this is a text file that is the input to a java program which counts the number of repeated
+words in this file and I could repeat a lot of words but I'll just repeat a few like file and repeat
+and probably this and that and a few more words

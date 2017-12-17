@@ -3,7 +3,7 @@ package bonusExercises;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-public class FindMiddleNode47 {
+public class FindMiddleNode {
 
 	public static void main(String[] args) {
 		/*
