@@ -141,10 +141,34 @@ public class HW1Java1 {
 	
 	public static void bonusCall() {
 		Bonus b = new Bonus();
+		String str = "The dog jumped over the fence. eeeeeeeeee";
+		String word = "Hello World";
+		int[] arr = new int[] {5, 3, 9, 2, 4, 7, 8, 1, 2}; 
+		int[] a1 = new int[] {1, 2, 3, 4, 5};
+		int[] a2 = new int[] {2, 5, 7, 8, 10};
+		
+		
 		b.intswap();
 		b.findMidNode();
 		System.out.println(b.Factorial(5));
 		System.out.println(b.substring("Hello World", 4, 6));
-		b.deadlock();
+		//b.deadlock();
+		//b.livelock();
+		b.reverseNum(123456789);
+		b.findDuplicate();
+		b.findRepeatWords();
+		b.findRepeatChars(str);
+		b.checkOddEven(101);
+		b.isPalindrome(word);
+		b.sortInsertion(arr);
+		b.findCommon(a1, a2);
+		b.findDistinct(arr);
+		b.findDistinctWords();
+		b.computePi();
+		b.printDog();
+		b.printPascals();
+		b.numGuess();
 	}
+
+
 }
