@@ -3,12 +3,12 @@
 	import java.util.*;
 
 	// A class to represent Employees. Problem 42
-	class CompareEmployees
+public class CompareEmployees
 	{
 		int age;
-		String name, department;
+		String name,department;
 
-		// Constructor
+		// Constructor n
 		public CompareEmployees(int age, String name,
 								String department)
 		{
@@ -23,42 +23,8 @@
 			return this.age + " " + this.name +
 							" " + this.department;
 		}
-	}
-
-	class Sortbyroll implements Comparator<CompareEmployees>
-	{
-		// Used for sorting in ascending order of
-		// roll number
-		public int compare(CompareEmployees a, CompareEmployees b)
-		{
-			return a.age - b.age;
-		}
-	}
-
-	class Sortbyname implements Comparator<CompareEmployees>
-	{
-		// Used for sorting in ascending order of
-		// roll name
-		public int compare(CompareEmployees a, CompareEmployees b)
-		{
-			return a.name.compareTo(b.name);
-		}
-	}
-
-	class Sortbydepartment implements Comparator<CompareEmployees>
-	{
-		// Used for sorting in ascending order of
-		// roll name
-		public int compare(CompareEmployees a, CompareEmployees b)
-		{
-			return a.department.compareTo(b.department);
-		}
-	}
 
 
-	// Driver class
-	class Main
-	{
 		public static void main (String[] args)
 		{
 			ArrayList<CompareEmployees> ar = new ArrayList<CompareEmployees>();
@@ -88,4 +54,25 @@
 			for (int i=0; i<ar.size(); i++)
 				System.out.println(ar.get(i));
 		}
+        	}
+/*
+ * class Sortbyname implements Comparator<CompareEmployees>
+	{
+		// Used for sorting in ascending order of
+		// roll name
+		public int compare(CompareEmployees a, CompareEmployees b)
+		{
+			return a.name.compareTo(b.name);
+		}
 	}
+
+	class Sortbydepartment implements Comparator<CompareEmployees>
+	{
+		// Used for sorting in ascending order of
+		// roll name
+		public int compare(CompareEmployees a, CompareEmployees b)
+		{
+			return a.department.compareTo(b.department);
+		}
+	
+*/
