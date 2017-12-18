@@ -14,7 +14,7 @@ class FileIO {
 	HashMap<Integer, Employee> employeeObjectMap = new HashMap<Integer, Employee>();
 	
 	public void initFileRead() throws FileNotFoundException {
-		fr = new FileReader("C:\\Users\\Robin\\Revature Workspace\\AssignmentWeek1\\src\\question24_25_26_27_28\\EmployeeList.txt");
+		fr = new FileReader("resources/EmployeeList.txt");
 		br = new BufferedReader(fr);
 	}
 	public void readObjectIntoHashMap() throws IOException {
