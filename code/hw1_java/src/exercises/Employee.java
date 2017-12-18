@@ -1,6 +1,7 @@
 package exercises;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Employee implements Comparator<Employee>, Comparable<Employee>{
 	String name;
@@ -24,4 +25,14 @@ public class Employee implements Comparator<Employee>, Comparable<Employee>{
 		return this.name.compareTo(e.name);
 	}
 	
+	public int equals(Employee e) {	//#60
+		if (this.name==e.name && this.department==e.department && this.age==e.age) {
+			return 1;
+		}
+		return 0;
+	}
+	
+	public int hashcode() {
+		return Objects.hash(name, department, age);
+	}
 }
