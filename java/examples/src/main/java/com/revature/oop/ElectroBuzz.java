@@ -2,6 +2,9 @@ package com.revature.oop;
 
 public abstract class ElectroBuzz implements Pokemon {
 
+	public ElectroBuzz() {
+	}
+	
 	@Override
 	public void attack() {
 		System.out.println("ElectroBuzz - attack");
