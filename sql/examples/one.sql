@@ -136,7 +136,7 @@ insert into Player values ('Marshawn Lynch', 'RB', 21, 5);
 
 --scalar & aggreegate functions
 --scalar - TRIM, LTRIM, RTRIM, Round, ABS, Trunc, Length, RPad, LPad,
--- String functions, Substr, to_char, Inst
+-- String functions, Substr, to_char, Inst, replace
 
 -- aggregate - sum, max, min, count, avg, 
 
