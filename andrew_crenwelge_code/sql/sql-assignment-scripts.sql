@@ -33,7 +33,7 @@ INSERT INTO customer
   VALUES (60, 'Bob', 'Parker', 'Apple, Inc', '341 Copper St', 'San Jose', 'CA', 'USA','74381','+1 (815) 325-9631','+1 (815) 091-9821','bparker@gmail.com',4);
 INSERT INTO customer
   VALUES (61, 'Gabriel', 'Hernandez', 'Oracle', '671 Oracle Dr', 'Austin', 'TX', 'USA','90141','+1 (735) 019-3781','+1 (735) 659-9557','ghernandez@gmail.com',4);
-
+/
 -- UPDATE STATEMENTS (2.4)
 UPDATE customer
   SET firstname = 'Robert', lastname = 'Walter'
@@ -55,22 +55,11 @@ SELECT * FROM employee
   WHERE hiredate BETWEEN '01-JUN-03' AND '01-MAR-04';
 /
 -- DELETING ENTRY (2.7)
--- first we must dropping constraints and re-adding with cascade delete
-ALTER TABLE invoice
-  DROP CONSTRAINT FK_INVOICECUSTOMERID;
-ALTER TABLE invoice
-  ADD CONSTRAINT FK_INVOICECUSTOMERID_Cascade
-  FOREIGN KEY (CustomerID) REFERENCES customer(CustomerID) ON DELETE CASCADE;
-/
-ALTER TABLE invoiceline
-  DROP CONSTRAINT FK_INVOICELINEINVOICEID;
-ALTER TABLE invoiceline
-  ADD CONSTRAINT FK_IVLINVOICEID_Cascade
-  FOREIGN KEY (InvoiceID) REFERENCES invoice(InvoiceID) ON DELETE CASCADE;
-/
--- now we can delete a customer and it will delete their invoices
-DELETE FROM customer
-  WHERE firstname = 'Robert' AND lastname= 'Walter';
+-- first delete dependency in invoice table
+DELETE FROM invoice
+WHERE customerid = (SELECT customerid FROM customer WHERE firstname = 'Robert' AND lastname= 'Walter');
+/ -- now we can delete the customer
+DELETE FROM customer WHERE firstname = 'Robert' AND lastname= 'Walter';
 /
 -- FUNCTIONS
 -- System defined functions (3.1)
@@ -100,7 +89,7 @@ CREATE or REPLACE FUNCTION avg_invoice_line_price
   RETURN number
   IS ave number;
 BEGIN
-  SELECT AVG(unitprice) into ave FROM INVOICELINE;
+  SELECT AVG(unitprice) into ave FROM invoiceline;
   RETURN ave;
 END;
 -- use the function
@@ -108,14 +97,22 @@ SELECT avg_invoice_line_price() FROM dual;
 
 -- USER DEFINED TABLE VALUED FUNCTIONS (3.4)
 --Create a function that returns all employees who are born after 1968
-SELECT * FROM employee WHERE birthdate > TO_DATE('31-DEC-68');
+CREATE or REPLACE FUNCTION get_emp_born_after(dt date)
+  RETURN SYS_REFCURSOR
+  IS tbl SYS_REFCURSOR;
+BEGIN
+  SELECT * into tbl FROM employee where birthdate > dt;
+  RETURN tbl;
+END;
+-- use the function
+SELECT get_emp_born_after(TO_DATE('31-DEC-68')) from dual;
 
 --STORED PROCEDURES
 -- Basic stored procedure (4.1)
 -- Create a procedure which gets first and last names of all employees
 -- first create an object
 CREATE TYPE NAMES IS OBJECT (
-  ID NUMBER,
+  ID NUMBER, 
   FIRSTNAME VARCHAR(20),
   LASTNAME VARCHAR(20));
 /
@@ -321,3 +318,10 @@ END;
   
 --ADMINISTRATION (9.0)
   --Create a .bak file for the Chinook database
+
+SELECT BILLINGCOUNTRY,AVG(total) FROM invoice WHERE TOTAL > 0.99 GROUP BY BILLINGCOUNTRY;
+SELECT BILLINGCOUNTRY,ROUND(AVG(total),2) AS AVG_TOTAL 
+FROM invoice 
+GROUP BY BILLINGCOUNTRY 
+HAVING AVG(TOTAL) > 5.5
+ORDER BY AVG(TOTAL) DESC;
