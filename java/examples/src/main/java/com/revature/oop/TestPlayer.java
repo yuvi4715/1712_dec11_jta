@@ -11,6 +11,7 @@ public class TestPlayer {
 	//syntax for annotations - @keyword
 	
 	Player p1 = new Player();
+	
 	@Before
 	public void setUp() throws Exception {
 		System.out.println("setup - before");
