@@ -5,7 +5,7 @@ public class MainClass extends ElectroBuzz {
 	//public static Pokemon ElectroBuzz = null;
 	
 	public static void main(String[] args) {
-		
+
 		Pokemon ElectroBuzz = new Pikachu(); 
 		ElectroBuzz.attack();
 		ElectroBuzz.evolve();

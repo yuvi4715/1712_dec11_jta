@@ -1,6 +1,8 @@
 package com.revature.oop;
 
-public class Bank {
+import java.io.Serializable;
+
+public class Bank implements Serializable{
 
 	private float accountBalance;
 	private int accountNumber;
