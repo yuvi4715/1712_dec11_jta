@@ -1,5 +1,6 @@
 --good to know only
 select * from all_tables;
+select * from all_constraints where table_name = 'TEAMS';
 desc dual; --not descending order
 --desc in the front means describe
 --desc at the end of query is descending order
