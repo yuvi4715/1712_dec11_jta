@@ -4,9 +4,6 @@
 # Metadata
 .metadata/
 
-# Binary
-bin/
-
 # Log file
 *.log
 
