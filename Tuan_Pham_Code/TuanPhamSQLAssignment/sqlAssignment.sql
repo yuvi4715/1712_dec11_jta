@@ -287,50 +287,166 @@ end
 --exec updateEmp(9, 'Pham','John','Trainee',3,'03-Feb-93','12-Dec-17','123 Roundwood St', 'Reston','VA', '97128','714-777-8888', '(800)999-9999', 'myEmail@cpp.edu');
 
 /* Task – Create a stored procedure that returns the managers of an employee. */
-create or replace procedure empManager
+create or replace procedure empManager(empID Number, myCursor OUT SYS_REFCURSOR)
+-- takes in an employeeid parameter and finds the manager of that employee
 as
 begin
-
+    --Do a subquery to find the manager by finding the employee id first then by matching the reportsto id
+    open myCursor FOR SELECT FIRSTNAME, LASTNAME 
+    from EMPLOYEE 
+    where EMPLOYEEID IN (select REPORTSTO
+                        FROM EMPLOYEE e
+                        WHERE e.EMPLOYEEID = empID);
 end
 ;
 /
 
-/* Task – Create a stored procedure that returns the name and company of a customer. */
+declare
+    empCursor SYS_REFCURSOR;
+    fName varchar2(20);
+    lName varchar2(20);
 
+begin
+    --Find the manager of the employee with id 7
+    empManager(7, empCursor);
+    --retreive the data from query and print
+    loop
+        FETCH empCursor INTO fName, lName;
+        EXIT WHEN empCursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(fName|| ' ' || lName);
+    end loop;
+end;
+/
+
+/* Task – Create a stored procedure that returns the name and company of a customer. */
+create or replace procedure companyName(empID Number, myCursor OUT SYS_REFCURSOR)
+-- takes in an customerid parameter and finds the name and company of that employee
+as
+begin
+    open myCursor FOR SELECT FIRSTNAME, LASTNAME, COMPANY 
+    from CUSTOMER
+    where CUSTOMERID = empID;
+end
+;
+/
+
+declare
+    empCursor SYS_REFCURSOR;
+    fName varchar2(20);
+    lName varchar2(20);
+    company varchar2(20);
+
+begin
+    --Find the name and company of a customer with id 5
+    companyName(5, empCursor);
+    --retreive the data from query and print
+    loop
+        FETCH empCursor INTO fName, lName, company;
+        EXIT WHEN empCursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(fName|| ' ' || lName || ' ' || company);
+    end loop;
+end;
+/
 
 /* Task – Create a transaction that given a invoiceId will delete that invoice (There may be constraints that rely on this, find out how to resolve them). */
+declare
+invoiceIdDel number := 327;
+begin   
+    --Delete from invoiceline first because of the dependency
+    DELETE FROM INVOICELINE
+    WHERE INVOICEID = invoiceIdDel;
+    
+    --Then delete from invoice since there are no more foreign keys
+    DELETE FROM INVOICE
+    WHERE INVOICEID = invoiceIdDel;
+end
+;
+/
 
+select INVOICEID
+FROM INVOICE;
+--commit;
 
 /* Task – Create a transaction nested within a stored procedure that inserts a new record in the Customer table */
+create or replace procedure insertCustomer(customerID Number, fName varchar2, lName varchar2, 
+company varchar2, address varchar2, city varchar2, states varchar2, country varchar2, postalcode varchar2, phone varchar2, fax varchar2, email varchar2, supID varchar2)
+as
+begin
+    insert into customer
+    values (customerID, fName, lName,company, address, city, states, country, postalcode, phone, fax, email, supID);
+end
+;
+/
 
+exec insertCustomer(60, 'Tuan', 'Pham', NULL, '153 America Plaza Dr','Reston','VA', 'United States', '8911', '+1 723 233 3232', NULL, 'tuanemail@hotmail.com', 5);
+
+select FIRSTNAME
+FROM CUSTOMER;
 
 /* Task - Create an after insert trigger on the employee table fired after a new record is inserted into the table. */
-
+create or replace trigger insertEmpTrigger
+after insert on EMPLOYEE for each row
+begin
+    DBMS.OUTPUT.PUT_LINE('Trigger running after inserting into EMPLOYEE');
+end;
+/
 
 /* Task – Create an after update trigger on the album table that fires after a row is inserted in the table */
-
+create or replace trigger updateAlbTrigger
+after update on ALBUM for each row
+begin
+    DBMS.OUTPUT.PUT_LINE('Trigger running after updating ALBUM');
+end;
+/
 
 /* Task – Create an after delete trigger on the customer table that fires after a row is deleted from the table. */
-
+create or replace trigger delCustomerTrigger
+after delete on CUSTOMER for each row
+begin
+    DBMS.OUTPUT.PUT_LINE('Trigger running after deleting a customer');
+end;
+/
 
 /*Task – Create an inner join that joins customers and orders and specifies the name of the customer and the invoiceId. */
-
+select FIRSTNAME, LASTNAME, INVOICEID
+FROM CUSTOMER c inner join INVOICE i
+on c.CUSTOMERID = i.CUSTOMERID;
 
 /* Task – Create an outer join that joins the customer and invoice table, specifying the CustomerId, firstname, lastname, invoiceId, and total.*/
-
+select c.CUSTOMERID, c.FIRSTNAME, c.LASTNAME, i.INVOICEID, i.TOTAL
+FROM CUSTOMER c right join INVOICE i
+on c.CUSTOMERID = i.CUSTOMERID;
 
 /* Task – Create a right join that joins album and artist specifying artist name and title. */
-
+select t.NAME, a.TITLE
+FROM ALBUM a right join ARTIST t
+on a.ARTISTID = t.ARTISTID;
 
 /* Task – Create a cross join that joins album and artist and sorts by artist name in ascending order. */
-
+select a.TITLE,t.NAME
+FROM ALBUM a cross join ARTIST t
+where a.ARTISTID = t.ARTISTID
+order by t.NAME ASC;
 
 /*Task – Perform a self-join on the employee table, joining on the reportsto column. */
-
+--Join
+select * 
+FROM EMPLOYEE a, EMPLOYEE b
+WHERE a.EMPLOYEEID = b.REPORTSTO;
 
 /* Create an inner join between all tables in the chinook database. */
-
-
-/* Task – Create a .bak file for the Chinook database */
+-- Generate an ER Diagram to make it easier on ourselves... We can see all the foreign keys and link all dependencies
+select *
+FROM INVOICELINE 
+inner join TRACK on INVOICELINE.TRACKID = TRACK.TRACKID
+inner join GENRE on TRACK.GENREID = GENRE.GENREID
+inner join MEDIATYPE on TRACK.MEDIATYPEID = MEDIATYPE.MEDIATYPEID
+inner join ALBUM on TRACK.ALBUMID = ALBUM.ALBUMID
+inner join PLAYLISTTRACK on PLAYLISTTRACK.TRACKID = TRACK.TRACKID
+inner join PLAYLIST on PLAYLIST.PLAYLISTID = PLAYLISTTRACK.PLAYLISTID
+inner join ARTIST on ARTIST.ARTISTID = ALBUM.ARTISTID
+inner join INVOICE on INVOICELINE.INVOICEID = INVOICE.INVOICEID
+inner join CUSTOMER on INVOICE.CUSTOMERID = CUSTOMER.CUSTOMERID
+inner join EMPLOYEE on CUSTOMER.SUPPORTREPID = EMPLOYEE.REPORTSTO;
 
 commit;
