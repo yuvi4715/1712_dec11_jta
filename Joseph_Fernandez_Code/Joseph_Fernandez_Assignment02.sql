@@ -257,7 +257,7 @@ CREATE or REPLACE PROCEDURE deleteInvoice(invID IN NUMBER)
 AS
 BEGIN
     DELETE FROM Invoice i WHERE i.InvoiceID = invID;
---    COMMIT;
+    COMMIT;
 END;
 /
 BEGIN
@@ -273,7 +273,7 @@ CREATE or REPLACE PROCEDURE addCustomer (cusID IN NUMBER, fName IN VARCHAR2, lNa
 AS
 BEGIN
     INSERT INTO Customer VALUES (cusID, fName, lName, comp, addr, ci, st, coun, pc, ph, fx, em, spID);
---    COMMIT;
+    COMMIT;
 END;
 /
 BEGIN
