@@ -1,0 +1,25 @@
+package com.ers.servlets;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.HttpServlet;
+
+import com.ers.dao.RequestDao;
+import com.ers.dao.RequestDaoImpl;
+import com.ers.model.Employee;
+import com.ers.model.Request;
+import com.ers.service.EmployeeService;
+
+@WebServlet("/SubmitRequest")
+public class ManagerViewRequests extends HttpServlet {
+	
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
+		// get the onlyForEmployee flag
+		
+		RequestDao rdao = RequestDaoImpl.getInstance();
+		List<Request> list = rdao.getAllRequests();
+		// add list as a parameter
+		req.getRequestDispatcher("ManagerRequestView.jsp").forward(req,resp);
+	}
+}

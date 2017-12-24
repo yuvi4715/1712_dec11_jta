@@ -1,6 +1,6 @@
 package com.ers.model;
 
-public class ReimbursementRequest {
+public class Request {
 	private int reqID;
 	private int empID; // foreign key
 	private int mgrID; // foreign key
@@ -8,7 +8,7 @@ public class ReimbursementRequest {
 	private boolean isPending;
 	private boolean isApproved;
 	
-	public ReimbursementRequest(int reqID,int empID,int mgrID,String date) {
+	public Request(int reqID,int empID,int mgrID,String date) {
 		this.reqID = reqID;
 		this.empID = empID;
 		this.mgrID = mgrID;
@@ -17,6 +17,10 @@ public class ReimbursementRequest {
 		this.isApproved = false;
 	}
 	
+	public Request() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getReqID() {
 		return reqID;
 	}

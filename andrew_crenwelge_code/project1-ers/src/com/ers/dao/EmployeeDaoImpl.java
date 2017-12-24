@@ -5,11 +5,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.ers.model.Employee;
 import com.ers.util.ConnectionUtil;
+
+import oracle.sql.DATE;
 
 public class EmployeeDaoImpl implements EmployeeDao{
 
@@ -110,7 +113,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	}
 
 	@Override
-	public List<Employee> selectAll() {
+	public List<Employee> getAllEmployees() {
 		try(Connection conn = ConnectionUtil.getConnection()){
 			String sql = "Select * from employee";
 			PreparedStatement p = conn.prepareStatement(sql);
@@ -153,5 +156,49 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			e.printStackTrace();
 		} 
 		return new String();
+	}
+	
+	@Override
+	public boolean login(Employee emp) {
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			int statementIndex = 0;
+			int sessionId = 1; // HOW DO WE GET THIS??
+			String command = "INSERT INTO sessionlog VALUES(?,?,?,NULL)"; // insert record into sessionlog
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setInt(++statementIndex, sessionId);
+			statement.setInt(++statementIndex, emp.getId());
+			statement.setTimestamp(++statementIndex, new Timestamp(System.currentTimeMillis()));
+
+			if(statement.executeUpdate() > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return false;
+	}
+
+	@Override
+	public boolean logout(int sessionId) {
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			int statementIndex = 0;
+			String command = "UPDATE sessionlog SET logouttime = ? WHERE sessionId = ?"; // insert record into sessionlog
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setTimestamp(++statementIndex, new Timestamp(System.currentTimeMillis()));
+			statement.setInt(++statementIndex, sessionId);
+
+			if(statement.executeUpdate() > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return false;
+	}
+
+	@Override
+	public boolean updateInfo(Employee employee) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

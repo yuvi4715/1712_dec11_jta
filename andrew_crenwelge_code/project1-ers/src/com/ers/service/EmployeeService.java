@@ -33,22 +33,26 @@ public class EmployeeService {
 	
 	//service to call selectAll method in DAO
 	public List<Employee> listAllUsers(){
-		return EmployeeDaoImpl.getInstance().selectAll();
+		return EmployeeDaoImpl.getInstance().getAllEmployees();
 	}
 	
 	//
-	public Employee login(Employee Employee) {
+	public boolean login(Employee Employee) {
 		//Get user information without validation
-		Employee c1 = EmployeeDaoImpl.getInstance().select(Employee);
+		Employee e1 = EmployeeDaoImpl.getInstance().select(Employee);
 		/*
 		 * c1.getPassword is the hash we stored in database
 		 * compare that against the user input
 		 * if credentials are correct then return all Employee info
 		 * otherwise, return a blank object
 		 */
-		if (c1.getPassword().equals(EmployeeDaoImpl.getInstance().getEmployeeHash(Employee))) {
-			return c1;
+		if (e1.getPassword().equals(EmployeeDaoImpl.getInstance().getEmployeeHash(Employee))) {
+			return true;
 		}
-		return new Employee();
+		return false;
+	}
+	
+	public boolean logout(int sessionId) {
+		return EmployeeDaoImpl.getInstance().logout(sessionId);
 	}
 }
