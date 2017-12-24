@@ -5,7 +5,7 @@ from Employee;
 select *
 from Employee
 where lastname = 'King';
-/
+/ 
 select *
 from Employee
 where firstname = 'Andrew' and reportsto is null;
@@ -22,17 +22,15 @@ order by city;
 /
 
 -- 2.3 Insert Into
-savepoint twopointthree;
 insert into Genre values (26, 'Shoegaze');
 insert into Genre values (27, 'Trip Hop');
-insert into Employee values (9, 'Doe', 'John', 'IT Staff', 6, TO_DATE('01/JUN/2004', 'dd/mon/yyyy'), TO_DATE('01/JUN/2005', 'dd/mon/yyyy'));
-insert into Employee values (9, 'Doe', 'Jane', 'IT Staff', 6, TO_DATE('01/JAN/2004', 'dd/mon/yyyy'), TO_DATE('01/JAN/2006', 'dd/mon/yyyy'));
+insert into Employee (employeeid, lastname, firstname) values (9, 'Doe', 'John');
+insert into Employee (employeeid, lastname, firstname) values (10, 'Doe', 'Jane');
 insert into Customer(customerid, firstname, lastname, email) values (60, 'John', 'Doe', 'JohnD@email.com');
 insert into Customer(customerid, firstname, lastname, email) values (61, 'Jane', 'Doe', 'JaneD@email.com');
 /
 
 -- 2.4 Update
-savepoint twopointfour;
 update Customer
 set firstname = 'Robert', lastname = 'Walter'
 where firstname = 'Aaron' and lastname = 'Mitchell';
@@ -41,6 +39,7 @@ update Artist
 set name = 'CCR'
 where name = 'Creedence Clearwater Revival';
 /
+
 -- 2.5 Like
 select *
 from Invoice
@@ -59,7 +58,6 @@ and TO_DATE('01/MAR/2004', 'dd/mon/yyyy');
 /
 
 -- 2.7 Delete
-savepoint twopointseven;
 delete from invoiceline
 where invoiceid in (select invoiceid from invoice
                     where customerid in (select customerid from customer
@@ -164,7 +162,6 @@ create or replace procedure updatePI
 )
 as
 begin
-    savepoint fourpointtwo;
     update employee e
     set e.lastname = lname, e.firstname = fname
     where employeeid = id;
@@ -196,7 +193,6 @@ end;
 create or replace procedure deleteInvoice(id IN invoice.invoiceid%type)
 as
 begin
-    savepoint fivepointzero;
     delete from invoiceline where invoiceid in (select invoiceid from invoice
                                                 where invoiceid = id);
     delete invoice
@@ -212,7 +208,6 @@ create or replace procedure createCustomer
 as 
 maxID customer.customerid%type;
 begin
-    savepoint fivepointzerotwo;
     select max(customerid) into maxID from customer;
     insert into customer (customerid, firstname, lastname, email) values(maxID+1, fname, lname, mail);
 end;
@@ -278,7 +273,5 @@ inner join invoiceline on invoiceline.trackid = track.trackid
 inner join invoice on invoice.invoiceid = invoiceline.invoiceid
 inner join customer on customer.customerid = invoice.customerid
 inner join employee on employee.employeeid = customer.supportrepid;
-/
-commit;
 /
 -- 9.0 Administration
