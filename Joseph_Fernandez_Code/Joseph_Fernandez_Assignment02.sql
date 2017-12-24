@@ -344,14 +344,19 @@ SELECT e2.LastName, e1.LastName FROM Employee e1, Employee e2 WHERE e1.EmployeeI
 
 ---------- 7.6 Complicated Join assignment ----------
 --Create an inner join between all tables in the chinook database.
-  SELECT * FROM Invoice i1
-  INNER JOIN InvoiceLine i2 ON i1.InvoiceID = i2.InvoiceID
-  INNER JOIN Customer c ON i1.CustomerID = c.CustomerID
-  INNER JOIN Employee e ON c.SupportrepID = e.EmployeeID
-  INNER JOIN Track t ON i2.TrackID = t.TrackID
-  INNER JOIN Genre g ON t.GenreID = g.GenreID
-  INNER JOIN MediaType m ON t.MediaTypeID = m.MediaTypeID
-  INNER JOIN Album a1 ON t.AlbumID = a1.AlbumID
-  INNER JOIN Artist a2 ON a1.ArtistID = a2.ArtistID
-  INNER JOIN PlaylistTrack p1 ON t.TrackID = p1.TrackID
-  INNER JOIN Playlist p2 ON p1.PlaylistID = p2.PlaylistID;
+SELECT * FROM Invoice i1
+    INNER JOIN InvoiceLine i2 ON i1.InvoiceID = i2.InvoiceID
+    INNER JOIN Customer c ON i1.CustomerID = c.CustomerID
+    INNER JOIN Employee e ON c.SupportrepID = e.EmployeeID
+    INNER JOIN Track t ON i2.TrackID = t.TrackID
+    INNER JOIN Genre g ON t.GenreID = g.GenreID
+    INNER JOIN MediaType m ON t.MediaTypeID = m.MediaTypeID
+    INNER JOIN Album a1 ON t.AlbumID = a1.AlbumID
+    INNER JOIN Artist a2 ON a1.ArtistID = a2.ArtistID
+    INNER JOIN PlaylistTrack p1 ON t.TrackID = p1.TrackID
+    INNER JOIN Playlist p2 ON p1.PlaylistID = p2.PlaylistID;
+  
+  
+  
+---------- 9.0 Administration ----------
+--Task – Create a .bak file for the Chinook database
