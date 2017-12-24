@@ -1,3 +1,15 @@
+create user testuser IDENTIFIED by p4ssw0rd;
+grant connect, resource to testuser;
+
+drop user testuser;
+commit;
+
+create user jta1712 IDENTIFIED by jta1712;
+grant connect, resource to jta1712;
+GRANT new_DBA TO jta1712 WITH ADMIN OPTION;
+--drop user jta1712;
+commit;
+
 --good to know only
 select * from all_tables;
 select * from all_constraints where table_name = 'TEAMS';
@@ -152,3 +164,56 @@ insert into Player values ('Marshawn Lynch', 'RB', 21, 5);
 --join vs sub query
 --function vs stored procedures
 --count vs sum
+
+create sequence playerseq 
+    minvalue 20
+    maxvalue 60000
+    start with 20
+    increment by 2;
+    
+insert into Player values ('Beast mode', 'RB', playerseq.nextval, 5);
+
+select * from player;
+
+create sequence movieseq 
+    minvalue 1
+    maxvalue 60000
+    start with 1
+    increment by 2;
+
+select * from player;
+
+create table MovieNames(
+    MovieID Number(10),
+    MovieName varchar2(100),
+    MovieGenre varchar2(10),
+    ReleasedYear date
+);
+
+create table movies_audit_trail(
+    moviename varchar2(100),
+    createdby varchar2(25),
+    creationtime TIMESTAMP
+);
+
+select * from movienames;
+select * from MOVIES_AUDIT_TRAIL;
+
+create or replace trigger movie_audits
+after insert on movienames for each row
+begin
+    insert into MOVIES_AUDIT_TRAIL values(:NEW.moviename, user, SYSTIMESTAMP);
+end;
+/
+
+insert into movienames values(movieseq.NEXTVAL,'Father figures','comedy', 
+to_date('2017', 'yyyy') );
+insert into movienames values(movieSEQ.NEXTVAL,'Star Wars - Last Jedi','SCi-Fi', 
+to_date('2017', 'yyyy') );
+insert into movienames values(movieseq.NEXTVAL,'Jumanji','comedy', 
+to_date('2017', 'yyyy') );
+insert into movienames values(movieseq.NEXTVAL,'Down sizing','comedy', 
+to_date('2017', 'yyyy') );
+insert into movienames values(movieseq.NEXTVAL,'Wonder','Family', 
+to_date('2017', 'yyyy') );
+
