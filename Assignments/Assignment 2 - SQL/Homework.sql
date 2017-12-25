@@ -85,7 +85,73 @@ BEGIN
     RETURN average;
 END;
 
+CREATE OR REPLACE FUNCTION getEmployeeAfter1968
+    RETURN SYS_REFCURSOR
+    IS result SYS_REFCURSOR;
+BEGIN
+    SELECT * INTO result FROM Employee WHERE Birthdate > TO_DATE('31-DEC-68');
+    RETURN result;
+END;
 
+
+
+-- STORED PROCEDURES
+CREATE OR REPLACE PROCEDURE getFirstLast
+    AS
+BEGIN
+    SELECT FirstName, LastName FROM Employee;
+END;
+
+CREATE OR REPLACE PROCEDURE updateEmployee(EmployeeID in number, LastName in varchar2, Firstname in varchar2, 
+    Title in varchar2, ReportsTo in number, Birthdate in date, Hiredate in date, 
+    Address in varchar2, City in varchar2, State in varchar2, Country in varchar2, Postalcode in varchar2, 
+    Phone in varchar2, Email in varchar2, Fax in varchar2)
+    AS
+BEGIN
+    UPDATE Employee e 
+    SET e.EmployeeID = EmployeeID, e.LastName = LastName, e.FirstName = FirstName, 
+    e.Title = Title, e.ReportsTo = ReportsTo, e.Birthdate = Birthdate, e.Hiredate = Hiredate, 
+    e.Address = Address, e.City = City, e.State = State, e.Country = Country, e.Postalcode = Postalcode, 
+    e.Phone = Phone, e.Email = Email, e.Fax = Fax
+    WHERE e.EmployeeID = EmployeeID;
+END;
+
+CREATE OR REPLACE PROCEDURE getManager(EmployeeID IN number, man OUT varchar2)
+    AS
+BEGIN
+    SELECT (m.FirstName || ' ' || m.Lastname) INTO man FROM Employee e
+    INNER JOIN Employee m ON m.EmployeeID = e.ReportsTo
+    WHERE e.EmployeeID = EmployeeID;
+END;
+
+CREATE OR REPLACE PROCEDURE getNameCompany(CustomerID IN number, Customername OUT varchar2, CustomerCompany OUT varchar2)
+    AS
+BEGIN
+    SELECT ( c.FirstName || ' ' || c.LastName) INTo CustomerName FROM Customer
+    WHERE c.CustomerID = CustomerID;
+    SELECT c.Company INTO CustomerCompany FROM Customer c
+    WHERE c.CustomerID = CustomerID;
+END;
+
+
+-- TRANSACTIONS
+CREATE OR REPLACE PROCEDURE deleteInvoice(InvoiceID IN number)
+    AS
+BEGIN
+    DELETE FROM Invoice i
+    WHERE i.InvoiceID = InvoiceID;
+    commit;
+END;
+
+CREATE OR REPLACE PROCEDURE insertCustomer(CustomerID number,FirstName varchar2,LastName varchar2,Company varchar2,
+  Address varchar2,City varchar2, St varchar2,Country varchar2,PostalCode varchar2,
+  Phone varchar2,Fax varchar2,Email varchar2, SupportRepID number)
+    AS
+BEGIN
+    INSERT INTO Customer
+    Values (CustomerID, FirstName, LastName, Company, Address, City, St, Country, PostalCode, Phone, Fax, Email, SupportRepID);
+    commit;
+END;
 
 -- TRIGGERS
 CREATE OR REPLACE TRIGGER insertEmployee
@@ -142,3 +208,6 @@ SELECT * FROM InvoiceLine IL
         INNER JOIN Playlisttrack Plt ON T.TrackID = Plt.TrackID
             INNER JOIN Playlist Pl ON Plt.PlaylistID = Pl.PlaylistID;
 
+
+-- Administration
+-- BACKUP DATABASE MyDatabase TO DISK = 'C:\my_git_repos\1712_dec11_jta\MyDatabase.bak'
