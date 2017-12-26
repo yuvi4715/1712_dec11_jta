@@ -74,3 +74,13 @@ where
 desc dual;
 select * from dual;
 
+select * from all_constraints where table_name = 'TEAMS';
+
+select * from player;
+select count(*) from player;
+select count(*) from player where PLAYER_ID > 4;
+select * from player where PLAYER_ID = 10;
+select * from player where player.name like 'D%';
+
+
+
