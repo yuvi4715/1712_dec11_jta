@@ -1,0 +1,22 @@
+@charset "ISO-8859-1";
+	p{
+		background-color: lightgray;
+		color: black;
+		font-family:Tahoma;
+		font-size:50%;
+		text-align:center;
+	}
+	
+	#tableAndList{
+		font-family: sans-serif;
+		border-collapse: collapse;
+		background: aqua;
+		column-rule-color: fuchsia;
+	}
+	
+	#anotherID{
+		background-color: maroon;
+		color: rgba(255,255,0);
+		opacity: 0.5;
+		
+	}
