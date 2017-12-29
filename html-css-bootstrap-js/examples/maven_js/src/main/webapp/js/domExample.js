@@ -39,3 +39,4 @@ user.onblur = function(){
 		user.value = '';
 	}
 }
+
