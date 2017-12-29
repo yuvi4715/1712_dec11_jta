@@ -2,6 +2,7 @@ console.log("did the page load?");
 var d = document;
 var c = console;
 
+//simple event listener example
 window.onload = function (){
 	c.log("page should be loaded now");
 	
@@ -26,3 +27,21 @@ window.onload = function (){
 		c.log("button was clicked");
 	}
 }
+
+
+window.onload = function(){
+	//callback function - simplest example
+	var c1 = function(msg){
+		console.log(msg);
+	}
+
+	function run(c2){
+		c2('running call back function');
+	}
+
+	c1("this is not call back");
+	run(c1);
+}
+
+
+
