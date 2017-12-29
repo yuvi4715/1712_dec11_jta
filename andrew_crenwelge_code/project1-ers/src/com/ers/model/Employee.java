@@ -5,7 +5,8 @@ public class Employee {
 	private String firstname;
 	private String lastname;
 	private String username;
-	private String password;
+	private String passhash;
+	private String passSalt;
 	private String birthdate;
 	private String email;
 	private String phoneNumber;
@@ -19,25 +20,25 @@ public class Employee {
 		this.empID = id;
 	}
 
-	public Employee(String username, String password) {
+	public Employee(String username, String passhash) {
 		super();
 		this.username = username;
-		this.password = password;
+		this.passhash = passhash;
 	}
 
-	public Employee(int id, String firstname, String lastname, String username, String password) {
+	public Employee(int id, String firstname, String lastname, String username, String passhash) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
-		this.password = password;
+		this.passhash = passhash;
 	}
 
 	public Employee() {
 		this.firstname = "";
 		this.lastname = "";
 		this.username = "";
-		this.password = "";
+		this.passhash = "";
 	}
 
 	public int getId() {
@@ -72,12 +73,12 @@ public class Employee {
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getpasshash() {
+		return passhash;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setpasshash(String passhash) {
+		this.passhash = passhash;
 	}
 	
 
@@ -140,7 +141,15 @@ public class Employee {
 	@Override
 	public String toString() {
 		return "Customer [id=" + empID + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
-				+ ", password=" + password + "]";
+				+ ", passhash=" + passhash + "]";
+	}
+
+	public String getPassSalt() {
+		return passSalt;
+	}
+
+	public void setPassSalt(String passSalt) {
+		this.passSalt = passSalt;
 	}
 	
 	

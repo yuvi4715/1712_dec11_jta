@@ -5,6 +5,7 @@ public class Request {
 	private int empID; // foreign key
 	private int mgrID; // foreign key
 	private String dateSubmitted;
+	private String dateResolved;
 	private boolean isPending;
 	private boolean isApproved;
 	
@@ -56,6 +57,14 @@ public class Request {
 	}
 	public void setApproved(boolean isApproved) {
 		this.isApproved = isApproved;
+	}
+
+	public String getDateResolved() {
+		return dateResolved;
+	}
+
+	public void setDateResolved(String dateResolved) {
+		this.dateResolved = dateResolved;
 	}
 
 }
