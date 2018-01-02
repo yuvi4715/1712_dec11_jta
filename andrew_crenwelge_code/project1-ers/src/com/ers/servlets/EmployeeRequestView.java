@@ -13,15 +13,16 @@ import com.ers.dao.RequestDao;
 import com.ers.dao.RequestDaoImpl;
 import com.ers.model.Request;
 
-@WebServlet("/ManagerViewRequest")
-public class ManagerViewRequests extends HttpServlet {
+@WebServlet("/EmployeeRequestView")
+public class EmployeeRequestView extends HttpServlet {
 	
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
-		// get the onlyForEmployee flag
-		
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
+		// get Employee ID somehow
+		int empID = 1;
 		RequestDao rdao = RequestDaoImpl.getInstance();
-		List<Request> list = rdao.getAllRequests();
+		List<Request> list = rdao.getRequestsByEmployee(empID);
 		// add list as a parameter
-		req.getRequestDispatcher("ManagerRequestView.jsp").forward(req,resp);
+		req.setAttribute("allRequests", list);
+		req.getRequestDispatcher("EmployeeRequestView.jsp").forward(req,resp);
 	}
 }

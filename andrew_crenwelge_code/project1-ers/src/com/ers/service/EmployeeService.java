@@ -46,7 +46,7 @@ public class EmployeeService {
 		 * if credentials are correct then return all Employee info
 		 * otherwise, return a blank object
 		 */
-		if (e1.getPassword().equals(EmployeeDaoImpl.getInstance().getEmployeeHash(Employee))) {
+		if (e1.getpasshash().equals(EmployeeDaoImpl.getInstance().getEmployeeHash(Employee))) {
 			return true;
 		}
 		return false;

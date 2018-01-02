@@ -30,7 +30,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	
 	//Insert into employee table using PreparedStatement
 	@Override
-	public boolean insert(Employee employee) {
+	public boolean addNewEmployee(Employee employee) {
 		try(Connection conn = ConnectionUtil.getConnection()){
 			int statementIndex = 0;
 			
@@ -44,7 +44,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			p.setString(++statementIndex, employee.getFirstname().toUpperCase());
 			p.setString(++statementIndex, employee.getLastname().toUpperCase());
 			p.setString(++statementIndex, employee.getUsername().toUpperCase());
-			p.setString(++statementIndex, employee.getPassword());
+			p.setString(++statementIndex, employee.getpasshash());
 			
 			//execute the statement
 			if (p.executeUpdate() > 0) {
@@ -56,48 +56,14 @@ public class EmployeeDaoImpl implements EmployeeDao{
 		return false;
 	}
 
-	//Insert into employee table using PreparedStatement	
-	@Override
-	public boolean insertProcedure(Employee employee) {
-		try(Connection conn = ConnectionUtil.getConnection()){
-			int statementIndex = 0;
-			
-			//Calling the store procedure
-			String storedProc = "CALL INSERT_employee(?,?,?,?)";
-			
-			//Using callable statement in itself is not vulnerable to SQL Injection
-			CallableStatement c = conn.prepareCall(storedProc);
-			
-			//Set attributes to insert
-			c.setString(++statementIndex, employee.getFirstname().toUpperCase());
-			c.setString(++statementIndex, employee.getLastname().toUpperCase());
-			c.setString(++statementIndex, employee.getUsername().toUpperCase());
-			c.setString(++statementIndex, employee.getPassword());
-			
-			if(c.executeUpdate() > 0) {
-				return true;
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
 	//Select employee based on his user name
 	@Override
-	public Employee select(Employee employee) {
+	public Employee getEmployeeByUsername(String username) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			int statementIndex = 0;
-			
-			String sql = "SELECT * FROM employee WHERE E_USERNAME = ?";
+			String sql = "SELECT * FROM employee WHERE username = ?";
 			PreparedStatement p = conn.prepareStatement(sql);
-			
-			//Incrementing the statementIndex helps in ordering the parameters
-			p.setString(++statementIndex, employee.getFirstname());
-			
+			p.setString(1, username);
 			ResultSet result = p.executeQuery();
-			
 			while (result.next()) {
 				return new Employee(
 				result.getInt("E_ID"),
@@ -146,7 +112,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			String command = "SELECT GET_employee_HASH(?,?) AS HASH FROM DUAL";
 			PreparedStatement statement = connection.prepareStatement(command);
 			statement.setString(++statementIndex, employee.getUsername());
-			statement.setString(++statementIndex, employee.getPassword());
+			statement.setString(++statementIndex, employee.getpasshash());
 			ResultSet result = statement.executeQuery();
 
 			if(result.next()) {
@@ -159,19 +125,23 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	}
 	
 	@Override
-	public boolean login(Employee emp) {
+	public boolean authenticate(String username, String password) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			int statementIndex = 0;
-			int sessionId = 1; // HOW DO WE GET THIS??
-			String command = "INSERT INTO sessionlog VALUES(?,?,?,NULL)"; // insert record into sessionlog
+			String command = "SELECT * FROM user WHERE username = ?";
 			PreparedStatement statement = connection.prepareStatement(command);
-			statement.setInt(++statementIndex, sessionId);
-			statement.setInt(++statementIndex, emp.getId());
-			statement.setTimestamp(++statementIndex, new Timestamp(System.currentTimeMillis()));
-
-			if(statement.executeUpdate() > 0) {
-				return true;
+			statement.setString(++statementIndex, username);
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) { // checks that the username exists
+				String db_password = rs.getString(3);
+				// String db_salt = rs.getString(4);
+				if (password == db_password)
+					return true;
+				else
+					return false;
 			}
+			else
+				return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
@@ -200,5 +170,26 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	public boolean updateInfo(Employee employee) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public Employee getEmployeeById(int id) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String sql = "SELECT * FROM employee WHERE empId = ?";
+			PreparedStatement p = conn.prepareStatement(sql);
+			p.setInt(1, id);
+			ResultSet result = p.executeQuery();
+			while (result.next()) {
+				return new Employee(
+				result.getInt("E_ID"),
+				result.getString("E_FIRSTNAME"),
+				result.getString("E_LASTNAME"),
+				result.getString("E_USERNAME"),
+				result.getString("E_PASSWORD"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new Employee();
 	}
 }

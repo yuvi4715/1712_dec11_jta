@@ -1,9 +1,11 @@
 package com.ers.model;
 
 public class Request {
-	private int reqID;
+	private int reqID; // primary key
 	private int empID; // foreign key
 	private int mgrID; // foreign key
+	private double amount;
+	private String description;
 	private String dateSubmitted;
 	private String dateResolved;
 	private boolean isPending;
@@ -65,6 +67,22 @@ public class Request {
 
 	public void setDateResolved(String dateResolved) {
 		this.dateResolved = dateResolved;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

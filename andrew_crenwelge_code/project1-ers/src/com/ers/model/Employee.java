@@ -5,12 +5,14 @@ public class Employee {
 	private String firstname;
 	private String lastname;
 	private String username;
+	private Boolean isManager;
 	private String passhash;
 	private String passSalt;
 	private String birthdate;
 	private String email;
 	private String phoneNumber;
 	private String address;
+	private String city;
 	private String state;
 	private String country;
 	private String zip;
@@ -150,6 +152,22 @@ public class Employee {
 
 	public void setPassSalt(String passSalt) {
 		this.passSalt = passSalt;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public Boolean getIsManager() {
+		return isManager;
+	}
+
+	public void setIsManager(Boolean isManager) {
+		this.isManager = isManager;
 	}
 	
 	
