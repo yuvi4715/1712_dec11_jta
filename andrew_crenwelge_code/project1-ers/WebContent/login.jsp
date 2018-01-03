@@ -20,10 +20,10 @@
   </head>
   <body class="container">
   	<div class="page-header">
-  	  <h1>Login Here</h1>
+  	  <h1>Login To ERS</h1>
   	</div>
   	<div class="row">
-  	  <div class="col-sm-3">
+  	  <div class="col-sm-4 col-sm-offset-4">
 	    <c:if test="${not empty requestScope.errMsg}">
 	      <div class="alert alert-danger">
             <c:out value="${requestScope.errMsg}" />

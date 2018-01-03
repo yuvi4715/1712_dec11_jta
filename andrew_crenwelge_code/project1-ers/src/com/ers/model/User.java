@@ -5,15 +5,17 @@ public class User {
 	private String username;
 	private String passhash;
 	private String passSalt;
-	private String logStatus;
 	
-	public User(int empID, String username, String passhash, String passSalt, String logStatus) {
+	public User(int empID, String username, String passhash, String passSalt) {
 		super();
 		this.empID = empID;
 		this.username = username;
 		this.passhash = passhash;
 		this.passSalt = passSalt;
-		this.logStatus = logStatus;
+	}
+
+	public User() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getEmpID() {
@@ -46,14 +48,6 @@ public class User {
 
 	public void setPassSalt(String passSalt) {
 		this.passSalt = passSalt;
-	}
-
-	public String getLogStatus() {
-		return logStatus;
-	}
-
-	public void setLogStatus(String logStatus) {
-		this.logStatus = logStatus;
 	}
 	
 }

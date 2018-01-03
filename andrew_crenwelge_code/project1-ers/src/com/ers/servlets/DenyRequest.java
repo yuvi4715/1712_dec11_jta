@@ -17,15 +17,15 @@ public class DenyRequest extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
 		// get the request data somehow
-		int reqId = 1;
+		int reqId = Integer.parseInt(req.getParameter("reqId"));
 		RequestDao rdao = RequestDaoImpl.getInstance();
 		Request r = rdao.getRequestById(reqId);
 		boolean success = rdao.denyRequest(r);
 		if (success) {
-			// celebrate!
+			req.setAttribute("successMsg", "Request denied successfully");
 		}
 		else {
-			// :(
+			req.setAttribute("errMsg", "Request was not denied");
 		}
 		req.getRequestDispatcher("ManagerRequestView.jsp").forward(req,resp);
 	}

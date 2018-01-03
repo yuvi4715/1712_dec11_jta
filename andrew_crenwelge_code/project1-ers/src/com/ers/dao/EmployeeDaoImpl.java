@@ -12,8 +12,6 @@ import java.util.List;
 import com.ers.model.Employee;
 import com.ers.util.ConnectionUtil;
 
-import oracle.sql.DATE;
-
 public class EmployeeDaoImpl implements EmployeeDao{
 
 	private static EmployeeDaoImpl employeeDaoImpl;
@@ -35,7 +33,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			int statementIndex = 0;
 			
 			//Simple insert statement to insert into employee table
-			String sql = "insert into employee values(NULL, ?, ?, ?, ?)";
+			String sql = "insert into employee values()";
 			
 			//Execute an insert statement using prepared statement
 			PreparedStatement p = conn.prepareStatement(sql);
@@ -43,8 +41,8 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			//Incrementing the statementIndex helps in ordering the parameters
 			p.setString(++statementIndex, employee.getFirstname().toUpperCase());
 			p.setString(++statementIndex, employee.getLastname().toUpperCase());
-			p.setString(++statementIndex, employee.getUsername().toUpperCase());
-			p.setString(++statementIndex, employee.getpasshash());
+			//p.setString(++statementIndex, employee.getUsername().toUpperCase());
+			//p.setString(++statementIndex, employee.getpasshash());
 			
 			//execute the statement
 			if (p.executeUpdate() > 0) {
@@ -60,17 +58,25 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	@Override
 	public Employee getEmployeeByUsername(String username) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM employee WHERE username = ?";
+			String sql = "SELECT * FROM testuser.employee e join testuser.usertable u on e.empid=u.empid WHERE u.username=?";
 			PreparedStatement p = conn.prepareStatement(sql);
 			p.setString(1, username);
-			ResultSet result = p.executeQuery();
-			while (result.next()) {
+			ResultSet r = p.executeQuery();
+			if (r.next()) {
 				return new Employee(
-				result.getInt("E_ID"),
-				result.getString("E_FIRSTNAME"),
-				result.getString("E_LASTNAME"),
-				result.getString("E_USERNAME"),
-				result.getString("E_PASSWORD"));
+						r.getInt(1),    // empId
+						r.getString(2), // fname
+						r.getString(3), // lname
+						r.getString(4), // email
+						r.getString(5), // birthdate
+						r.getString(6), // phone
+						r.getString(7), // address
+						r.getString(8), // city
+						r.getString(9), // state
+						r.getString(10),// country
+						r.getString(11),// zip
+						r.getBoolean(12)// isManager
+						);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -83,24 +89,28 @@ public class EmployeeDaoImpl implements EmployeeDao{
 		try(Connection conn = ConnectionUtil.getConnection()){
 			String sql = "Select * from employee";
 			PreparedStatement p = conn.prepareStatement(sql);
-			ResultSet rs = p.executeQuery();
-			
+			ResultSet r = p.executeQuery();
 			List<Employee> employeeList = new ArrayList<>();
-			while (rs.next()) {
+			while (r.next()) {
 				employeeList.add(new Employee(
-						rs.getInt("E_ID"),
-						rs.getString("E_FIRSTNAME"),
-						rs.getString("E_LASTNAME"),
-						rs.getString("E_USERNAME"),
-						rs.getString("E_PASSWORD"))
-						);
+						r.getInt(1),    // empId
+						r.getString(2), // fname
+						r.getString(3), // lname
+						r.getString(4), // email
+						r.getString(5), // birthdate
+						r.getString(6), // phone
+						r.getString(7), // address
+						r.getString(8), // city
+						r.getString(9), // state
+						r.getString(10),// country
+						r.getString(11),// zip
+						r.getBoolean(12)// isManager
+						));
 			}
-			
 			return employeeList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return new ArrayList<>();
 	}
 
@@ -108,11 +118,11 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	@Override
 	public String getEmployeeHash(Employee employee) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
-			int statementIndex = 0;
+			// int statementIndex = 0;
 			String command = "SELECT GET_employee_HASH(?,?) AS HASH FROM DUAL";
 			PreparedStatement statement = connection.prepareStatement(command);
-			statement.setString(++statementIndex, employee.getUsername());
-			statement.setString(++statementIndex, employee.getpasshash());
+			//statement.setString(++statementIndex, employee.getUsername());
+			//statement.setString(++statementIndex, employee.getpasshash());
 			ResultSet result = statement.executeQuery();
 
 			if(result.next()) {
@@ -128,14 +138,14 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	public boolean authenticate(String username, String password) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			int statementIndex = 0;
-			String command = "SELECT * FROM user WHERE username = ?";
+			String command = "SELECT * FROM usertable WHERE username = ?";
 			PreparedStatement statement = connection.prepareStatement(command);
 			statement.setString(++statementIndex, username);
 			ResultSet rs = statement.executeQuery();
 			if (rs.next()) { // checks that the username exists
 				String db_password = rs.getString(3);
 				// String db_salt = rs.getString(4);
-				if (password == db_password)
+				if (password.equals(db_password))
 					return true;
 				else
 					return false;
@@ -167,8 +177,26 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	}
 
 	@Override
-	public boolean updateInfo(Employee employee) {
-		// TODO Auto-generated method stub
+	public boolean updateInfo(Employee emp) {
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			int idx = 0;
+			String command = "{CALL updateEmpInfo(?,'andrewcrenwelge@gmail.com','702-528-6802','123 Main St.','Reston', 'VA','USA','12190')}";
+			CallableStatement cs = connection.prepareCall(command);
+			cs.setInt(++idx, emp.getId());
+			cs.setString(++idx, emp.getEmail());
+			cs.setString(++idx, emp.getPhoneNumber());
+			cs.setString(++idx, emp.getAddress());
+			cs.setString(++idx, emp.getCity());
+			cs.setString(++idx, emp.getState());
+			cs.setString(++idx, emp.getCountry());
+			cs.setString(++idx, emp.getZip());
+			ResultSet result = cs.executeQuery();
+			if(result.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -180,12 +208,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			p.setInt(1, id);
 			ResultSet result = p.executeQuery();
 			while (result.next()) {
-				return new Employee(
-				result.getInt("E_ID"),
-				result.getString("E_FIRSTNAME"),
-				result.getString("E_LASTNAME"),
-				result.getString("E_USERNAME"),
-				result.getString("E_PASSWORD"));
+				return new Employee();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

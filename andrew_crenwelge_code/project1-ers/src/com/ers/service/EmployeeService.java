@@ -31,7 +31,7 @@ public class EmployeeService {
 		return EmployeeDaoImpl.getInstance().insertProcedure(Employee);
 	}
 	
-	//service to call selectAll method in DAO
+	//service to call getAllEmployees method in DAO
 	public List<Employee> listAllUsers(){
 		return EmployeeDaoImpl.getInstance().getAllEmployees();
 	}

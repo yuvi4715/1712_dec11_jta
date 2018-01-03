@@ -2,6 +2,7 @@ package com.ers.main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,13 +32,18 @@ public class JDBCSimpleExample {
 	static void jdbcExample(String url, String user, String password) {
 		try(Connection conn = DriverManager.getConnection(url, user, password)) { //2
 			System.out.println("connection should be established");
-			stmt = conn.createStatement();		//3
-			rs = stmt.executeQuery("select * from player");	//4, 5
+			String sql = "SELECT * FROM testuser.employee e join testuser.usertable u on e.empid=u.empid WHERE u.username=?";
+			PreparedStatement p = conn.prepareStatement(sql);										  //3
+			// CallableStatement cs = conn.prepareCall(sql);
+			// cs.setString(1, "acrenwelge");
+			p.setString(1, "acrenwelge");
+			rs = p.executeQuery();	//4, 5
 			while (rs.next()) {
 				System.out.println(
-						rs.getString(1) + " : " +  
+						rs.getInt(1) + " : " +  
 						rs.getString(2) + " : " + 
-						rs.getString(3));
+						rs.getString(3)
+						);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

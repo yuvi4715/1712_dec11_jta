@@ -9,6 +9,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="css/layout.css"></link>
     <title>ERS - Reimbursement Requests</title>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,10 +55,15 @@
 	  	<div class="page-header">
 	  	  <h1>Expense Reimbursement System</h1>
 	  	</div>
-		<div class="row">
-		  <div class="col-sm-6">
-		  <button type="button" class="btn btn-primary">Add New Reimbursement Request</button>
-		  <form method="post" action="" class="form-horizontal">
+	  	<div class="row" style="margin-bottom: 15px">
+	  	  <button id="request-dropdown" type="button" class="btn btn-primary">Add New Reimbursement Request</button>
+	  	</div>
+		<div class="row hideme" id="dropme">
+		  <div class="col-sm-6 well">
+		  <div>
+		    <button id="closenewreq" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  </div>
+		  <form style="padding-top: 20px;margin-top:10px" method="post" action="" class="form-horizontal">
 		  	<div class="form-group">
 		  	  <label for="name" class="control-label col-sm-3">Request name</label>
 		  	  <div class="col-sm-9">
@@ -87,35 +93,20 @@
 		  </div>
 		</div>
 		
-		<div>
-			<ul class="nav nav-pills">
-			  <li role="presentation" class="active"><a href="#">Pending Requests</a></li>
-			  <li role="presentation"><a href="#">Resolved Requests</a></li>
+		<div class="row">
+		  <p>
+		    Use the tabs below to navigate your reimbursement requests.
+		  </p>
+		</div>
+		<div class="row">
+			<ul class="nav nav-tabs">
+			  <li id="employee-all" role="tab" class="active"><a data-toggle="tab" href="#all-requests">All Requests</a></li>
+			  <li id="employee-pending" role="tab"><a data-toggle="tab" href="#pending-requests">Pending Requests</a></li>
+			  <li id="employee-resolved" role="tab"><a data-toggle="tab" href="#resolved-requests">Resolved Requests</a></li>
 			</ul>
-			<div class="panel panel-default">
+			<div class="tab-content">
+		     <div role="tabpanel" class="tab-pane active" id="all-requests">
 			  <table class="table table-bordered table-striped table-hover">
-			    <caption>Pending Requests</caption>
-				  <thead><tr>
-				    <th>Reimbursement Request No.</th>
-				    <th>Name</th>
-				    <th>Description</th>
-				    <th>Amount</th>
-				    <th>Date Submitted</th></tr>
-				  </thead>
-				  <tbody>
-				    <tr>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				    </tr>
-				  </tbody>
-			  </table>
-			</div>
-			<div class="panel panel-default">
-			  <table class="table table-bordered table-striped table-hover">
-			    <caption>Resolved Requests</caption>
 				  <thead><tr>
 				    <th>Reimbursement Request No.</th>
 				    <th>Name</th>
@@ -139,11 +130,59 @@
 				    </tr>
 				  </tbody>
 			  </table>
-			</div>
+		  </div>
+		  <div role="tabpanel" class="tab-pane" id="pending-requests">
+			  <table class="table table-bordered table-striped table-hover">
+				  <thead><tr>
+				    <th>Reimbursement Request No.</th>
+				    <th>Name</th>
+				    <th>Description</th>
+				    <th>Amount</th>
+				    <th>Date Submitted</th></tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				      <td>Test</td>
+				      <td>Test</td>
+				      <td>Test</td>
+				      <td>Test</td>
+				      <td>Test</td>
+				    </tr>
+				  </tbody>
+			  </table>
+		  </div>
+		  <div role="tabpanel" class="tab-pane" id="resolved-requests">
+			  <table class="table table-bordered table-striped table-hover">
+				  <thead><tr>
+				    <th>Reimbursement Request No.</th>
+				    <th>Name</th>
+				    <th>Description</th>
+				    <th>Status</th>
+				    <th>Amount</th>
+				    <th>Resolved By</th>
+				    <th>Date Submitted</th>
+				    <th>Date Resolved</th></tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				      <td>Test</td>
+				      <td>Test</td>
+				      <td>Test</td>
+				      <td>Test</td>
+				      <td>Test</td>
+				      <td>Test</td>
+				      <td>Test</td>
+				      <td>Test</td>
+				    </tr>
+				  </tbody>
+			  </table>
+		  </div>
+	     </div>
 		</div>
 	</section>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>

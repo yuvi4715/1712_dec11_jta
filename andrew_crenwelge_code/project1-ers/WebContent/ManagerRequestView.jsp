@@ -56,6 +56,9 @@
 	  	<div class="page-header">
 	  	  <h1>Expense Reimbursement System</h1>
 	  	</div>
+	  	<p>
+	  	  Use the tabs below to navigate the reimbursement requests.
+	  	</p>
 	  	<ul class="nav nav-tabs">
 	  	  <li id="manager-all" role="tab" class="active"><a data-toggle="tab" href="#allrequests">All Requests</a></li>
 		  <li id="manager-all-pending" role="tab"><a data-toggle="tab" href="#pending">All Pending Requests</a></li>
@@ -73,7 +76,8 @@
 				    <th>Description</th>
 				    <th>Amount</th>
 				    <th>Submitted By</th>
-				    <th>Date Submitted</th></tr>
+				    <th>Date Submitted</th>
+				    <th>Receipt</th></tr>
 				  </thead>
 				  <tbody>
 				    <c:forEach items="${param.allRequests}" var="req">
@@ -84,6 +88,7 @@
 				        <td><c:out value="${req.amount}"></c:out></td>
 				        <td><c:out value="${req.empName}"></c:out></td>
 				        <td><c:out value="${req.dateSubmitted}"></c:out></td>
+				        <td><button class="btn btn-info">View Receipt</button></td>
 				      </tr>
 				    </c:forEach>
 				  </tbody>
@@ -99,7 +104,8 @@
 				    <th>Description</th>
 				    <th>Amount</th>
 				    <th>Submitted By</th>
-				    <th>Date Submitted</th></tr>
+				    <th>Date Submitted</th>
+				    <th>Receipt</th></tr>
 				  </thead>
 				  <tbody>
 				    <tr>
@@ -109,6 +115,7 @@
 				      <td>Test</td>
 				      <td>Test</td>
 				      <td>Test</td>
+				      <td><button class="btn btn-info">View Receipt</button></td>
 				    </tr>
 				  </tbody>
 			  </table>
@@ -126,7 +133,8 @@
 				    <th>Submitted By</th>
 				    <th>Resolved By</th>
 				    <th>Date Submitted</th>
-				    <th>Date Resolved</th></tr>
+				    <th>Date Resolved</th>
+				    <th>Receipt</th></tr>
 				  </thead>
 				  <tbody>
 				    <tr>
@@ -139,6 +147,7 @@
 				      <td>Test</td>
 				      <td>Test</td>
 				      <td>Test</td>
+				      <td><button class="btn btn-info">View Receipt</button></td>
 				    </tr>
 				  </tbody>
 			  </table>
@@ -182,7 +191,8 @@
 				    <th>Amount</th>
 				    <th>Resolved By</th>
 				    <th>Date Submitted</th>
-				    <th>Date Resolved</th></tr>
+				    <th>Date Resolved</th>
+				    <th>Receipt</th></tr>
 				  </thead>
 				  <tbody>
 				    <tr>
@@ -193,6 +203,7 @@
 				      <td>Test</td>
 				      <td>Test</td>
 				      <td>Test</td>
+				      <td><button class="btn btn-info">View Receipt</button></td>
 				    </tr>
 				  </tbody>
 				</table>

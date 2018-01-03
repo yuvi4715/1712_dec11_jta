@@ -11,16 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ers.dao.RequestDao;
 import com.ers.dao.RequestDaoImpl;
+import com.ers.model.Employee;
 import com.ers.model.Request;
 
 @WebServlet("/EmployeeRequestView")
 public class EmployeeRequestView extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
-		// get Employee ID somehow
-		int empID = 1;
+		// get Employee ID and retrieve list of request for that employee
+		Employee e1 = (Employee) req.getSession().getAttribute("employee");
 		RequestDao rdao = RequestDaoImpl.getInstance();
-		List<Request> list = rdao.getRequestsByEmployee(empID);
+		List<Request> list = rdao.getRequestsByEmployee(e1.getId());
 		// add list as a parameter
 		req.setAttribute("allRequests", list);
 		req.getRequestDispatcher("EmployeeRequestView.jsp").forward(req,resp);

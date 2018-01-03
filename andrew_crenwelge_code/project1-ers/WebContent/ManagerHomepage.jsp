@@ -10,6 +10,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="css/layout.css"></link>
     <title>ERS Homepage</title>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,7 +44,7 @@
 	          <ul class="dropdown-menu">
 	            <li><a href="#">View Profile</a></li>
 	            <li role="separator" class="divider"></li>
-	            <li id="logout"><a href="/Logout">Logout</a></li>
+	            <li id="logout"><a href="Logout">Logout</a></li>
 	          </ul>
 	        </li>
 	      </ul>
@@ -52,39 +53,103 @@
 	</nav>
     </header>
 	<section class="container">
-		<!-- EMPLOYEE SHOULD BE ABLE TO LOGOUT FROM HERE AS WELL AS VIEW/UPDATE THEIR INFO -->
 		<div class="page-header">
 		  <h1>Expense Reimbursement System</h1>
 		</div>
-		<h2>Welcome, <c:out value="${sessionScope.employee.firstname} ${sessionScope.employee.lastname}"></c:out></h2>
+		<h3>Welcome, <c:out value="${sessionScope.employee.firstname} ${sessionScope.employee.lastname}"></c:out></h3>
 		<div class="row">
-		  <!-- EMPLOYEE INFO HERE -->
-		  <div class="col-sm-4 well">
-			<ul class="list-unstyled">
-			  <li>First name: <c:out value="${sessionScope.employee.firstname}"></c:out></li>
-			  <li>Last name: <c:out value="${sessionScope.employee.lastname}"></c:out></li>
-			  <li>Username: <c:out value="${sessionScope.employee.username}"></c:out></li>
-			  <li>Email: <c:out value="${sessionScope.employee.email}"></c:out></li>
-			  <li>Birth date: <c:out value="${sessionScope.employee.birthdate}"></c:out></li>
-			  <li>Phone number: <c:out value="${sessionScope.employee.phoneNumber}"></c:out></li>
-			  <li>Address: <c:out value="${sessionScope.employee.address}"></c:out></li>
-			  <li>City: <c:out value="${sessionScope.employee.city}"></c:out></li>
-			  <li>State: <c:out value="${sessionScope.employee.state}"></c:out></li>
-			  <li>Country: <c:out value="${sessionScope.employee.country}"></c:out></li>
-			  <li>Zip code: <c:out value="${sessionScope.employee.zip}"></c:out></li>
-			</ul>
-			<button type="button" class="btn btn-warning">Edit Profile</button>
-			<button type="submit" class="btn btn-primary">Save</button>
+		  <div class="col-sm-6 well">
+		    <h4>Profile Information</h4>
+		    <form class="form-horizontal no-bottom-margin" id="emp-info-form">
+		      <div class="form-group">
+			    <label class="col-sm-4 control-label"><strong>First name: </strong></label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control hidden">
+			      <p class="form-control-static"><c:out value="${sessionScope.employee.firstname}"></c:out></p>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-4 control-label"><strong>Last name: </strong></label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control hidden">
+			      <p class="form-control-static"><c:out value="${sessionScope.employee.lastname}"></c:out></p>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-4 control-label"><strong>Username: </strong></label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control hidden">
+			      <p class="form-control-static"><c:out value="${sessionScope.user.username}"></c:out></p>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-4 control-label"><strong>Email: </strong></label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control hidden">
+			      <p class="form-control-static"><c:out value="${sessionScope.employee.email}"></c:out></p>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-4 control-label"><strong>Birth date: </strong></label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control hidden">
+			      <p class="form-control-static"><c:out value="${sessionScope.employee.birthdate}"></c:out></p>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-4 control-label"><strong>Phone number: </strong></label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control hidden">
+			      <p class="form-control-static"><c:out value="${sessionScope.employee.phoneNumber}"></c:out></p>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-4 control-label"><strong>Address: </strong></label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control hidden">
+			      <p class="form-control-static"><c:out value="${sessionScope.employee.address}"></c:out></p>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-4 control-label"><strong>City: </strong></label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control hidden">
+			      <p class="form-control-static"><c:out value="${sessionScope.employee.city}"></c:out></p>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-4 control-label"><strong>State: </strong></label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control hidden">
+			      <p class="form-control-static"><c:out value="${sessionScope.employee.state}"></c:out></p>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-4 control-label"><strong>Country: </strong></label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control hidden">
+			      <p class="form-control-static"><c:out value="${sessionScope.employee.country}"></c:out></p>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-4 control-label"><strong>Zip code: </strong></label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control hidden">
+			      <p class="form-control-static"><c:out value="${sessionScope.employee.zip}"></c:out></p>
+			    </div>
+			  </div>
+			  <div class="col-sm-offset-4 col-sm-8">
+			    <button id="edit-profile" type="button" class="btn btn-warning">Edit Profile</button>
+			    <button id="save-profile" type="submit" class="btn btn-primary hideme">Save</button>
+			    <button id="cancel-profile-update" type="button" class="btn btn-danger hideme">Cancel</button>
+			  </div>
+			</form>
 		  </div>
-		</div>
-		<div>Show info for manager here if user is a manager?</div>
-		<div>
-		  <!-- LOGOUT HERE -->
-		  <button type="submit" class="btn btn-danger">Logout</button>
 		</div>
 	</section>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>

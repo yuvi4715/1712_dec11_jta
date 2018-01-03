@@ -8,23 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ers.service.EmployeeService;
-
 @WebServlet("/Logout")
 public class Logout extends HttpServlet {
 	
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
-		// get session Id
-		int sessionId = 1;
-		// attempt to log user in
-		EmployeeService es = EmployeeService.getInstance();
-		boolean success = es.logout(sessionId);
-		if (success) {
-			// celebrate
-		}
-		else {
-			// :(
-		}
-		req.getRequestDispatcher("index.jsp").forward(req,resp);
+	private static final long serialVersionUID = -2845915078425757454L;
+
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
+		req.getSession().removeAttribute("employee");
+		req.getSession().removeAttribute("user");
+		req.setAttribute("successMsg", "Successfully logged out");
+		req.getRequestDispatcher("login.jsp").forward(req,resp);
 	}
 }

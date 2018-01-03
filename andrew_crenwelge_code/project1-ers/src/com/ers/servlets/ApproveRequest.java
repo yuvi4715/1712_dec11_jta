@@ -16,16 +16,16 @@ import com.ers.model.Request;
 public class ApproveRequest extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
-		// get the request data somehow
-		int reqId = 1;
+		// get the request data
+		int reqId = Integer.parseInt(req.getParameter("reqId"));
 		RequestDao rdao = RequestDaoImpl.getInstance();
 		Request r = rdao.getRequestById(reqId);
 		boolean success = rdao.approveRequest(r);
 		if (success) {
-			// celebrate!
+			req.setAttribute("successMsg", "The request was approved!");
 		}
 		else {
-			// :(
+			req.setAttribute("errMsg", "Sorry, the request was not approved");
 		}
 		req.getRequestDispatcher("ManagerRequestView.jsp").forward(req,resp);
 	}
