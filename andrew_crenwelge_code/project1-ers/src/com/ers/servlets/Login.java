@@ -25,6 +25,7 @@ public class Login extends HttpServlet {
 		EmployeeDaoImpl edao = EmployeeDaoImpl.getInstance();
 		boolean success = edao.authenticate(uname, pword);
 		if (success) {
+			System.out.println("Successfully authenticated user " + uname);
 			// get user info and store in session
 			Employee e1 = edao.getEmployeeByUsername(uname);
 			User u1 = new User();

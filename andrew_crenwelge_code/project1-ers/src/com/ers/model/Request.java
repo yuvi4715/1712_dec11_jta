@@ -5,6 +5,7 @@ public class Request {
 	private int empID; // foreign key
 	private int mgrID; // foreign key
 	private double amount;
+	private String reqTitle;
 	private String description;
 	private String dateSubmitted;
 	private String dateResolved;
@@ -20,9 +21,7 @@ public class Request {
 		this.isApproved = false;
 	}
 	
-	public Request() {
-		// TODO Auto-generated constructor stub
-	}
+	public Request() {}
 
 	public int getReqID() {
 		return reqID;
@@ -85,4 +84,20 @@ public class Request {
 		this.description = description;
 	}
 
+	public String getReqTitle() {
+		return reqTitle;
+	}
+
+	public void setReqTitle(String reqTitle) {
+		this.reqTitle = reqTitle;
+	}
+	
+	public int getStatId() {
+		if (this.isPending)
+			return 1;
+		else if (this.isApproved)
+			return 2;
+		else
+			return 3;
+	}
 }

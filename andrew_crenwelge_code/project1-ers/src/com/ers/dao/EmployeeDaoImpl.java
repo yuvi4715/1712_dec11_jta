@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,19 +30,19 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	public boolean addNewEmployee(Employee employee) {
 		try(Connection conn = ConnectionUtil.getConnection()){
 			int statementIndex = 0;
-			
-			//Simple insert statement to insert into employee table
-			String sql = "insert into employee values()";
-			
-			//Execute an insert statement using prepared statement
+			String sql = "INSERT INTO employee values(EMPLOYEE_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,?,?,?)";			
 			PreparedStatement p = conn.prepareStatement(sql);
-			
-			//Incrementing the statementIndex helps in ordering the parameters
-			p.setString(++statementIndex, employee.getFirstname().toUpperCase());
-			p.setString(++statementIndex, employee.getLastname().toUpperCase());
-			//p.setString(++statementIndex, employee.getUsername().toUpperCase());
-			//p.setString(++statementIndex, employee.getpasshash());
-			
+			p.setString(++statementIndex, employee.getFirstname());
+			p.setString(++statementIndex, employee.getLastname());
+			p.setString(++statementIndex, employee.getEmail());
+			p.setString(++statementIndex, employee.getBirthdate());
+			p.setString(++statementIndex, employee.getPhoneNumber());
+			p.setString(++statementIndex, employee.getAddress());
+			p.setString(++statementIndex, employee.getCity());
+			p.setString(++statementIndex, employee.getState());
+			p.setString(++statementIndex, employee.getCountry());
+			p.setString(++statementIndex, employee.getZip());
+			p.setBoolean(++statementIndex, employee.getIsManager());
 			//execute the statement
 			if (p.executeUpdate() > 0) {
 				return true;
@@ -54,11 +53,11 @@ public class EmployeeDaoImpl implements EmployeeDao{
 		return false;
 	}
 
-	//Select employee based on his user name
+	//Get employee based on user name
 	@Override
 	public Employee getEmployeeByUsername(String username) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM testuser.employee e join testuser.usertable u on e.empid=u.empid WHERE u.username=?";
+			String sql = "SELECT * FROM employee e JOIN usertable u on e.empid=u.empid WHERE u.username=?";
 			PreparedStatement p = conn.prepareStatement(sql);
 			p.setString(1, username);
 			ResultSet r = p.executeQuery();
@@ -118,13 +117,10 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	@Override
 	public String getEmployeeHash(Employee employee) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
-			// int statementIndex = 0;
-			String command = "SELECT GET_employee_HASH(?,?) AS HASH FROM DUAL";
+			String command = "SELECT passhash FROM usertable WHERE empid=?";
 			PreparedStatement statement = connection.prepareStatement(command);
-			//statement.setString(++statementIndex, employee.getUsername());
-			//statement.setString(++statementIndex, employee.getpasshash());
+			statement.setInt(1, employee.getId());
 			ResultSet result = statement.executeQuery();
-
 			if(result.next()) {
 				return result.getString("HASH");
 			}
@@ -137,10 +133,9 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	@Override
 	public boolean authenticate(String username, String password) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
-			int statementIndex = 0;
 			String command = "SELECT * FROM usertable WHERE username = ?";
 			PreparedStatement statement = connection.prepareStatement(command);
-			statement.setString(++statementIndex, username);
+			statement.setString(1, username);
 			ResultSet rs = statement.executeQuery();
 			if (rs.next()) { // checks that the username exists
 				String db_password = rs.getString(3);
@@ -160,29 +155,16 @@ public class EmployeeDaoImpl implements EmployeeDao{
 
 	@Override
 	public boolean logout(int sessionId) {
-		try(Connection connection = ConnectionUtil.getConnection()) {
-			int statementIndex = 0;
-			String command = "UPDATE sessionlog SET logouttime = ? WHERE sessionId = ?"; // insert record into sessionlog
-			PreparedStatement statement = connection.prepareStatement(command);
-			statement.setTimestamp(++statementIndex, new Timestamp(System.currentTimeMillis()));
-			statement.setInt(++statementIndex, sessionId);
-
-			if(statement.executeUpdate() > 0) {
-				return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} 
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean updateInfo(Employee emp) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			int idx = 0;
-			String command = "{CALL updateEmpInfo(?,'andrewcrenwelge@gmail.com','702-528-6802','123 Main St.','Reston', 'VA','USA','12190')}";
+			String command = "{CALL updateEmpInfo(?,?,?,?,?,?,?,?)}";
 			CallableStatement cs = connection.prepareCall(command);
-			cs.setInt(++idx, emp.getId());
+			cs.setInt(   ++idx, emp.getId());
 			cs.setString(++idx, emp.getEmail());
 			cs.setString(++idx, emp.getPhoneNumber());
 			cs.setString(++idx, emp.getAddress());
@@ -190,10 +172,8 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			cs.setString(++idx, emp.getState());
 			cs.setString(++idx, emp.getCountry());
 			cs.setString(++idx, emp.getZip());
-			ResultSet result = cs.executeQuery();
-			if(result.next()) {
-				return true;
-			}
+			cs.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -206,9 +186,22 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			String sql = "SELECT * FROM employee WHERE empId = ?";
 			PreparedStatement p = conn.prepareStatement(sql);
 			p.setInt(1, id);
-			ResultSet result = p.executeQuery();
-			while (result.next()) {
-				return new Employee();
+			ResultSet r = p.executeQuery();
+			while (r.next()) {
+				return new Employee(
+						r.getInt(1),    // empId
+						r.getString(2), // fname
+						r.getString(3), // lname
+						r.getString(4), // email
+						r.getString(5), // birthdate
+						r.getString(6), // phone
+						r.getString(7), // address
+						r.getString(8), // city
+						r.getString(9), // state
+						r.getString(10),// country
+						r.getString(11),// zip
+						r.getBoolean(12)// isManager
+						);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

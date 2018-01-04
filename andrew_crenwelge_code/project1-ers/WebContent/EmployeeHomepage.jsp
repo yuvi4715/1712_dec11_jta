@@ -38,7 +38,7 @@
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
 	        <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span>&emsp;Home</a></li>
-	        <li><a href="EmployeeRequestView.jsp"><span class="glyphicon glyphicon-usd"></span>&emsp;Reimbursement Requests <span class="sr-only">(current)</span></a></li>
+	        <li><a href="EmployeeRequestView"><span class="glyphicon glyphicon-usd"></span>&emsp;Reimbursement Requests <span class="sr-only">(current)</span></a></li>
 	        <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>&emsp;Profile <span class="caret"></span></a>
 	          <ul class="dropdown-menu">

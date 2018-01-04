@@ -16,5 +16,5 @@ public interface RequestDao {
 	public List<Request> getResolvedRequestsByEmployee(int empID);
 	public List<Request> getPendingRequestsByEmployee(int empID);
 	public List<Request> getRequestsByEmployee(int empID);
-	public Employee getManagerOfRequest(Request r); // depends if we want Managers to be Employees
+	public Employee getManagerOfRequest(Request r);
 }

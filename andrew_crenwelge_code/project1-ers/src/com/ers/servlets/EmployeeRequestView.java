@@ -17,6 +17,8 @@ import com.ers.model.Request;
 @WebServlet("/EmployeeRequestView")
 public class EmployeeRequestView extends HttpServlet {
 	
+	private static final long serialVersionUID = 3928559648235553534L;
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
 		// get Employee ID and retrieve list of request for that employee
 		Employee e1 = (Employee) req.getSession().getAttribute("employee");

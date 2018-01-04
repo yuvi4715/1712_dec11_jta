@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +27,18 @@ public class RequestDaoImpl implements RequestDao {
 	@Override
 	public boolean initializeNewRequest(Request req) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			int statementIndex = 0;			
-			String sql = "insert into request values(NULL, ?, ?, ?, ?)";
+			int statementIndex = 0;
+			String sql = "INSERT INTO requests VALUES(REQUEST_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement p = conn.prepareStatement(sql);
-			//Incrementing the statementIndex helps in ordering the parameters
-			p.setInt(++statementIndex, req.getEmpID());			
-			//execute the statement
+			p.setInt(++statementIndex, req.getEmpID());
+			p.setString(++statementIndex, req.getReqTitle());
+			p.setInt(++statementIndex, req.getStatId());
+			p.setDouble(++statementIndex, req.getAmount());
+			p.setTimestamp(++statementIndex, new Timestamp(System.currentTimeMillis()));
+			p.setTimestamp(++statementIndex, null);
+			p.setInt(++statementIndex, req.getMgrID());
+			p.setString(++statementIndex, req.getDescription());
+			// p.setBlob(++statementIndex, null);
 			if (p.executeUpdate() > 0) {
 				return true;
 			}
@@ -45,7 +52,7 @@ public class RequestDaoImpl implements RequestDao {
 	public List<Request> getAllRequests() {
 		List<Request> list = new ArrayList<>();
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM open_requests FULL OUTER JOIN closed_requests";
+			String sql = "SELECT * FROM requests";
 			PreparedStatement p = conn.prepareStatement(sql);
 			//execute the statement
 			ResultSet rs = p.executeQuery();
