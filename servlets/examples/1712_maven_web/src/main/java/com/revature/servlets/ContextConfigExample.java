@@ -3,46 +3,42 @@ package com.revature.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class Two
- */
-public class Two extends HttpServlet {
+public class ContextConfigExample extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Two() {
+    public ContextConfigExample() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		ServletContext sc1 = getServletContext();
+		String str1 = sc1.getInitParameter("QuarterBack");
+		
+		response.setContentType("text/html");
 		PrintWriter pw = response.getWriter();
 		pw.println("<html><body>"
-				+ "<p> value for name: "+  request.getParameter("fullname") + "</p>"
+				+ "<p> Current week best quarter back is : "+  str1 + "</p>");
+		
+		ServletConfig sc2 = getServletConfig();
+		String str2 = sc2.getInitParameter("WideReceiver");
+		pw.println("<p> Current week best wide receiver is : "+  str2 + "</p>");
+				
+		String str3 = (String) sc1.getAttribute("RunningBack");
+		
+		pw.println("<p> Current week best running back is : "+  str3 + "</p>"
 				+ "</body></html>");
 		
-		//response.sendRedirect("welcome.html");
 		
-//		ServletConfig sc2 = getServletConfig();
-//		String str2 = sc2.getInitParameter("WideReceiver");
-//		
-//		pw.println("<p> Current week best wide receiver is : "+  str2 + "</p>"
-//				+ "</body></html>");
-		
-		RequestDispatcher r = request.getRequestDispatcher("default.html");
-		//r.forward(request, response);
-		r.include(request, response);
-		pw.close();
+				
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
