@@ -16,10 +16,12 @@ import com.ers.model.Request;
 @WebServlet("/ManagerRequestView")
 public class ManagerRequestView extends HttpServlet {
 	
+	private static final long serialVersionUID = -5394234461003030203L;
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {		
 		RequestDao rdao = RequestDaoImpl.getInstance();
 		List<Request> list = rdao.getAllRequests();
-		// add list as a parameter
+		// add list as attribute
 		req.setAttribute("allRequests", list);
 		req.getRequestDispatcher("ManagerRequestView.jsp").forward(req,resp);
 	}

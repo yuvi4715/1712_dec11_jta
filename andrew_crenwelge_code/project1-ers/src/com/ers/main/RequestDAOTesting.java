@@ -1,13 +1,10 @@
 package com.ers.main;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 import com.ers.dao.RequestDao;
 import com.ers.dao.RequestDaoImpl;
 import com.ers.model.Request;
-import com.ers.util.ConnectionUtil;
 
 public class RequestDAOTesting {
 
@@ -46,110 +43,65 @@ public class RequestDAOTesting {
 	}
 
 	static void getAllRequests() {
-		try(Connection conn = ConnectionUtil.getConnection()) {
-			System.out.println("connection should be established");
-			RequestDao rdao = RequestDaoImpl.getInstance();
-			List<Request> list = rdao.getAllRequests();
-			for (Request r : list) {
-				System.out.println(r);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		RequestDao rdao = RequestDaoImpl.getInstance();
+		List<Request> list = rdao.getAllRequests();
+		for (Request r : list) {
+			System.out.println(r);
 		}
 	}
 	
 	static void getAllPendingRequests() {
-		try(Connection conn = ConnectionUtil.getConnection()) {
-			System.out.println("connection should be established");
-			RequestDao rdao = RequestDaoImpl.getInstance();
-			List<Request> list = rdao.getAllPendingRequests();
-			for (Request r : list) {
-				System.out.println(r);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		RequestDao rdao = RequestDaoImpl.getInstance();
+		List<Request> list = rdao.getAllPendingRequests();
+		for (Request r : list) {
+			System.out.println(r);
 		}
 	}
 	
 	static void getAllResolvedRequests() {
-		try(Connection conn = ConnectionUtil.getConnection()) {
-			System.out.println("connection should be established");
-			RequestDao rdao = RequestDaoImpl.getInstance();
-			List<Request> list = rdao.getAllResolvedRequests();
-			for (Request r : list) {
-				System.out.println(r);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		RequestDao rdao = RequestDaoImpl.getInstance();
+		List<Request> list = rdao.getAllResolvedRequests();
+		for (Request r : list) {
+			System.out.println(r);
 		}
 	}
 	
 	static void getSingleRequest() {
-		try(Connection conn = ConnectionUtil.getConnection()) {
-			System.out.println("connection should be established");
-			RequestDao rdao = RequestDaoImpl.getInstance();
-			System.out.println(rdao.getRequestById(1));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		RequestDao rdao = RequestDaoImpl.getInstance();
+		System.out.println(rdao.getRequestById(1));
 	}
 	
 	static void getEmpResolvedRequest() {
-		try(Connection conn = ConnectionUtil.getConnection()) {
-			System.out.println("connection should be established");
-			RequestDao rdao = RequestDaoImpl.getInstance();
-			List<Request> list = rdao.getResolvedRequestsByEmployee(1);
-			for (Request r : list) {
-				System.out.println(r);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		RequestDao rdao = RequestDaoImpl.getInstance();
+		List<Request> list = rdao.getResolvedRequestsByEmployee(1);
+		for (Request r : list) {
+			System.out.println(r);
 		}
 	}
 	
 	static void getEmpPendingRequest() {
-		try(Connection conn = ConnectionUtil.getConnection()) {
-			System.out.println("connection should be established");
-			RequestDao rdao = RequestDaoImpl.getInstance();
-			List<Request> list = rdao.getPendingRequestsByEmployee(1);
-			for (Request r : list) {
-				System.out.println(r);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		RequestDao rdao = RequestDaoImpl.getInstance();
+		List<Request> list = rdao.getPendingRequestsByEmployee(1);
+		for (Request r : list) {
+			System.out.println(r);
 		}
 	}
 	
 	static void approveRequest() {
-		try(Connection conn = ConnectionUtil.getConnection()) {
-			System.out.println("connection should be established");
-			RequestDao rdao = RequestDaoImpl.getInstance();
-			Request r = new Request();
-			rdao.approveRequest(r);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		RequestDao rdao = RequestDaoImpl.getInstance();
+		Request r = new Request();
+		rdao.approveRequest(r);
 	}
 	
 	static void denyRequest() {
-		try(Connection conn = ConnectionUtil.getConnection()) {
-			System.out.println("connection should be established");
-			RequestDao rdao = RequestDaoImpl.getInstance();
-			Request r = new Request();
-			rdao.denyRequest(r);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		RequestDao rdao = RequestDaoImpl.getInstance();
+		Request r = new Request();
+		rdao.denyRequest(r);
 	}
 	
 	static void getManagerOfRequest() {
-		try(Connection conn = ConnectionUtil.getConnection()) {
-			System.out.println("connection should be established");
-			RequestDao rdao = RequestDaoImpl.getInstance();
-			Request r = new Request();
-			rdao.getManagerOfRequest(r);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		RequestDao rdao = RequestDaoImpl.getInstance();
+		Request r = new Request();
+		rdao.getManagerOfRequest(r);
 	}
 }

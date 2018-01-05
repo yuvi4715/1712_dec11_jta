@@ -32,7 +32,7 @@ public class JDBCSimpleExample {
 	static void jdbcExample(String url, String user, String password) {
 		try(Connection conn = DriverManager.getConnection(url, user, password)) { //2
 			System.out.println("connection should be established");
-			String sql = "SELECT * FROM testuser.employee e join testuser.usertable u on e.empid=u.empid WHERE u.username=?";
+			String sql = "SELECT * FROM employee e join usertable u on e.empid=u.empid WHERE u.username=?";
 			PreparedStatement p = conn.prepareStatement(sql);										  //3
 			// CallableStatement cs = conn.prepareCall(sql);
 			// cs.setString(1, "acrenwelge");

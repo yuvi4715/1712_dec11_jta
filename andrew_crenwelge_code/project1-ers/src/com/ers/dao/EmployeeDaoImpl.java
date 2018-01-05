@@ -8,15 +8,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.ers.model.Employee;
 import com.ers.util.ConnectionUtil;
 
-public class EmployeeDaoImpl implements EmployeeDao{
+
+public class EmployeeDaoImpl implements EmployeeDao {
+	final static Logger logger = Logger.getLogger(Logger.class);
 
 	private static EmployeeDaoImpl employeeDaoImpl;
 	
-	private EmployeeDaoImpl() {
-	}
+	private EmployeeDaoImpl() {}
 	
 	public static EmployeeDaoImpl getInstance() {
 		if (employeeDaoImpl == null) {
@@ -45,6 +48,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			p.setBoolean(++statementIndex, employee.getIsManager());
 			//execute the statement
 			if (p.executeUpdate() > 0) {
+				logger.info("Employee added: " + employee);
 				return true;
 			}
 		} catch (SQLException e) {
@@ -86,7 +90,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	@Override
 	public List<Employee> getAllEmployees() {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "Select * from employee";
+			String sql = "SELECT * FROM employee";
 			PreparedStatement p = conn.prepareStatement(sql);
 			ResultSet r = p.executeQuery();
 			List<Employee> employeeList = new ArrayList<>();
@@ -140,10 +144,14 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			if (rs.next()) { // checks that the username exists
 				String db_password = rs.getString(3);
 				// String db_salt = rs.getString(4);
-				if (password.equals(db_password))
+				if (password.equals(db_password)) {
+					logger.info("User "+username+" authenticated");
 					return true;
-				else
+				}
+				else {
+					logger.warn("Invalid credentials for "+username);
 					return false;
+				}
 			}
 			else
 				return false;
@@ -173,6 +181,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			cs.setString(++idx, emp.getCountry());
 			cs.setString(++idx, emp.getZip());
 			cs.executeUpdate();
+			logger.info("Employee " + emp.getId() + " information updated");
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

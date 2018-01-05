@@ -1,9 +1,7 @@
 package com.ers.servlets;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,17 +17,19 @@ import com.ers.model.Request;
 @WebServlet("/SubmitRequest")
 public class SubmitRequest extends HttpServlet {
 	
+	private static final long serialVersionUID = 6190336207607325032L;
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
 		// get the employee
 		Employee e1 = (Employee) req.getSession().getAttribute("employee");
 		// get the request data
-		Request r = new Request();
+		Request r = new Request(); // make a new request
 		// reqId will be set on db via sequence
-		r.setEmpID(e1.getId());
-		r.setApproved(false);
-		r.setAmount(Double.parseDouble(req.getParameter("amount")));
-		// r.setDateSubmitted() ??? Timestamp?
-		r.setDescription(req.getParameter("description"));
+		r.setEmpID(e1.getId()); // set empid to be the id of the current employee who is logged in
+		r.setStatus("pending"); // all initial requests are pending
+		r.setAmount(Double.parseDouble(req.getParameter("amount"))); // get amount from form submission
+		r.setDateSubmitted(new Timestamp(System.currentTimeMillis())); // timestamp the request
+		r.setDescription(req.getParameter("description")); // get the description from the form
 		RequestDao rdao = RequestDaoImpl.getInstance();
 		boolean success = rdao.initializeNewRequest(r);
 		if (success) {

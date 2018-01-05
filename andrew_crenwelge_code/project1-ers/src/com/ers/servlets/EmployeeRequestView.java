@@ -26,6 +26,9 @@ public class EmployeeRequestView extends HttpServlet {
 		List<Request> list = rdao.getRequestsByEmployee(e1.getId());
 		// add list as a parameter
 		req.setAttribute("allRequests", list);
+		for (Request r : list) {
+			System.out.println(r);
+		}
 		req.getRequestDispatcher("EmployeeRequestView.jsp").forward(req,resp);
 	}
 }

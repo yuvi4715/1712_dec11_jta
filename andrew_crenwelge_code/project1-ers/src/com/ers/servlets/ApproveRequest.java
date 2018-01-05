@@ -15,6 +15,8 @@ import com.ers.model.Request;
 @WebServlet("/ApproveRequest")
 public class ApproveRequest extends HttpServlet {
 	
+	private static final long serialVersionUID = -415521901773532388L;
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
 		// get the request data
 		int reqId = Integer.parseInt(req.getParameter("reqId"));

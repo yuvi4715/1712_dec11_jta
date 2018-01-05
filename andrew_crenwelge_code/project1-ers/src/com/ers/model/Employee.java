@@ -122,6 +122,7 @@ public class Employee {
 	}
 	public Employee(int id, String firstname,String lastname,String email,String birthdate,
 			String phoneNum,String address,String city,String state, String country, String zip, Boolean isManager) {
+		this.empID = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;

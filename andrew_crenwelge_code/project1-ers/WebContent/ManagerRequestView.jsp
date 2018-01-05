@@ -180,7 +180,7 @@
 			        <label>Search Requests By Employee:</label>
 		  	        <input id="empName" type="text" name="empName"/>
 			      </div>
-			      <button id="searchReqByEmp" type="submit" class="btn btn-default">Search</button>
+			      <button id="searchReqByEmp" type="button" class="btn btn-default">Search</button>
 			    </form>
 			  </div>
 			  <table class="table table-bordered table-striped table-hover">

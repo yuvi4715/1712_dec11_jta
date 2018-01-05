@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -97,6 +98,7 @@
 		  <p>
 		    Use the tabs below to navigate your reimbursement requests.
 		  </p>
+		  <div class="alert alert-danger hideme" id="errordiv"></div>
 		</div>
 		<div class="row">
 			<ul class="nav nav-tabs">
@@ -119,66 +121,70 @@
 				  </thead>
 				  <tbody>
 				    <tr>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
+				      <c:forEach items="${param.allRequests}" var="req">
+				      <tr>
+				        <td><c:out value="${req.reqID}"></c:out></td>
+				        <td><c:out value="${req.title}"></c:out></td>
+				        <td><c:out value="${req.description}"></c:out></td>
+				        <td><c:out value="${req.amount}"></c:out></td>
+				        <td><c:out value="${req.mgrId}"></c:out></td>
+				        <td><c:out value="${req.empName}"></c:out></td>
+				        <td><c:out value="${req.dateSubmitted}"></c:out></td>
+				        <td><c:out value="${req.dateResolved}"></c:out></td>
+				      </tr>
+				    </c:forEach>
 				    </tr>
 				  </tbody>
-			  </table>
-		  </div>
-		  <div role="tabpanel" class="tab-pane" id="pending-requests">
-			  <table class="table table-bordered table-striped table-hover">
-				  <thead><tr>
-				    <th>Reimbursement Request No.</th>
-				    <th>Name</th>
-				    <th>Description</th>
-				    <th>Amount</th>
-				    <th>Date Submitted</th></tr>
-				  </thead>
-				  <tbody>
-				    <tr>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				    </tr>
-				  </tbody>
-			  </table>
-		  </div>
-		  <div role="tabpanel" class="tab-pane" id="resolved-requests">
-			  <table class="table table-bordered table-striped table-hover">
-				  <thead><tr>
-				    <th>Reimbursement Request No.</th>
-				    <th>Name</th>
-				    <th>Description</th>
-				    <th>Status</th>
-				    <th>Amount</th>
-				    <th>Resolved By</th>
-				    <th>Date Submitted</th>
-				    <th>Date Resolved</th></tr>
-				  </thead>
-				  <tbody>
-				    <tr>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				    </tr>
-				  </tbody>
-			  </table>
-		  </div>
-	     </div>
-		</div>
+			     </table>
+		  		</div>
+			    <div role="tabpanel" class="tab-pane" id="pending-requests">
+				  <table class="table table-bordered table-striped table-hover">
+					  <thead><tr>
+					    <th>Reimbursement Request No.</th>
+					    <th>Name</th>
+					    <th>Description</th>
+					    <th>Amount</th>
+					    <th>Date Submitted</th></tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <td>Test</td>
+					      <td>Test</td>
+					      <td>Test</td>
+					      <td>Test</td>
+					      <td>Test</td>
+					    </tr>
+					  </tbody>
+				  </table>
+			  </div>
+			  <div role="tabpanel" class="tab-pane" id="resolved-requests">
+				  <table class="table table-bordered table-striped table-hover">
+					  <thead><tr>
+					    <th>Reimbursement Request No.</th>
+					    <th>Name</th>
+					    <th>Description</th>
+					    <th>Status</th>
+					    <th>Amount</th>
+					    <th>Resolved By</th>
+					    <th>Date Submitted</th>
+					    <th>Date Resolved</th></tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <td>Test</td>
+					      <td>Test</td>
+					      <td>Test</td>
+					      <td>Test</td>
+					      <td>Test</td>
+					      <td>Test</td>
+					      <td>Test</td>
+					      <td>Test</td>
+					    </tr>
+					  </tbody>
+				  </table>
+			  </div>
+	       </div><!-- end tab content -->
+		</div><!-- end row -->
 	</section>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

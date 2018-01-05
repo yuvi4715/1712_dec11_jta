@@ -16,5 +16,6 @@ public interface RequestDao {
 	public List<Request> getResolvedRequestsByEmployee(int empID);
 	public List<Request> getPendingRequestsByEmployee(int empID);
 	public List<Request> getRequestsByEmployee(int empID);
+	public List<Request> getRequestsByEmployeeName(String firstname, String lastname);
 	public Employee getManagerOfRequest(Request r);
 }

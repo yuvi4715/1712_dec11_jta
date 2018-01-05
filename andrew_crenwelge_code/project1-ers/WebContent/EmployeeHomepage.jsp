@@ -58,6 +58,7 @@
 		  <h1>Expense Reimbursement System</h1>
 		</div>
 		<h3>Welcome, <c:out value="${sessionScope.employee.firstname} ${sessionScope.employee.lastname}"></c:out></h3>
+		<div class="alert alert-danger hideme" id="errordiv"></div>
 		<div class="row">
 		  <div class="col-sm-6 well">
 		  	<h4>Profile Information</h4>

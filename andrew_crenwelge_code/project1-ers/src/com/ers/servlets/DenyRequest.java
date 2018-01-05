@@ -15,6 +15,8 @@ import com.ers.model.Request;
 @WebServlet("/DenyRequest")
 public class DenyRequest extends HttpServlet {
 	
+	private static final long serialVersionUID = 4139060270023748193L;
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
 		// get the request data somehow
 		int reqId = Integer.parseInt(req.getParameter("reqId"));

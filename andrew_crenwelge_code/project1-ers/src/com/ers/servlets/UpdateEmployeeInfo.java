@@ -19,23 +19,31 @@ public class UpdateEmployeeInfo extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
 		// get the employee data
-		Employee e1 = new Employee();
-		e1.setEmail(req.getParameter("email"));
-		e1.setAddress(req.getParameter("address"));
-		e1.setCity(req.getParameter("city"));
-		e1.setCountry(req.getParameter("country"));
-		e1.setState(req.getParameter("state"));
-		e1.setZip(req.getParameter("zip"));
-		e1.setPhoneNumber(req.getParameter("phoneNumber"));
+		Employee oldempobj = (Employee) req.getSession().getAttribute("employee");
+		Employee newempobj = new Employee();
+		newempobj.setId(oldempobj.getId());
+		// set new employee with old employee info
+		newempobj.setFirstname(oldempobj.getFirstname());
+		newempobj.setLastname(oldempobj.getFirstname());
+		newempobj.setIsManager(oldempobj.getIsManager());
+		// set other fields from submission form
+		newempobj.setEmail(req.getParameter("email"));
+		newempobj.setAddress(req.getParameter("address"));
+		newempobj.setCity(req.getParameter("city"));
+		newempobj.setCountry(req.getParameter("country"));
+		newempobj.setState(req.getParameter("state"));
+		newempobj.setZip(req.getParameter("zip"));
+		newempobj.setPhoneNumber(req.getParameter("phoneNumber"));
 		EmployeeDao edao = EmployeeDaoImpl.getInstance();
 		// update the employee in the database
-		boolean success = edao.updateInfo(e1);
+		boolean success = edao.updateInfo(newempobj);
 		if (success) {
 			req.setAttribute("successMsg", "Your information was updated");
 		}
 		else {
 			req.setAttribute("errMsg", "Sorry, there was an error. Your information was not updated");
 		}
+		resp.setContentType("text/JSON");
 		req.getRequestDispatcher("EmployeeHomepage.jsp").forward(req,resp);
 	}
 }
