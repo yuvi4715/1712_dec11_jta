@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Open Reimbursement</title>
+
+<style type="text/css">
+.container {
+	width: 500px;
+	clear: both;
+}
+
+.container input {
+	width: 100%;
+	clear: both;
+}
+</style>
+
+</head>
+<body>
+	<div>
+		<h3>Please enter the amount you want reimbursed:</h3>
+		<br>
+		<form method = "post" action="OpenReimbServlet">
+			<div>
+				<div class="container">
+					Amount: <input name ="amount" onchange="setTwoNumberDecimal" type="number" min="0.01" step="0.01" max="10000" />
+					EmployeeID: <input name ="eid" type="number" /> 
+					Password: <input name ="pword" type="password" />
+					<button type="submit">Submit</button>
+				</div>
+			</div>
+		</form>
+
+	</div>
+<script>
+function setTwoNumberDecimal(event) {
+    this.value = parseFloat(this.value).toFixed(2);
+}
+</script>
+
+</body>
+</html>

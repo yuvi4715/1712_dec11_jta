@@ -3,26 +3,27 @@ package ers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.User;
+import dao.ReimbOpenDAO;
+import dao.ReimbOpenDAOImpl;
 import dao.UserDAO;
 import dao.UserDaoImpl;
 
 /**
- * Servlet implementation class FrontController
+ * Servlet implementation class OpenReimbServlet
  */
-public class Servlet extends HttpServlet {
+public class OpenReimbServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Servlet() {
+    public OpenReimbServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,42 +32,49 @@ public class Servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		String username = request.getParameter("uname");
-		String password = request.getParameter("psw");
-
+		//response.getWriter().append("sfsfas");
+		String stringuserid = request.getParameter("eid");
+		String password = request.getParameter("pword");
+		String money = request.getParameter("amount");
+		int userid = Integer.parseInt(stringuserid);
 		UserDAO u = null;
 		u = new UserDaoImpl(); ;
 		User a = null;
 		try
 		{
-			a = u.getUser(username);
+			a = u.getUser(userid);
 		} catch (SQLException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		if(a == null)
+		if (!a.getPassword().equals(password))
 		{
 			response.setContentType("text/html");
 			PrintWriter pw = response.getWriter();
-			pw.println("<html> <body> <p> Username/Password combination does not match</p></body></html>");
-		}
-		else if (!a.getPassword().equals(password))
-		{
-			response.setContentType("text/html");
-			PrintWriter pw = response.getWriter();
-			pw.println("<html> <body> <p> Username/Password combination does not match ***</p></body></html>");
+			pw.println("<html> <body> <p> Username/Password "
+					+ "combination does not match ***</p></body></html>");
 		}
 		else
 		{
-			response.sendRedirect("Employee.html");
+//			response.setContentType("text/html");
+//			PrintWriter pw = response.getWriter();
+//			pw.println("yes");
+			ReimbOpenDAO rod = new ReimbOpenDAOImpl();
+			try
+			{
+				rod.insertReimb(money, stringuserid);
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
 	/**
-	 * @ee HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
