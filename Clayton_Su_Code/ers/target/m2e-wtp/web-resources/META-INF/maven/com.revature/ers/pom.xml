@@ -37,11 +37,16 @@
     <artifactId>javax.servlet.jsp.jstl-api</artifactId>
     <version>1.2.1</version>
 </dependency>
+
+	
+
 <dependency>
     <groupId>javax.servlet</groupId>
     <artifactId>jstl</artifactId>
     <version>1.2</version>
 </dependency>
+
+
   </dependencies>
   <build>
     <finalName>ers</finalName>
