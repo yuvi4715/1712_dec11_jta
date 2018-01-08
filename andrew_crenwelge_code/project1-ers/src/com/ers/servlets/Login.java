@@ -24,14 +24,19 @@ public class Login extends HttpServlet {
 		// attempt to log user in
 		EmployeeDaoImpl edao = EmployeeDaoImpl.getInstance();
 		boolean success = edao.authenticate(uname, pword);
+		// boolean success = ((uname.equals("acrenwelge") && pword.equals("abc")) || (uname.equals("admin") && pword.equals("password")));
 		if (success) {
 			System.out.println("Successfully authenticated user " + uname);
 			// get user info and store in session
 			Employee e1 = edao.getEmployeeByUsername(uname);
+			// Employee e1 = new Employee();
+			// Employee e1 = new Employee(id, firstname, lastname, email, birthdate, phoneNum, address, city, state, country, zip, isManager)
 			User u1 = new User();
 			u1.setUsername(uname);
 			req.getSession().setAttribute("employee", e1);
 			req.getSession().setAttribute("user", u1);
+			System.out.println("Employee info: "+e1);
+			System.out.println("User info: "+u1);
 			if (e1.getIsManager()) {
 				req.getRequestDispatcher("ManagerHomepage.jsp").forward(req,resp);
 			}

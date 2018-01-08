@@ -8,14 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import com.ers.model.Employee;
 import com.ers.util.ConnectionUtil;
+import com.ers.util.LogUtil;
 
 
 public class EmployeeDaoImpl implements EmployeeDao {
-	final static Logger logger = Logger.getLogger(Logger.class);
 
 	private static EmployeeDaoImpl employeeDaoImpl;
 	
@@ -48,7 +46,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			p.setBoolean(++statementIndex, employee.getIsManager());
 			//execute the statement
 			if (p.executeUpdate() > 0) {
-				logger.info("Employee added: " + employee);
+				LogUtil.logger.info("Employee added: "+employee);
 				return true;
 			}
 		} catch (SQLException e) {
@@ -89,11 +87,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public List<Employee> getAllEmployees() {
+		List<Employee> employeeList = new ArrayList<>();
 		try(Connection conn = ConnectionUtil.getConnection()){
 			String sql = "SELECT * FROM employee";
 			PreparedStatement p = conn.prepareStatement(sql);
 			ResultSet r = p.executeQuery();
-			List<Employee> employeeList = new ArrayList<>();
 			while (r.next()) {
 				employeeList.add(new Employee(
 						r.getInt(1),    // empId
@@ -114,7 +112,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return new ArrayList<>();
+		return employeeList;
 	}
 
 	/* Get a employee hash consuming the user defined function we created */
@@ -145,11 +143,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				String db_password = rs.getString(3);
 				// String db_salt = rs.getString(4);
 				if (password.equals(db_password)) {
-					logger.info("User "+username+" authenticated");
+					LogUtil.logger.info("User "+username+" authenticated");
 					return true;
 				}
 				else {
-					logger.warn("Invalid credentials for "+username);
+					LogUtil.logger.warn("Invalid credentials for "+username);
 					return false;
 				}
 			}
@@ -180,8 +178,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			cs.setString(++idx, emp.getState());
 			cs.setString(++idx, emp.getCountry());
 			cs.setString(++idx, emp.getZip());
-			cs.executeUpdate();
-			logger.info("Employee " + emp.getId() + " information updated");
+			int rowsAffected = cs.executeUpdate();
+			System.out.println("Employee updated: "+emp);
+			System.out.println("Rows affected: "+rowsAffected);
+			LogUtil.logger.info("Employee " + emp.getId() + " information updated. "+rowsAffected +" rows affected");
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

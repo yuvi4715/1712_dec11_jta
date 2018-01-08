@@ -7,23 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
     <link rel="stylesheet" href="css/layout.css"></link>
     <title>ERS - Reimbursement Requests</title>
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body>
     <header>
-	  <nav class="navbar navbar-default">
+	  <nav class="navbar navbar-inverse">
 	  <div class="container">
-	    <!-- Brand and toggle get grouped for better mobile display -->
 	    <div class="navbar-header">
 	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 	        <span class="sr-only">Toggle navigation</span>
@@ -34,13 +25,12 @@
 	      <a class="navbar-brand" href="ManagerHomepage.jsp">ERS</a>
 	    </div>
 	
-	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
-	        <li><a href="ManagerHomepage.jsp">Home</a></li>
-	        <li class="active"><a href="#">Reimbursement Requests <span class="sr-only">(current)</span></a></li>
+	        <li><a href="ManagerHomepage.jsp"><span class="glyphicon glyphicon-home"></span>&emsp;Home</a></li>
+	        <li class="active"><a href="#"><span class="glyphicon glyphicon-usd"></span>&emsp;Reimbursement Requests <span class="sr-only">(current)</span></a></li>
 	        <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>&emsp;Profile <span class="caret"></span></a>
 	          <ul class="dropdown-menu">
 	            <li><a href="ManagerHomepage.jsp">View Profile</a></li>
 	            <li role="separator" class="divider"></li>
@@ -48,47 +38,66 @@
 	          </ul>
 	        </li>
 	      </ul>
+	      <p class="navbar-text navbar-right">Signed in as <c:out value="${sessionScope.user.username}"></c:out></p>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	  </nav>
     </header>
   	<section class="container">
-	  	<div class="page-header">
-	  	  <h1>Expense Reimbursement System</h1>
-	  	</div>
+  	  <div class="row">
+  	    <div class="page-header">
+		  <h1>Expense Reimbursement System</h1>
+		</div>
+		<c:if test="${not empty requestScope.errMsg}">
+		  <div class="alert alert-danger" id="jsp-errordiv">
+	        <c:out value="${requestScope.errMsg}" />
+	      </div>
+	    </c:if>
+	    <div class="alert alert-danger hideme" id="errordiv"></div>
+	    <div class="alert alert-success hideme" id="successdiv"></div>
 	  	<p>
 	  	  Use the tabs below to navigate the reimbursement requests.
 	  	</p>
-	  	<ul class="nav nav-tabs">
-	  	  <li id="manager-all" role="tab" class="active"><a data-toggle="tab" href="#allrequests">All Requests</a></li>
+	  </div>
+	  <div class="row">
+  	    <ul class="nav nav-tabs">
+	  	  <li id="manager-all" role="tab" class="active"><a data-toggle="tab" href="#all-requests">All Requests</a></li>
 		  <li id="manager-all-pending" role="tab"><a data-toggle="tab" href="#pending">All Pending Requests</a></li>
 		  <li id="manager-all-resolved" role="tab"><a data-toggle="tab" href="#resolved">All Resolved Requests</a></li>
 		  <li id="manager-all-employees" role="tab"><a data-toggle="tab" href="#allemployees">All Employees</a></li>
 		  <li role="tab"><a data-toggle="tab" href="#reqbyemployee">Search Requests By Employee</a></li>
 		</ul>
 		<div class="tab-content">
-		  <div role="tabpanel" class="tab-pane active" id="allrequests">
+		  <div role="tabpanel" class="tab-pane active" id="all-requests">
 		    <div class="panel panel-default">
 			  <table class="table table-bordered table-striped table-hover">
 				  <thead><tr>
-				    <th>Reimbursement Request No.</th>
-				    <th>Title</th>
-				    <th>Description</th>
-				    <th>Amount</th>
-				    <th>Submitted By</th>
-				    <th>Date Submitted</th>
-				    <th>Receipt</th></tr>
+				    <th class="col-md-1">Reimbursement Request No.</th>
+				    <th class="col-md-1">Name</th>
+				    <th class="col-md-2">Description</th>
+				    <th class="col-md-1">Status</th>
+				    <th class="col-md-1">Amount</th>
+				    <th class="col-md-1">Submitted By</th>
+				    <th class="col-md-1">Date Submitted</th>
+				    <th class="col-md-1">Date Resolved</th>
+				    <th class="col-md-1">Receipt</th>
+				    <th class="col-md-2">Approve/Deny</th></tr>
 				  </thead>
 				  <tbody>
-				    <c:forEach items="${param.allRequests}" var="req">
+				    <c:forEach items="${requestScope.allRequests}" var="req">
 				      <tr>
 				        <td><c:out value="${req.reqID}"></c:out></td>
-				        <td><c:out value="${req.title}"></c:out></td>
+				        <td><c:out value="${req.reqTitle}"></c:out></td>
 				        <td><c:out value="${req.description}"></c:out></td>
+				        <td><c:out value="${req.status}"></c:out></td>
 				        <td><c:out value="${req.amount}"></c:out></td>
-				        <td><c:out value="${req.empName}"></c:out></td>
+				        <td><c:out value="${req.empID}"></c:out></td>
 				        <td><c:out value="${req.dateSubmitted}"></c:out></td>
+				        <td><c:out value="${req.dateResolved}"></c:out></td>
 				        <td><button class="btn btn-info">View Receipt</button></td>
+				        <td><c:if test="${req.getStatus()=='Pending'}">
+				          <button class="btn btn-success approve">Approve</button>&ensp;<button class="btn btn-danger deny">Deny</button>
+				        </c:if></td>
 				      </tr>
 				    </c:forEach>
 				  </tbody>
@@ -100,23 +109,27 @@
 			  <table class="table table-bordered table-striped table-hover">
 				  <thead><tr>
 				    <th>Reimbursement Request No.</th>
-				    <th>Title</th>
+				    <th>Name</th>
 				    <th>Description</th>
 				    <th>Amount</th>
 				    <th>Submitted By</th>
 				    <th>Date Submitted</th>
-				    <th>Receipt</th></tr>
+				    <th>Receipt</th>
+				    <th>Action</th></tr>
 				  </thead>
 				  <tbody>
-				    <tr>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td><button class="btn btn-info">View Receipt</button></td>
-				    </tr>
+				    <c:forEach items="${requestScope.pendingRequests}" var="req">
+				      <tr>
+				        <td><c:out value="${req.reqID}"></c:out></td>
+				        <td><c:out value="${req.reqTitle}"></c:out></td>
+				        <td><c:out value="${req.description}"></c:out></td>
+				        <td><c:out value="${req.amount}"></c:out></td>
+				        <td><c:out value="${req.empID}"></c:out></td>
+				        <td><c:out value="${req.dateSubmitted}"></c:out></td>
+				        <td><button class="btn btn-info">View Receipt</button></td>
+				        <td><button class="btn btn-success approve">Approve</button>&ensp;<button class="btn btn-danger deny">Deny</button></td>
+				      </tr>
+				    </c:forEach>
 				  </tbody>
 			  </table>
 		    </div>
@@ -126,7 +139,7 @@
 			  <table class="table table-bordered table-striped table-hover">
 				  <thead><tr>
 				    <th>Reimbursement Request No.</th>
-				    <th>Title</th>
+				    <th>Name</th>
 				    <th>Description</th>
 				    <th>Status</th>
 				    <th>Amount</th>
@@ -137,18 +150,20 @@
 				    <th>Receipt</th></tr>
 				  </thead>
 				  <tbody>
-				    <tr>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td><button class="btn btn-info">View Receipt</button></td>
-				    </tr>
+				    <c:forEach items="${requestScope.resolvedRequests}" var="req">
+				      <tr>
+				        <td><c:out value="${req.reqID}"></c:out></td>
+				        <td><c:out value="${req.reqTitle}"></c:out></td>
+				        <td><c:out value="${req.description}"></c:out></td>
+				        <td><c:out value="${req.status}"></c:out></td>
+				        <td><c:out value="${req.amount}"></c:out></td>
+				        <td><c:out value="${req.empID}"></c:out></td>
+				        <td><c:out value="${req.mgrID}"></c:out></td>
+				        <td><c:out value="${req.dateSubmitted}"></c:out></td>
+				        <td><c:out value="${req.dateResolved}"></c:out></td>
+				        <td><button class="btn btn-info">View Receipt</button></td>
+				      </tr>
+				    </c:forEach>
 				  </tbody>
 			  </table>
 			</div>
@@ -162,11 +177,13 @@
 				  <th>Last Name</th>
 				</thead>
 				<tbody>
-				  <tr>
-				    <td>Test</td>
-				    <td>Test</td>
-				    <td>Test</td>
-				  </tr>
+				  <c:forEach items="${requestScope.allEmployees}" var="employee">
+				      <tr>
+				        <td><c:out value="${employee.getId()}"></c:out></td>
+				        <td><c:out value="${employee.getFirstname()}"></c:out></td>
+				        <td><c:out value="${employee.getLastname()}"></c:out></td>
+				      </tr>
+				    </c:forEach>
 				</tbody>
 			  </table>
 			</div>
@@ -178,41 +195,37 @@
 			      <div class="form-group">
 			        <!-- Search by employee first and last name -->
 			        <label>Search Requests By Employee:</label>
-		  	        <input id="empName" type="text" name="empName"/>
+		  	        <select name="empName" id="employeeID">
+		  	          <c:forEach items="${requestScope.allEmployees}" var="employee">
+		  	            <option value="${employee.getId()}">${employee.getFirstname()} ${employee.getLastname()}</option>
+		  	          </c:forEach>
+		  	        </select>
 			      </div>
 			      <button id="searchReqByEmp" type="button" class="btn btn-default">Search</button>
 			    </form>
 			  </div>
 			  <table class="table table-bordered table-striped table-hover">
 				  <thead><tr>
-				    <th>Employee</th>
 				    <th>Reimbursement Request No.</th>
+				    <th>Title</th>
 				    <th>Status</th>
 				    <th>Amount</th>
 				    <th>Resolved By</th>
 				    <th>Date Submitted</th>
 				    <th>Date Resolved</th>
-				    <th>Receipt</th></tr>
+				    <th>Receipt</th>
+				    <th>Approve/Deny</th></tr>
 				  </thead>
-				  <tbody>
-				    <tr>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td><button class="btn btn-info">View Receipt</button></td>
-				    </tr>
-				  </tbody>
+				  <tbody></tbody>
 				</table>
-			</div>
-		  </div>
-		</div>
-    </section>
+			  </div>
+		    </div> <!-- end panel -->
+		</div><!-- end panel container -->
+	  </div><!-- end row -->
+    </section><!-- end container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>

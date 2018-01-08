@@ -1,146 +1,221 @@
 // requires jQuery
 $(document).ready(function(){
+  var old = {
+    updateInfo: function(){
+      console.log("Attempting to update this employee's info...");
+      $inputs = $("#emp-info-form input");
+      console.log($inputs.eq(3).val());
+      console.log($inputs.eq(5).val());
+      console.log($inputs.eq(6).val());
+      console.log($inputs.eq(7).val());
+      console.log($inputs.eq(8).val());
+      console.log($inputs.eq(9).val());
+      var dataToSend = {
+        email: $inputs.eq(3).val(),
+        phoneNumber: $inputs.eq(5).val(),
+        address: $inputs.eq(6).val(),
+        city: $inputs.eq(7).val(),
+        state: $inputs.eq(8).val(),
+        country: $inputs.eq(9).val(),
+        zip: $inputs.eq(10).val()
+      };
+      $.ajax({
+        url: 'UpdateEmployeeInfo',
+        method: "POST",
+        data: $.param(dataToSend),
+        success: function(rtnData) {
+          console.log(rtnData);
+          $inputs.eq(3).val(rtnData.email);
+          $inputs.eq(5).val(rtnData.phoneNumber);
+          $inputs.eq(6).val(rtnData.address);
+          $inputs.eq(7).val(rtnData.city);
+          $inputs.eq(8).val(rtnData.state);
+          $inputs.eq(9).val(rtnData.country);
+          $inputs.eq(10).val(rtnData.zip);
+          handleSuccess(rtnData);
+        },
+        error: util.handleErr
+      });
+    }
+  };
   var util = {
-    appendTable: function($jqObj,data,hasViewBtn,Btntext) {
-      for (var key in data) {
-        var columns = data[key].length;
+    appendTable: function($jqObj,data,colsToMatch,hasReceiptBtn,hasApproveBtn) {
+      $jqObj.children().remove();
+      var jsdata = JSON.parse(data);
+      for (var i=0;i<data.length;i++) {
+        var obj = jsdata[i];
+        console.log(obj);
         var $row = $(document.createElement('tr'));
-        for (var i=0;i<columns;i++) {
-          var $td = $(document.createElement('td'));
-          $td.text(data[key][i]);
-          $row.append($td);
+        for (var j=0;j<colsToMatch.length;j++) {
+          var column = colsToMatch[j];
+          if (obj.hasOwnProperty(column)) {
+            var text;
+            if (obj[column] != null) {text = obj[column];}
+            else {text = "N/A";}
+            var $td = $(document.createElement('td'));
+            $td.text(text);
+            $row.append($td);
+          }
         }
-        if (hasViewBtn) {
-          $row.append("<td><button class='btn btn-info'>"+Btntext+"</button></td>");
+        if (hasReceiptBtn) {
+          $row.append("<td><button class='btn btn-info'>View Receipt</button></td>");
+        }
+        if (hasApproveBtn) {
+          $row.append("<td><button class='btn btn-success approve'>Approve</button><button class='btn btn-success deny'>Deny</button></td>");
         }
         $jqObj.append($row);
       }
+    },
+    handleErr: function(errMsg) {
+      console.log(errMsg);
+      $("#sucessdiv").addClass("hideme");
+      $("#errordiv").text(errMsg).removeClass("hideme");
+    },
+    handleSuccess: function(successMsg) {
+      console.log(successMsg);
+      $("#errdiv").addClass("hideme");
+      $("#sucessdiv").text(successMsg).removeClass("hideme");
     }
   };
   var emplfuncs = {
     getAllPending: function(){
+      console.log("Getting all pending requests for this employee...");
       $.ajax({
-        url: "",
+        url: "EmployeeGetPending",
         method: "GET",
         success: function(rtnData){
           console.log(rtnData);
           var $tbody = $("#pending-requests").find('tbody');
-          util.appendTable($tbody,rtnData);
+          var cols = ['reqID','reqTitle','description','amount','dateSubmitted'];
+          util.appendTable($tbody,rtnData,cols);
         },
-        error: function(err) {
-          console.log(err);
-        }
+        error: util.handleErr
       });
     },
     getAllResolved: function() {
+      console.log("Getting all resolved requests for this employee...");
       $.ajax({
-        url: "",
+        url: "EmployeeGetResolved",
         method: "GET",
         success: function(rtnData){
           console.log(rtnData);
           var $tbody = $("#resolved-requests").find('tbody');
-          util.appendTable($tbody,rtnData);
+          var cols = ['reqID','reqTitle','description','amount','status','dateSubmitted','dateResolved','mgrID'];
+          util.appendTable($tbody,rtnData,cols);
         },
-        error: function(err) {
-          console.log(err);
-        }
+        error: util.handleErr
       });
     },
-    updateInfo: function(){
-      $inputs = $("#emp-info-form input");
-      $.ajax({
-        url: '/UpdateEmployeeInfo',
-        method: POST,
-        data: {
-          "email": $inputs.get(3),
-          "phoneNumber": $inputs.get(5),
-          "address": $inputs.get(6),
-          "city": $inputs.get(7),
-          "state": $inputs.get(8),
-          "country": $inputs.get(9),
-          "zip": $inputs.get(10),
-        },
-        success: function(rtnData) {
-          $inputs.get(3).val(rtnData.email);
-          $inputs.get(5).val(rtnData.phoneNumber);
-          $inputs.get(6).val(rtnData.address);
-          $inputs.get(7).val(rtnData.city);
-          $inputs.get(8).val(rtnData.state);
-          $inputs.get(9).val(rtnData.country);
-          $inputs.get(10).val(rtnData.zip);
-        },
-        error: function(err) {
-          $("#errordiv").text(err.errMsg);
-        }
-      });
-    }
   };
   var mgrfuncs = {
     getAllPending: function() {
+      console.log("Getting all pending requests for all employees");
       $.ajax({
-        url: "",
+        url: "ManagerGetPending",
         method: "GET",
         success: function(rtnData){
           console.log(rtnData);
           var $tbody = $("#pending").find('tbody');
-          util.appendTable($tbody,rtnData);
+          var columns = ['reqID','reqTitle','description','amount','empID','dateSubmitted'];
+          util.appendTable($tbody,rtnData,columns,true,true);
         },
-        error: function(err){
-          console.log(err);
-        }
+        error: util.handleErr
       });
     },
     getAllResolved: function(){
+      console.log("Getting all resolved requests for all employees...");
       $.ajax({
-        url: "",
+        url: "ManagerGetResolved",
         method: "GET",
         success: function(rtnData){
           console.log(rtnData);
           var $tbody = $("#resolved").find('tbody');
-          util.appendTable($tbody,rtnData);
+          var columns = ['reqID','reqTitle','description','status','amount','empID','mgrID','dateResolved'];
+          util.appendTable($tbody,rtnData,columns,true,false);
         },
-        error: function(err){
-          console.log(err);
-        }
+        error: util.handleErr
       });
     },
     getAllEmployees: function(){
+      console.log("Getting all employees...");
       $.ajax({
-        url: "",
+        url: "ManagerGetAllEmployees",
         method: "GET",
         success: function(rtnData){
           console.log(rtnData);
           var $tbody = $("all-employees").find('tbody');
-          util.appendTable($tbody,rtnData);
+          var columns = ['empID','firstname','lastname'];
+          util.appendTable($tbody,rtnData,columns);
         },
-        error: function(err){
-          console.log(err);
-        }
+        error: util.handleErr
       });
     },
     getAllRequestsForEmployee: function(){
-      var text = $("#empName").val();
-      var firstName = text.split(" ")[0];
-      var lastName = text.split(" ")[1];
+      console.log("Getting all requests for the employee selected...");
+      var eid = $("#employeeID").val();
       $.ajax({
-        url: "",
+        url: "ManagerGetRequestForEmployee",
         method: "GET",
         data: {
-          firstName: firstName,
-          lastName: lastName
+          employeeID: eid
         },
         success: function(rtnData){
           console.log(rtnData);
           var $tbody = $("#reqbyemployee").find('tbody');
-          util.appendTable($tbody,rtnData);
+          var columns = ['reqID','reqTitle','status','amount','mgrID','dateSubmitted','dateResolved'];
+          $tbody.children().remove();
+          var jsdata = JSON.parse(data);
+          for (var i=0;i<data.length;i++) {
+            var obj = jsdata[i];
+            var $row = $(document.createElement('tr'));
+            for (var j=0;j<columns.length;j++) {
+              var column = columns[j];
+              if (obj.hasOwnProperty(column)) {
+                var text;
+                if (obj[column] != null) {text = obj[column];}
+                else {text = "N/A";}
+                var $td = $(document.createElement('td'));
+                $td.text(text);
+                $row.append($td);
+              }
+            }
+            if (hasReceiptBtn) {
+              $row.append("<td><button class='btn btn-info'>View Receipt</button></td>");
+            }
+            if (hasApproveBtn) {
+              $row.append("<td><button class='btn btn-success approve'>Approve</button><button class='btn btn-success deny'>Deny</button></td>");
+            }
+            $tbody.append($row);
+          }
         },
-        error: function(err){
-          console.log(err);
-        }
+        error: util.handleErr
+      });
+    },
+    approveRequest: function(){
+      console.log("Attempting to approve request #");
+      var requestID = Number($(this).parent().children().first().text());
+      $.ajax({
+        url: "ApproveRequest",
+        method: "POST",
+        data: $.param(requestID),
+        success: util.handleSuccess,
+        error: util.handleErr
+      });
+    },
+    denyRequest: function(){
+      console.log("Attempting to deny request #");
+      var requestID = Number($(this).parent().children().first().text());
+      $.ajax({
+        url: "DenyRequest",
+        method: "POST",
+        data: $.param(requestID),
+        success: util.handleSuccess,
+        error: util.handleErr
       });
     }
   };
   var initEventListeners = function(){
+    // View manipulation on homepage
     $("#request-dropdown").on('click',function(){
   	  $("#dropme").slideDown();
     });
@@ -152,7 +227,7 @@ $(document).ready(function(){
   	  $("#save-profile").show();
   	  $("#cancel-profile-update").show();
   	  $("#emp-info-form input").each(function(index){
-  		  console.log($(this).next().text());
+  		  console.log("Employee info form - input field "+(index+1)+": "+$(this).next().text());
   		  if (index != 0 && index != 1 && index != 4) {
   			  $(this).val($(this).next().text());
   			  $(this).removeClass('hidden');
@@ -169,15 +244,18 @@ $(document).ready(function(){
   	  $allinput.addClass('hidden');
   	  $allstatic.show();
     });
-    $("#manager-all-pending").on('click', mgrfuncs.getAllPending);
-    $("#manager-all-resolved").on('click', mgrfuncs.getAllResolved);
-    $("#manager-all-employees").on('click', mgrfuncs.getAllEmployees);
+
+    // ManagerRequestView ajax requests
+    //$("#manager-all-pending").on('click', mgrfuncs.getAllPending);
+    //$("#manager-all-resolved").on('click', mgrfuncs.getAllResolved);
+    //$("#manager-all-employees").on('click', mgrfuncs.getAllEmployees);
     $("#searchReqByEmp").on('click', mgrfuncs.getAllRequestsForEmployee);
+    $(".approve").on('click', mgrfuncs.approveRequest);
+    $(".deny").on('click', mgrfuncs.denyRequest);
 
-    $("#employee-all-pending").on('click', emplfuncs.getAllPending);
-    $("#employee-all-resolved").on('click', emplfuncs.getAllResolved);
-
-    $("#updateInfo").on('click', emplfuncs.updateEmpInfo);
+    // EmployeeRequestView ajax requests
+    $("#employee-pending").on('click', emplfuncs.getAllPending);
+    $("#employee-resolved").on('click', emplfuncs.getAllResolved);
   };
   initEventListeners();
 });

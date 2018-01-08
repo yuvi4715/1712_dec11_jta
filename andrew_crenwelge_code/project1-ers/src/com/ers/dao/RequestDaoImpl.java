@@ -28,17 +28,18 @@ public class RequestDaoImpl implements RequestDao {
 	public boolean initializeNewRequest(Request req) {
 		try(Connection conn = ConnectionUtil.getConnection()){
 			int statementIndex = 0;
-			String sql = "CALL insertNewRequest(REQUEST_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,?)";
+			String sql = "CALL insertNewRequest(?,?,?,?,?,?,?,?)";
 			PreparedStatement p = conn.prepareStatement(sql);
+			// requestId is set in db using a sequence
 			p.setInt(++statementIndex, req.getEmpID());
 			p.setString(++statementIndex, req.getReqTitle());
 			p.setString(++statementIndex, req.getStatus());
 			p.setDouble(++statementIndex, req.getAmount());
 			p.setTimestamp(++statementIndex, new Timestamp(System.currentTimeMillis()));
-			p.setTimestamp(++statementIndex, null);
-			p.setInt(++statementIndex, req.getMgrID());
+			p.setTimestamp(++statementIndex, null); // initialized requests are not resolved and thus do not have resolved timestamp
+			p.setNull(++statementIndex, java.sql.Types.NUMERIC);
 			p.setString(++statementIndex, req.getDescription());
-			if (p.executeUpdate() > 0) {
+			if (p.executeUpdate() >= 0) {
 				return true;
 			}
 		} catch (SQLException e) {
@@ -71,7 +72,7 @@ public class RequestDaoImpl implements RequestDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 	@Override
@@ -98,7 +99,7 @@ public class RequestDaoImpl implements RequestDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 	@Override
@@ -153,7 +154,7 @@ public class RequestDaoImpl implements RequestDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 	@Override
@@ -181,7 +182,7 @@ public class RequestDaoImpl implements RequestDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 	@Override
@@ -209,7 +210,7 @@ public class RequestDaoImpl implements RequestDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 	@Override
@@ -272,7 +273,7 @@ public class RequestDaoImpl implements RequestDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new Request();
 	}
 
 	@Override
@@ -291,7 +292,7 @@ public class RequestDaoImpl implements RequestDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new Employee();
 	}
 
 	@Override
@@ -320,6 +321,6 @@ public class RequestDaoImpl implements RequestDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 }

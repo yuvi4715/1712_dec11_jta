@@ -7,26 +7,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
     <title>ERS Sign In</title>
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body class="container">
   	<div class="page-header">
-  	  <h1>Login To ERS</h1>
+  	  <h1>Login To ERS - Expense Reimbursement System</h1>
   	</div>
   	<div class="row">
   	  <div class="col-sm-4 col-sm-offset-4">
-	    <c:if test="${not empty requestScope.errMsg}">
+	     <c:if test="${not empty requestScope.errMsg}">
 	      <div class="alert alert-danger">
             <c:out value="${requestScope.errMsg}" />
+          </div>
+        </c:if>
+        <c:if test="${not empty requestScope.successMsg}">
+	      <div class="alert alert-success">
+            <c:out value="${requestScope.successMsg}" />
           </div>
         </c:if>
   	    <form action="Login" method="post" class="well">

@@ -2,6 +2,7 @@ package com.ers.servlets;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,18 +27,21 @@ public class SubmitRequest extends HttpServlet {
 		Request r = new Request(); // make a new request
 		// reqId will be set on db via sequence
 		r.setEmpID(e1.getId()); // set empid to be the id of the current employee who is logged in
-		r.setStatus("pending"); // all initial requests are pending
+		r.setReqTitle(req.getParameter("title"));
+		r.setStatus("Pending"); // all initial requests are pending
 		r.setAmount(Double.parseDouble(req.getParameter("amount"))); // get amount from form submission
 		r.setDateSubmitted(new Timestamp(System.currentTimeMillis())); // timestamp the request
 		r.setDescription(req.getParameter("description")); // get the description from the form
 		RequestDao rdao = RequestDaoImpl.getInstance();
 		boolean success = rdao.initializeNewRequest(r);
 		if (success) {
-			req.setAttribute("successMsg", "The request was submitted successfully!");
+			req.setAttribute("successMsg", "Your request was submitted successfully");
 		}
 		else {
 			req.setAttribute("errMsg", "An error occurred: The request was not submitted");
 		}
+		List<Request> list = rdao.getRequestsByEmployee(e1.getId());
+		req.setAttribute("allRequests", list);
 		req.getRequestDispatcher("EmployeeRequestView.jsp").forward(req,resp);
 	}
 }
