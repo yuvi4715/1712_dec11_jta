@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>1712_dynamicWeb_2.5</display-name>
+  <welcome-file-list>
+    <welcome-file>maurice.html</welcome-file>
+    <welcome-file>yuvi.htm</welcome-file>
+    <welcome-file>tony.jsp</welcome-file>
+    <welcome-file>joseph.html</welcome-file>
+    <welcome-file>william.htm</welcome-file>
+    <welcome-file>john.htm</welcome-file>
+    <welcome-file>robin.html</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>HelloWorld</servlet-name>
+    <servlet-class>com.revature.servlets.HelloWorld</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HelloWorld</servlet-name>
+    <url-pattern>/HelloWorld</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SecondServlet</display-name>
+    <servlet-name>SecondServlet</servlet-name>
+    <servlet-class>com.revature.servlets.SecondServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SecondServlet</servlet-name>
+    <url-pattern>/SecondServlet</url-pattern>
+    <url-pattern>/hello</url-pattern>
+    <url-pattern>/whoareyou</url-pattern>
+    <url-pattern>/howdoesthiswork</url-pattern>
+    <url-pattern>/login.html</url-pattern>
+    <url-pattern>/login.done</url-pattern>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+</web-app>

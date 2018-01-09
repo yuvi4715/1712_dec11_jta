@@ -1,0 +1,56 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  
+  <context-param>
+  	<param-name>QuarterBack</param-name>
+  	<param-value>Matt Ryan</param-value>
+  </context-param>
+  <servlet>
+  	<servlet-name>One</servlet-name>
+  	<display-name>One</display-name>
+  	<description></description>
+  	<servlet-class>com.revature.servlets.One</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Two</servlet-name>
+  	<display-name>Two</display-name>
+  	<description></description>
+  	<servlet-class>com.revature.servlets.Two</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ContextConfigExample</servlet-name>
+  	<display-name>ContextConfigExample</display-name>
+  	<description></description>
+  	<servlet-class>com.revature.servlets.ContextConfigExample</servlet-class>
+  	<init-param>
+  		<param-name>WideReceiver</param-name>
+  		<param-value>Julio Jones</param-value>
+  	</init-param>
+  </servlet>
+  <servlet>
+  	<servlet-name>Three</servlet-name>
+  	<display-name>Three</display-name>
+  	<description></description>
+  	<servlet-class>com.revature.servlets.Three</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>One</servlet-name>
+  	<url-pattern>/One</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Two</servlet-name>
+  	<url-pattern>/Two</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ContextConfigExample</servlet-name>
+  	<url-pattern>/ContextConfigExample</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Three</servlet-name>
+  	<url-pattern>/Three</url-pattern>
+  </servlet-mapping>
+</web-app>
