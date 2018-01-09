@@ -1,0 +1,297 @@
+drop user LOGIN_TEST_DB cascade;
+CREATE USER LOGIN_TEST_DB IDENTIFIED BY p4ssw0rd;
+GRANT DBA TO LOGIN_TEST_DB WITH ADMIN OPTION;
+GRANT ALL PRIVILEGES TO OFERROSEN on ;
+/
+drop table users;
+
+CREATE TABLE USERS
+(
+  U_ID NUMBER NOT NULL,
+  U_FIRSTNAME varchar(20) NOT NULL,
+  U_LASTNAME varchar(20) NOT NULL,
+  U_USERNAME varchar(20) NOT NULL,
+  U_PASSWORD varchar(32) NOT NULL,
+  U_EMAIL varchar(100) NOT NULL,
+  U_MANAGER NUMBER NOT NULL, --1 if the user is a manager, 0 if not
+  U_LOGGEDIN NUMBER NOT NULL, -- 1 if the user is logged in, 0 if not
+  CONSTRAINT PK_USERS PRIMARY KEY (U_ID),
+  CONSTRAINT UNQ_USERNAME_U UNIQUE (U_USERNAME)
+);
+/
+--  OPEN REQUESTS
+CREATE TABLE O_REQUESTS     
+(
+  R_ID NUMBER NOT NULL,                 -- Request ID
+  E_ID NUMBER NOT NULL,                 -- ID of the employee who issued the request
+  AMOUNT varchar(16) NOT NULL,
+  SDATE varchar(22) DEFAULT TO_CHAR(CURRENT_TIMESTAMP, '(HH24:MI)MM/DD/YYYY'),
+  EDATE varchar(22) DEFAULT NULL,
+  STATUS varchar(10) DEFAULT 'Pending' NOT NULL,
+  RTYPE varchar(20),                   --Type of request - travel, lodging, training, other
+  RTYPE2 varchar(200) DEFAULT NULL,      -- Request details (optional)
+  RES_ID NUMBER DEFAULT NULL, --CHECK (RES_ID!=E_ID),      -- ID of manager who resolved request
+  RFLAG NUMBER(1) DEFAULT 0 NOT NULL,   --1 if receipt attached, 0 if not
+  RURL varchar(100) DEFAULT NULL,          --receipt URL (optional)
+  CONSTRAINT PK_Req1 PRIMARY KEY (R_ID)
+--  CONSTRAINT UNQ_USERNAME_M UNIQUE (M_USERNAME)
+);
+/
+-- CLOSED REQUESTS
+CREATE TABLE C_REQUESTS     
+(
+  R_ID NUMBER NOT NULL,                 -- Request ID
+  E_ID NUMBER NOT NULL,                 -- ID of the employee who issued the request
+  AMOUNT varchar(16) NOT NULL,
+  SDATE varchar(22)NOT NULL,
+  EDATE varchar(22)NOT NULL,
+  STATUS varchar(10) NOT NULL,
+  RTYPE varchar(20)NOT NULL,                   --Type of request - travel, lodging, training, other
+  RTYPE2 varchar(200) DEFAULT NULL,      -- Request details (optional)
+  RES_ID NUMBER NOT NULL, --CHECK (RES_ID!=E_ID),   -- ID of manager who resolved request
+  RFLAG NUMBER(1) DEFAULT 0 NOT NULL,   --1 if receipt attached, 0 if not
+  RURL varchar(100) DEFAULT NULL,          --receipt URL (optional)
+  CONSTRAINT PK_Req2 PRIMARY KEY (R_ID)
+--  CONSTRAINT UNQ_USERNAME_M UNIQUE (M_USERNAME)
+);
+/
+
+--SEQUENCES USED FOR AUTOINCREMENT
+drop sequence REQUESTS_SEQ;
+CREATE SEQUENCE REQUESTS_SEQ
+  START WITH 1
+  INCREMENT BY 1;
+  /
+  
+drop sequence USERS_SEQ;  
+  CREATE SEQUENCE USERS_SEQ
+  START WITH 1
+  INCREMENT BY 1;
+  
+  /
+
+--HASHING FUNCTION THAT COMBINES USERNAME, PASSWORD AND A SPECIAL WORD  
+CREATE OR REPLACE FUNCTION GET_HASH(USERNAME varchar, PASSWORD varchar) RETURN varchar
+IS
+EXTRA varchar(10) := 'SALT';
+BEGIN
+  RETURN TO_CHAR(DBMS_OBFUSCATION_TOOLKIT.MD5(
+  INPUT => UTL_I18N.STRING_TO_RAW(DATA => USERNAME || PASSWORD || EXTRA)));
+END;
+/
+/*
+PROCEDURE TO CLOSE A REQUEST
+Recieves as Input -  RID (request ID), STATUS (final status), 
+RES_ID (ID of manager who closed the request)
+OUTPUTS - FAIL
+FAIL = 0 - no failure, status is updated and the request is moved to C_REQUESTS table
+FAIL = 1 - RES_ID=E_ID, manager tried to resolve his own request
+FAIL = 2 - the final status is not valid (not declined or approved)
+*/
+CREATE OR REPLACE PROCEDURE CLOSE_REQUEST(
+RID IN NUMBER, 
+RRES_ID IN NUMBER, 
+SSTATUS IN VARCHAR,
+FAIL OUT NUMBER)
+AS
+EID C_REQUESTS.E_ID%TYPE;
+AAMOUNT C_REQUESTS.AMOUNT%TYPE;
+SSDATE C_REQUESTS.SDATE%TYPE;
+RRTYPE C_REQUESTS.RTYPE%TYPE;
+RRTYPE2 C_REQUESTS.RTYPE2%TYPE;
+RRFLAG C_REQUESTS.RFLAG%TYPE;
+RRURL C_REQUESTS.RURL%TYPE;
+BEGIN
+SELECT E_ID, AMOUNT, SDATE, RTYPE, RTYPE2, RFLAG, RURL 
+INTO EID, AAMOUNT,SSDATE,RRTYPE,RRTYPE2,RRFLAG,RRURL 
+FROM O_REQUESTS WHERE R_ID=RID;
+
+IF EID=RRES_ID THEN
+    FAIL:=1;
+ELSE
+    IF (SSTATUS='Approved' OR SSTATUS='Denied') THEN
+        FAIL:=0;  
+        INSERT INTO C_REQUESTS (R_ID,E_ID,AMOUNT,SDATE,EDATE,STATUS,
+        RTYPE,RTYPE2,RES_ID,RFLAG,RURL)
+        VALUES(RID,EID,AAMOUNT,SSDATE,
+        TO_CHAR(CURRENT_TIMESTAMP, '(HH24:MI)MM/DD/YYYY'),
+        SSTATUS,RRTYPE,RRTYPE2,RRES_ID,RRFLAG,RRURL); 
+        
+        DELETE FROM O_REQUESTS WHERE R_ID=RID;
+        commit;           
+    ELSE
+        FAIL:=2;
+    END IF;
+END IF;
+END;
+/
+
+--TRIGGER THAT GETS NEXT SEQUENCE VALUE FOR USER ID AND HASHES BLANK PASSWORD
+CREATE OR REPLACE TRIGGER USER_INSERT
+BEFORE INSERT
+ON USERS
+FOR EACH ROW
+BEGIN
+  /* INCREASE THE SEQUENCE */
+  IF :NEW.U_ID IS NULL THEN
+    SELECT USERS_SEQ.NEXTVAL INTO :NEW.U_ID FROM DUAL;
+  END IF;
+  /* SAVE HASH INSTEAD OF PASSWORD */
+  SELECT GET_HASH(:NEW.U_USERNAME,:NEW.U_PASSWORD) INTO :NEW.U_PASSWORD FROM DUAL;
+END;
+/
+
+--STORED PROCEDURE TO INSERT USERS
+--if an identical username exists, does not insert and returns fail=1
+CREATE OR REPLACE PROCEDURE INSERT_USERS(
+FIRSTNAME varchar, LASTNAME varchar, USERNAME varchar, PASSWORD varchar, 
+EMAIL varchar,MFLAG NUMBER,LFLAG NUMBER,FAIL OUT NUMBER)
+AS
+NUM NUMBER;
+BEGIN
+SELECT COUNT(*) INTO NUM FROM(SELECT U_USERNAME FROM USERS WHERE U_USERNAME = USERNAME);
+IF NUM=0 THEN
+  INSERT INTO USERS VALUES(NULL, FIRSTNAME, LASTNAME, USERNAME, PASSWORD, 
+  EMAIL, MFLAG,LFLAG);
+  FAIL:=0;
+  COMMIT;
+ELSE
+    FAIL:=1;
+END IF;
+END;
+/
+--STORED PROCEDURE TO Submit Request    
+CREATE OR REPLACE PROCEDURE SUBMIT_REQUEST(
+EEID IN NUMBER, 
+AAMOUNT IN VARCHAR, 
+RRTYPE IN VARCHAR,
+RRTYPE2 IN VARCHAR,
+RRFLAG IN NUMBER,
+RRURL IN VARCHAR)
+--RID OUT NUMBER,
+--SSDATE OUT VARCHAR
+AS
+NUM NUMBER;
+BEGIN
+INSERT INTO O_REQUESTS (E_ID,AMOUNT,RTYPE,RTYPE2,RFLAG,RURL)
+VALUES(EEID,'$'||AAMOUNT,RRTYPE,RRTYPE2,RRFLAG,RRURL); 
+COMMIT;
+--SELECT R_ID,SDATE 
+  --  INTO RID,SSDATE
+    --FROM O_REQUESTS WHERE (E_ID=EEID AND AMOUNT=AAMOUNT);
+    --TO_CHAR(CURRENT_TIMESTAMP, 'HH24:MI, MM/DD/YYYY')
+END;
+/
+--TRIGGER THAT GETS NEXT SEQUENCE VALUE FOR REQUEST ID
+CREATE OR REPLACE TRIGGER REQUEST_INSERT
+BEFORE INSERT
+ON O_REQUESTS
+FOR EACH ROW
+BEGIN
+  /* INCREASE THE SEQUENCE */
+  IF :NEW.R_ID IS NULL THEN
+    SELECT REQUESTS_SEQ.NEXTVAL INTO :NEW.R_ID FROM DUAL;
+  END IF;
+END;
+/
+
+--STORED PROCEDURE TO UPDATE USERS
+CREATE OR REPLACE PROCEDURE UPDATE_USERS(
+UID in NUMBER,
+FIRSTNAME in varchar, 
+LASTNAME in varchar, 
+USERNAME in varchar, 
+PASSWORD in varchar, 
+EMAIL in varchar,
+Fail out number)
+AS
+Num1 Number;
+EEID NUMBER;
+BEGIN
+SELECT COUNT(*) INTO NUM1 FROM(SELECT U_USERNAME FROM USERS WHERE U_USERNAME = USERNAME);
+IF NUM1=1 THEN
+    SELECT U_ID INTO EEID FROM USERS WHERE U_USERNAME = USERNAME;
+    IF UID=EEID THEN
+        UPDATE USERS
+        SET U_FIRSTNAME=FIRSTNAME, U_LASTNAME=LASTNAME, U_USERNAME=USERNAME, 
+        U_PASSWORD=GET_HASH(USERNAME,PASSWORD), U_EMAIL=EMAIL
+        WHERE U_ID=UID;
+        FAIL:=0;
+        COMMIT;
+    ELSE
+        FAIL:=1;
+    END IF;
+END IF;
+IF NUM1=0 THEN
+    UPDATE USERS
+    SET U_FIRSTNAME=FIRSTNAME, U_LASTNAME=LASTNAME, U_USERNAME=USERNAME, 
+    U_PASSWORD=GET_HASH(USERNAME,PASSWORD), U_EMAIL=EMAIL
+    WHERE U_ID=UID;
+    FAIL:=0;
+    COMMIT;
+END IF;
+IF NUM1>1 THEN
+    FAIL:=1;
+END IF;
+END;
+/
+/*
+STORED PROCEDURE TO LOGIN
+Will NOT log in if - 
+
+1) the user is trying to log in to the wrong homepage (M2!=MANAGERFLAG)
+#1 is phased out, the user no longer needs to declare if he is a manager or not
+
+2) the password is incorrect (P2!=GET_HASH(USERNAME,PASSWORD))
+3) the user name is incorrect (U2='0')
+
+4) the user is already logged in  (U_LOGGEDIN is already 1 during login)
+#4 is phased out, i.e the same user can login from multiple locations
+
+Each of the above will yeild a different error message on the client side
+Note - the U2 variable *eventually* recieves the value of U_FIRSTNAME
+and 'goes out' of the fname output. According to the logic on the client side, 
+if fname='0' - the *username* was entered incorrectly
+else the username is assumed to be correct
+*/
+CREATE OR REPLACE PROCEDURE USER_LOGIN(
+USERNAME IN varchar,
+PASSWORD IN varchar,
+MANAGERFLAG IN number,
+id out USERS.U_ID%TYPE,
+fname out USERS.U_FIRSTNAME%TYPE,
+lname out USERS.U_LASTNAME%TYPE,
+pass out USERS.U_PASSWORD%TYPE,
+email out USERS.U_EMAIL%TYPE,
+mang out USERS.U_MANAGER%TYPE,
+loggedin out USERS.U_LOGGEDIN%TYPE)
+AS
+U2 varchar(20); 
+P2 USERS.U_PASSWORD%TYPE;
+M2 USERS.U_MANAGER%TYPE;
+L2 USERS.U_LOGGEDIN%TYPE;
+BEGIN
+SELECT COUNT(*) INTO U2 FROM(SELECT U_USERNAME FROM USERS WHERE U_USERNAME = USERNAME); --0 if the username does not exist
+IF U2='0' THEN --username test
+    id:=0; fname:='0'; lname:='0'; pass:='0'; email:='0'; mang:=0; loggedin:=0; 
+ELSE
+    SELECT U_MANAGER,U_LOGGEDIN, U_PASSWORD, U_FIRSTNAME INTO M2,L2,P2,U2 FROM USERS WHERE U_USERNAME=USERNAME;
+    IF (M2!=MANAGERFLAG OR P2!=GET_HASH(USERNAME,PASSWORD))THEN -- manager and password test
+        P2:='0';
+    ELSE
+        UPDATE USERS SET U_LOGGEDIN=1 WHERE U_USERNAME=USERNAME;
+        L2:=1;
+ /*       IF L2=0 THEN    --currently logged in test
+            UPDATE USERS SET U_LOGGEDIN=1 WHERE U_USERNAME=USERNAME;
+            L2:=1;
+        ELSE
+            L2:=0;
+        END IF;
+*/
+    END IF;
+    SELECT U_ID,U2,U_LASTNAME,P2,U_EMAIL,M2,L2 
+    INTO id,fname,lname,pass,email,mang,loggedin
+    FROM USERS WHERE U_USERNAME=USERNAME;
+END IF;
+END;
+/
