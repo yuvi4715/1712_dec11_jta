@@ -1,0 +1,62 @@
+@charset "ISO-8859-1";
+
+  .jumbotron {
+     background-color: rgb(225, 255, 255);
+     padding:1px 0 1px 0;
+      float: none;
+      border: 2px solid #265a88;
+      margin:0 0 10px 0;
+    }
+    
+   .btn{
+margin: 10px;
+    position: absolute;
+    right: 50%;
+}
+
+.panel{ 
+
+             width: 96%;
+            margin:20px 20px 20px 20px;
+             background-color:rgb(225, 255, 255);
+             }
+             
+             table{
+                border: 1px solid black;
+                width:100%
+             }
+             
+             td{
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;  
+   
+}
+
+label {
+width:100%;
+}
+
+th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+    font-size:15px;      
+}
+
+input[type="text"]{
+ font-size:12px;
+}
+h5{
+     font-size:50px;
+     }
+     #log1{
+     right: 47%; 
+     margin:0;
+     position: absolute;
+     }
+     
+
+}
+ 
+   
