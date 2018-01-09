@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -57,10 +58,19 @@ public class Servlet extends HttpServlet {
 		{
 			response.setContentType("text/html");
 			PrintWriter pw = response.getWriter();
-			pw.println("<html> <body> <p> Username/Password combination does not match ***</p></body></html>");
+			pw.println("<html> <body> <p> "
+					+ "Username/Password combination does not match "
+					+ "***</p></body></html>");
 		}
 		else
 		{
+			ServletContext sharedName = getServletConfig().getServletContext();
+			sharedName.setAttribute("SharedName", username);
+			ServletContext sharedId = getServletConfig().getServletContext();
+			sharedId.setAttribute("SharedId", a.getEid());
+			ServletContext isManager = getServletConfig().getServletContext();
+			isManager.setAttribute("isManager", a.getIsManager());
+			
 			response.sendRedirect("Employee.html");
 		}
 	}
