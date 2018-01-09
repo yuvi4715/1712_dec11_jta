@@ -6,23 +6,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.ReimburseOpen;
+import beans.ReimbOpen;
 import ers.Connect;
 
 public class ReimbOpenDAOImpl implements ReimbOpenDAO
 {
 
 	@Override
-	public List<ReimburseOpen> getAllOpenReimb() throws SQLException
+	public List<ReimbOpen> getAllOpenReimb() throws SQLException
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ReimburseOpen> getAllOpenReimbsById(String id) throws SQLException
+	public List<ReimbOpen> getAllOpenReimbById(String id) throws SQLException
 	{
-		List<ReimburseOpen> roList = new ArrayList<ReimburseOpen>();
+		List<ReimbOpen> roList = new ArrayList<ReimbOpen>();
 		
 		String sql = "select * from Reimburse_Open where eid = ?";
 		PreparedStatement stmt = Connect.getConnection().prepareStatement(sql);
@@ -30,10 +30,10 @@ public class ReimbOpenDAOImpl implements ReimbOpenDAO
 		
 		ResultSet rs = stmt.executeQuery();
 		
-		ReimburseOpen ro = null;
+		ReimbOpen ro = null;
 		while (rs.next())
 		{
-			ro = new ReimburseOpen(rs.getInt(1), rs.getInt(2), rs.getInt(3));
+			ro = new ReimbOpen(rs.getInt(1), rs.getInt(2), rs.getInt(3));
 			roList.add(ro);
 		}
 		

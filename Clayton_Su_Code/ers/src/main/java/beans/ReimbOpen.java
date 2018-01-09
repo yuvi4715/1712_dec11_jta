@@ -1,12 +1,12 @@
 package beans;
 
-public class ReimburseOpen
+public class ReimbOpen
 {
 	int ridO;
 	int amount;
 	int eid;
 	
-	public ReimburseOpen(int rid, int amnt, int id)
+	public ReimbOpen(int rid, int amnt, int id)
 	{
 		this.ridO = rid;
 		this.amount = amnt;

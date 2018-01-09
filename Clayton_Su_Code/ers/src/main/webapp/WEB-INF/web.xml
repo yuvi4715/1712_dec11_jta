@@ -21,6 +21,18 @@
   	<description></description>
   	<servlet-class>ers.OpenReimbServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ViewOwnRequestsServlet</servlet-name>
+  	<display-name>ViewOwnRequestsServlet</display-name>
+  	<description></description>
+  	<servlet-class>ers.ViewOwnRequestsServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ViewClosedReimbsServlet</servlet-name>
+  	<display-name>ViewClosedReimbsServlet</display-name>
+  	<description></description>
+  	<servlet-class>ers.ViewClosedReimbsServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>Servlet</servlet-name>
   	<url-pattern>/Servlet</url-pattern>
@@ -32,5 +44,13 @@
   <servlet-mapping>
   	<servlet-name>OpenReimbServlet</servlet-name>
   	<url-pattern>/OpenReimbServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewOwnRequestsServlet</servlet-name>
+  	<url-pattern>/ViewOwnRequestsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewClosedReimbsServlet</servlet-name>
+  	<url-pattern>/ViewClosedReimbsServlet</url-pattern>
   </servlet-mapping>
 </web-app>
