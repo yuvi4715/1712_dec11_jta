@@ -1,14 +1,8 @@
 package com.ers.test;
 
-import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.ers.dao.EmployeeDao;
-import com.ers.dao.EmployeeDaoImpl;
-import com.ers.model.Employee;
 
 public class EmployeeDAOTest {
 
@@ -22,8 +16,8 @@ public class EmployeeDAOTest {
 
 	@Test
 	public void testAddNewEmployee() {
-		EmployeeDao edao = EmployeeDaoImpl.getInstance();
-		Employee e1 = new Employee(100,"Testfname","Testlname","Test@gmail.com","01-01-1990","111-111-1111","123 Test St","Testcity","Teststate","Testcountry","Testzip",true);
+		//EmployeeDao edao = EmployeeDaoImpl.getInstance();
+		//Employee e1 = new Employee(100,"Testfname","Testlname","Test@gmail.com","01-01-1990","111-111-1111","123 Test St","Testcity","Teststate","Testcountry","Testzip",true);
 		//int id, String firstname,String lastname,String email,String birthdate,String phoneNum,String address,String city,String state, String country, String zip, Boolean isManager
 		/*boolean success = edao.addNewEmployee(e1);
 		if (success) {

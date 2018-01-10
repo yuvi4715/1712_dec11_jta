@@ -13,6 +13,7 @@ import java.util.Map;
 import com.ers.model.Employee;
 import com.ers.model.Request;
 import com.ers.util.ConnectionUtil;
+import com.ers.util.LogUtil;
 
 public class RequestDaoImpl implements RequestDao {
 	private static RequestDaoImpl requestDaoImpl;
@@ -42,6 +43,7 @@ public class RequestDaoImpl implements RequestDao {
 			p.setNull(++statementIndex, java.sql.Types.NUMERIC);
 			p.setString(++statementIndex, req.getDescription());
 			if (p.executeUpdate() >= 0) {
+				LogUtil.logger.info("New request created");
 				return true;
 			}
 		} catch (SQLException e) {
@@ -218,12 +220,13 @@ public class RequestDaoImpl implements RequestDao {
 	@Override
 	public boolean approveRequest(Request r, int mgrID) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "UPDATE requests SET statid=2, resolvedby=?, endtime=CURRENT_TIMESTAMP WHERE reqid=?; commit;";
+			String sql = "UPDATE requests SET statid=2, resolvedby=?, endtime=CURRENT_TIMESTAMP WHERE reqid=?";
 			PreparedStatement p = conn.prepareStatement(sql);
 			p.setInt(1, mgrID);
 			p.setInt(2, r.getReqID());
 			int rowsUpdated = p.executeUpdate();
 			if (rowsUpdated == 1) {
+				LogUtil.logger.info("Request #"+r.getReqID()+" approved by manager of ID="+mgrID);
 				return true;
 			}
 			else {
@@ -238,12 +241,13 @@ public class RequestDaoImpl implements RequestDao {
 	@Override
 	public boolean denyRequest(Request r, int mgrID) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "UPDATE requests SET statid=3, resolvedby=?, endtime=CURRENT_TIMESTAMP WHERE reqid=?; commit;";
+			String sql = "UPDATE requests SET statid=3, resolvedby=?, endtime=CURRENT_TIMESTAMP WHERE reqid=?";
 			PreparedStatement p = conn.prepareStatement(sql);
 			p.setInt(1, mgrID);
 			p.setInt(2, r.getReqID());
 			int rowsUpdated = p.executeUpdate();
 			if (rowsUpdated == 1) {
+				LogUtil.logger.info("Request #"+r.getReqID()+" denied by manager of ID="+mgrID);
 				return true;
 			}
 			else {

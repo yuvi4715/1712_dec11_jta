@@ -47,7 +47,6 @@ $(document).ready(function(){
     },
     handleErr: function(errMsg) {
       console.log(errMsg);
-      var err = JSON.parse(errMsg);
       $("#successdiv").addClass("hideme");
       $("#errordiv").text(err).removeClass("hideme");
     },
@@ -101,12 +100,16 @@ $(document).ready(function(){
           var $tbody = $("#reqbyemployee").find('tbody');
           var columns = ['reqID','reqTitle','description','status','amount','mgrID','dateSubmitted','dateResolved'];
           util.appendTable($tbody,rtnData,columns,true,true);
+          $("#reqbyemployee .approve").on('click', mgrfuncs.approveRequest);
+          $("#reqbyemployee .deny").on('click', mgrfuncs.denyRequest);
         },
         error: util.handleErr
       });
     },
     approveRequest: function(){
       var requestID = Number($(this).closest('tr').children().first().text());
+      $(this).siblings().remove();
+      $(this).remove();
       console.log("Attempting to approve request #",requestID);
       var objToSend = {
         id: requestID
@@ -128,6 +131,8 @@ $(document).ready(function(){
     },
     denyRequest: function(){
       var requestID = Number($(this).closest('tr').children().first().text());
+      $(this).siblings().remove();
+      $(this).remove();
       console.log("Attempting to deny request #",requestID);
       var objToSend = {
         id: requestID

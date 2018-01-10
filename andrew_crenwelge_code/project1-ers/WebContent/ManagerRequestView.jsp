@@ -214,7 +214,7 @@
 			  <table class="table table-bordered table-striped table-hover">
 				  <thead><tr>
 				    <th class="col-md-1">Reimbursement Request No.</th>
-				    <th class="col-md-1">Title</th>
+				    <th class="col-md-1">Name</th>
 				    <th class="col-md-2">Description</th>
 				    <th class="col-md-1">Status</th>
 				    <th class="col-md-1">Amount</th>

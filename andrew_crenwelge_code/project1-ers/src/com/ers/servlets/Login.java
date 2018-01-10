@@ -33,8 +33,8 @@ public class Login extends HttpServlet {
 			u1.setUsername(uname);
 			req.getSession().setAttribute("employee", e1);
 			req.getSession().setAttribute("user", u1);
-			System.out.println("Employee info: "+e1);
-			System.out.println("User info: "+u1);
+			// System.out.println("Employee info: "+e1);
+			// System.out.println("User info: "+u1);
 			if (e1.getIsManager()) {
 				req.getRequestDispatcher("ManagerHomepage.jsp").forward(req,resp);
 			}

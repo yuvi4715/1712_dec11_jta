@@ -131,7 +131,7 @@
 				        <td><c:out value="${req.getReqTitle()}"></c:out></td>
 				        <td><c:out value="${req.getDescription()}"></c:out></td>
 				        <td><c:out value="${req.getStatus()}"></c:out></td>
-				        <td><c:out value="$\${req.getAmount()}"></c:out></td>
+				        <td><c:out value="$ ${req.getAmount()}"></c:out></td>
 				        <td><c:out value="${requestScope.mgrMap.get(req.getMgrID())}"></c:out></td>
 				        <td><c:out value="${req.getDateSubmitted().toString().substring(0,19)}"></c:out></td>
 				        <td><c:out value="${req.getDateResolved().toString().substring(0,19)}"></c:out></td>

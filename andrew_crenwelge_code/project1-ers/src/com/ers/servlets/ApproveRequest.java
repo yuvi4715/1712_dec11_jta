@@ -36,11 +36,15 @@ public class ApproveRequest extends HttpServlet {
         AjaxObj_reqid reqToApprove = mapper.readValue(json, AjaxObj_reqid.class);
 		RequestDao rdao = RequestDaoImpl.getInstance();
 		Request r = rdao.getRequestById(reqToApprove.getId());
+		// write the response
 		resp.setContentType("application/json");
 		RtnMsg obj = new RtnMsg();
 		obj.setSuccessMsg("The request was approved");
 		obj.setErrMsg("Sorry, the request was not approved");
 		PrintWriter pw = resp.getWriter();
+		// attempt to approve the request
+		// System.out.println(r);
+		// System.out.println(mgr.getId());
 		boolean success = rdao.approveRequest(r,mgr.getId());
 		if (success) {
 			obj.setSuccess(true);
