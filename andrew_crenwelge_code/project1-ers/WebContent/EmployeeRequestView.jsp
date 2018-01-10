@@ -131,10 +131,10 @@
 				        <td><c:out value="${req.getReqTitle()}"></c:out></td>
 				        <td><c:out value="${req.getDescription()}"></c:out></td>
 				        <td><c:out value="${req.getStatus()}"></c:out></td>
-				        <td><c:out value="${req.getAmount()}"></c:out></td>
-				        <td><c:out value="${req.getMgrID()}"></c:out></td>
-				        <td><c:out value="${req.getDateSubmitted()}"></c:out></td>
-				        <td><c:out value="${req.getDateResolved()}"></c:out></td>
+				        <td><c:out value="$\${req.getAmount()}"></c:out></td>
+				        <td><c:out value="${requestScope.mgrMap.get(req.getMgrID())}"></c:out></td>
+				        <td><c:out value="${req.getDateSubmitted().toString().substring(0,19)}"></c:out></td>
+				        <td><c:out value="${req.getDateResolved().toString().substring(0,19)}"></c:out></td>
 				        </tr>
 				      </c:forEach>
 				    </tr>
@@ -151,13 +151,7 @@
 				    <th>Date Submitted</th></tr>
 				  </thead>
 				  <tbody>
-				    <tr>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				    </tr>
+				    <tr></tr>
 				  </tbody>
 			  </table>
 		  </div>
@@ -174,16 +168,7 @@
 				    <th>Date Resolved</th></tr>
 				  </thead>
 				  <tbody>
-				    <tr>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				      <td>Test</td>
-				    </tr>
+				    <tr></tr>
 				  </tbody>
 			  </table>
 		  </div>

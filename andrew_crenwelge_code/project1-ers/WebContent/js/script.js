@@ -1,57 +1,36 @@
 // requires jQuery
 $(document).ready(function(){
-  var old = {
-    updateInfo: function(){
-      console.log("Attempting to update this employee's info...");
-      $inputs = $("#emp-info-form input");
-      console.log($inputs.eq(3).val());
-      console.log($inputs.eq(5).val());
-      console.log($inputs.eq(6).val());
-      console.log($inputs.eq(7).val());
-      console.log($inputs.eq(8).val());
-      console.log($inputs.eq(9).val());
-      var dataToSend = {
-        email: $inputs.eq(3).val(),
-        phoneNumber: $inputs.eq(5).val(),
-        address: $inputs.eq(6).val(),
-        city: $inputs.eq(7).val(),
-        state: $inputs.eq(8).val(),
-        country: $inputs.eq(9).val(),
-        zip: $inputs.eq(10).val()
-      };
-      $.ajax({
-        url: 'UpdateEmployeeInfo',
-        method: "POST",
-        data: $.param(dataToSend),
-        success: function(rtnData) {
-          console.log(rtnData);
-          $inputs.eq(3).val(rtnData.email);
-          $inputs.eq(5).val(rtnData.phoneNumber);
-          $inputs.eq(6).val(rtnData.address);
-          $inputs.eq(7).val(rtnData.city);
-          $inputs.eq(8).val(rtnData.state);
-          $inputs.eq(9).val(rtnData.country);
-          $inputs.eq(10).val(rtnData.zip);
-          handleSuccess(rtnData);
-        },
-        error: util.handleErr
-      });
-    }
-  };
   var util = {
+    formatTime: function(time) {
+      var formatted = String(new Date(time));
+      if (formatted != 'Invalid Date') {
+        return formatted;
+      }
+      else {
+        return "N/A";
+      }
+    },
     appendTable: function($jqObj,data,colsToMatch,hasReceiptBtn,hasApproveBtn) {
+      function formatTime() {}
+      console.log("inside appendTable");
+      console.log(data);
       $jqObj.children().remove();
-      var jsdata = JSON.parse(data);
-      for (var i=0;i<data.length;i++) {
-        var obj = jsdata[i];
-        console.log(obj);
+      var empMap = data.map;
+      var reqList = data.requestList;
+      for (var i=0;i<reqList.length;i++) {
+        var req = reqList[i];
+        console.log(req);
         var $row = $(document.createElement('tr'));
         for (var j=0;j<colsToMatch.length;j++) {
           var column = colsToMatch[j];
-          if (obj.hasOwnProperty(column)) {
+          if (req.hasOwnProperty(column)) {
             var text;
-            if (obj[column] != null) {text = obj[column];}
+            var value = req[column];
+            if (value != null) {text = value;}
             else {text = "N/A";}
+            if (column=='amount') {text = "$"+text;}
+            else if (column=='dateSubmitted' || column=='dateResolved') {text = this.formatTime(text);}
+            else if (column=='mgrID') {text = empMap[value];}
             var $td = $(document.createElement('td'));
             $td.text(text);
             $row.append($td);
@@ -60,21 +39,22 @@ $(document).ready(function(){
         if (hasReceiptBtn) {
           $row.append("<td><button class='btn btn-info'>View Receipt</button></td>");
         }
-        if (hasApproveBtn) {
-          $row.append("<td><button class='btn btn-success approve'>Approve</button><button class='btn btn-success deny'>Deny</button></td>");
+        if (req.status == 'Pending' && hasApproveBtn==true) {
+          $row.append("<td><button class='btn btn-success approve'>Approve</button>&ensp;<button class='btn btn-danger deny'>Deny</button></td>");
         }
         $jqObj.append($row);
       }
     },
     handleErr: function(errMsg) {
       console.log(errMsg);
-      $("#sucessdiv").addClass("hideme");
-      $("#errordiv").text(errMsg).removeClass("hideme");
+      var err = JSON.parse(errMsg);
+      $("#successdiv").addClass("hideme");
+      $("#errordiv").text(err).removeClass("hideme");
     },
     handleSuccess: function(successMsg) {
       console.log(successMsg);
-      $("#errdiv").addClass("hideme");
-      $("#sucessdiv").text(successMsg).removeClass("hideme");
+      $("#errordiv").addClass("hideme");
+      $("#successdiv").text(successMsg).removeClass("hideme");
     }
   };
   var emplfuncs = {
@@ -100,7 +80,7 @@ $(document).ready(function(){
         success: function(rtnData){
           console.log(rtnData);
           var $tbody = $("#resolved-requests").find('tbody');
-          var cols = ['reqID','reqTitle','description','amount','status','dateSubmitted','dateResolved','mgrID'];
+          var cols = ['reqID','reqTitle','description','status','amount','mgrID','dateSubmitted','dateResolved'];
           util.appendTable($tbody,rtnData,cols);
         },
         error: util.handleErr
@@ -108,108 +88,62 @@ $(document).ready(function(){
     },
   };
   var mgrfuncs = {
-    getAllPending: function() {
-      console.log("Getting all pending requests for all employees");
+    getAllRequestsForEmployee: function(){
+      var eid = $("#employeeID").val();
+      console.log("Getting all requests for the employee #",eid);
+      var dataToSend = {id: eid};
       $.ajax({
-        url: "ManagerGetPending",
-        method: "GET",
+        url: "ManagerGetRequestsForEmployee",
+        method: "POST",
+        data: JSON.stringify(dataToSend),
         success: function(rtnData){
           console.log(rtnData);
-          var $tbody = $("#pending").find('tbody');
-          var columns = ['reqID','reqTitle','description','amount','empID','dateSubmitted'];
+          var $tbody = $("#reqbyemployee").find('tbody');
+          var columns = ['reqID','reqTitle','description','status','amount','mgrID','dateSubmitted','dateResolved'];
           util.appendTable($tbody,rtnData,columns,true,true);
         },
         error: util.handleErr
       });
     },
-    getAllResolved: function(){
-      console.log("Getting all resolved requests for all employees...");
+    approveRequest: function(){
+      var requestID = Number($(this).closest('tr').children().first().text());
+      console.log("Attempting to approve request #",requestID);
+      var objToSend = {
+        id: requestID
+      };
       $.ajax({
-        url: "ManagerGetResolved",
-        method: "GET",
-        success: function(rtnData){
-          console.log(rtnData);
-          var $tbody = $("#resolved").find('tbody');
-          var columns = ['reqID','reqTitle','description','status','amount','empID','mgrID','dateResolved'];
-          util.appendTable($tbody,rtnData,columns,true,false);
-        },
-        error: util.handleErr
-      });
-    },
-    getAllEmployees: function(){
-      console.log("Getting all employees...");
-      $.ajax({
-        url: "ManagerGetAllEmployees",
-        method: "GET",
-        success: function(rtnData){
-          console.log(rtnData);
-          var $tbody = $("all-employees").find('tbody');
-          var columns = ['empID','firstname','lastname'];
-          util.appendTable($tbody,rtnData,columns);
-        },
-        error: util.handleErr
-      });
-    },
-    getAllRequestsForEmployee: function(){
-      console.log("Getting all requests for the employee selected...");
-      var eid = $("#employeeID").val();
-      $.ajax({
-        url: "ManagerGetRequestForEmployee",
-        method: "GET",
-        data: {
-          employeeID: eid
-        },
-        success: function(rtnData){
-          console.log(rtnData);
-          var $tbody = $("#reqbyemployee").find('tbody');
-          var columns = ['reqID','reqTitle','status','amount','mgrID','dateSubmitted','dateResolved'];
-          $tbody.children().remove();
-          var jsdata = JSON.parse(data);
-          for (var i=0;i<data.length;i++) {
-            var obj = jsdata[i];
-            var $row = $(document.createElement('tr'));
-            for (var j=0;j<columns.length;j++) {
-              var column = columns[j];
-              if (obj.hasOwnProperty(column)) {
-                var text;
-                if (obj[column] != null) {text = obj[column];}
-                else {text = "N/A";}
-                var $td = $(document.createElement('td'));
-                $td.text(text);
-                $row.append($td);
-              }
-            }
-            if (hasReceiptBtn) {
-              $row.append("<td><button class='btn btn-info'>View Receipt</button></td>");
-            }
-            if (hasApproveBtn) {
-              $row.append("<td><button class='btn btn-success approve'>Approve</button><button class='btn btn-success deny'>Deny</button></td>");
-            }
-            $tbody.append($row);
+        url: "ApproveRequest",
+        method: "POST",
+        data: JSON.stringify(objToSend),
+        success: function(rtnData) {
+          if (rtnData.success) {
+            util.handleSuccess(rtnData.successMsg);
+          }
+          else {
+            util.handleErr(rtnData.errMsg);
           }
         },
         error: util.handleErr
       });
     },
-    approveRequest: function(){
-      console.log("Attempting to approve request #");
-      var requestID = Number($(this).parent().children().first().text());
-      $.ajax({
-        url: "ApproveRequest",
-        method: "POST",
-        data: $.param(requestID),
-        success: util.handleSuccess,
-        error: util.handleErr
-      });
-    },
     denyRequest: function(){
-      console.log("Attempting to deny request #");
-      var requestID = Number($(this).parent().children().first().text());
+      var requestID = Number($(this).closest('tr').children().first().text());
+      console.log("Attempting to deny request #",requestID);
+      var objToSend = {
+        id: requestID
+      };
       $.ajax({
         url: "DenyRequest",
         method: "POST",
-        data: $.param(requestID),
-        success: util.handleSuccess,
+        data: JSON.stringify(objToSend),
+        success: function(rtnData) {
+          if (rtnData.success) {
+            util.handleSuccess(rtnData.successMsg);
+          }
+          else {
+            util.handleErr(rtnData.errMsg);
+          }
+        },
         error: util.handleErr
       });
     }
@@ -246,9 +180,6 @@ $(document).ready(function(){
     });
 
     // ManagerRequestView ajax requests
-    //$("#manager-all-pending").on('click', mgrfuncs.getAllPending);
-    //$("#manager-all-resolved").on('click', mgrfuncs.getAllResolved);
-    //$("#manager-all-employees").on('click', mgrfuncs.getAllEmployees);
     $("#searchReqByEmp").on('click', mgrfuncs.getAllRequestsForEmployee);
     $(".approve").on('click', mgrfuncs.approveRequest);
     $(".deny").on('click', mgrfuncs.denyRequest);

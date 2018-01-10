@@ -1,6 +1,7 @@
 package com.ers.main;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ers.dao.RequestDao;
 import com.ers.dao.RequestDaoImpl;
@@ -9,6 +10,7 @@ import com.ers.model.Request;
 public class RequestDAOTesting {
 
 	public static void main(String[] args) {
+		getEmplMap();
 		System.out.println("Getting all requests...");
 		getAllRequests();
 		System.out.println("=====================================");
@@ -40,6 +42,15 @@ public class RequestDAOTesting {
 		System.out.println("Getting manager of request...");
 		getManagerOfRequest();
 		*/
+	}
+	
+	static void getEmplMap() {
+		RequestDao rdao = RequestDaoImpl.getInstance();
+		Map<Integer,String> list = rdao.getRequestMgrMap();
+		for (Map.Entry<Integer, String> e : list.entrySet()) {
+			System.out.println(e.getKey());
+			System.out.println(e.getValue());
+		}
 	}
 
 	static void getAllRequests() {
@@ -90,13 +101,13 @@ public class RequestDAOTesting {
 	static void approveRequest() {
 		RequestDao rdao = RequestDaoImpl.getInstance();
 		Request r = new Request();
-		rdao.approveRequest(r);
+		rdao.approveRequest(r,2);
 	}
 	
 	static void denyRequest() {
 		RequestDao rdao = RequestDaoImpl.getInstance();
 		Request r = new Request();
-		rdao.denyRequest(r);
+		rdao.denyRequest(r,2);
 	}
 	
 	static void getManagerOfRequest() {

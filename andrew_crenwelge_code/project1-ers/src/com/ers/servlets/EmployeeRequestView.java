@@ -2,6 +2,7 @@ package com.ers.servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +25,9 @@ public class EmployeeRequestView extends HttpServlet {
 		Employee e1 = (Employee) req.getSession().getAttribute("employee");
 		RequestDao rdao = RequestDaoImpl.getInstance();
 		List<Request> list = rdao.getRequestsByEmployee(e1.getId());
+		Map<Integer, String> map = rdao.getRequestMgrMap();
 		req.setAttribute("allRequests", list);
+		req.setAttribute("mgrMap", map);
 		req.getRequestDispatcher("EmployeeRequestView.jsp").forward(req,resp);
 	}
 }

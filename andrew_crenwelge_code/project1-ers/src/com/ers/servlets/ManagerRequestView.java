@@ -2,6 +2,7 @@ package com.ers.servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,12 +28,14 @@ public class ManagerRequestView extends HttpServlet {
 		List<Request> list = rdao.getAllRequests();
 		List<Request> pendingList = rdao.getAllPendingRequests();
 		List<Request> resolvedList = rdao.getAllResolvedRequests();
+		// retrieve employees and maps for employee ids
+		EmployeeDao edao = EmployeeDaoImpl.getInstance();
+		List<Employee> elist = edao.getAllEmployees();
+		Map<Integer, String> map = rdao.getRequestMgrMap();
 		req.setAttribute("allRequests", list);
 		req.setAttribute("pendingRequests", pendingList);
 		req.setAttribute("resolvedRequests", resolvedList);
-		// retrieve employees and add as attribute
-		EmployeeDao edao = EmployeeDaoImpl.getInstance();
-		List<Employee> elist = edao.getAllEmployees();
+		req.setAttribute("mgrMap", map);
 		req.setAttribute("allEmployees", elist);
 		req.getRequestDispatcher("ManagerRequestView.jsp").forward(req,resp);
 	}

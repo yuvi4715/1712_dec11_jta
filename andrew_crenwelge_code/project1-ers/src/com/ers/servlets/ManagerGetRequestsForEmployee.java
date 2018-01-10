@@ -3,7 +3,8 @@ package com.ers.servlets;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,14 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ers.dao.RequestDao;
 import com.ers.dao.RequestDaoImpl;
-import com.ers.model.Employee;
 import com.ers.model.Request;
-import com.ers.util.AjaxObj_reqid;
-import com.ers.util.RtnMsg;
+import com.ers.model.RequestAjaxObj;
+import com.ers.util.AjaxObj_empid;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebServlet("/ApproveRequest")
-public class ApproveRequest extends HttpServlet {
+@WebServlet("/ManagerGetRequestsForEmployee")
+public class ManagerGetRequestsForEmployee extends HttpServlet {
 	
 	private static final long serialVersionUID = -415521901773532388L;
 
@@ -31,24 +31,24 @@ public class ApproveRequest extends HttpServlet {
         if(br != null){
             json = br.readLine();
         }
-		Employee mgr = (Employee) req.getSession().getAttribute("employee");
+        // map json to object
 		ObjectMapper mapper = new ObjectMapper();
-        AjaxObj_reqid reqToApprove = mapper.readValue(json, AjaxObj_reqid.class);
+        AjaxObj_empid reqToApprove = mapper.readValue(json, AjaxObj_empid.class);
+        // get requests for the employee
 		RequestDao rdao = RequestDaoImpl.getInstance();
-		Request r = rdao.getRequestById(reqToApprove.getId());
+		List<Request> list = rdao.getRequestsByEmployee(reqToApprove.getId());
+		// get the map of employee/manager id's to full names
+		Map<Integer,String> mgrMap = rdao.getRequestMgrMap();
+		// create the object that will be returned as JSON
+		RequestAjaxObj rajo = new RequestAjaxObj();
+		rajo.setMap(mgrMap);
+		rajo.setRequestobj(list);
+		// send json data back
 		resp.setContentType("application/json");
-		RtnMsg obj = new RtnMsg();
-		obj.setSuccessMsg("The request was approved");
-		obj.setErrMsg("Sorry, the request was not approved");
-		PrintWriter pw = resp.getWriter();
-		boolean success = rdao.approveRequest(r,mgr.getId());
-		if (success) {
-			obj.setSuccess(true);
-			pw.println(mapper.writeValueAsString(obj));
-		}
-		else {
-			obj.setSuccess(false);
-			pw.println(mapper.writeValueAsString(obj));
+		resp.getWriter().write(new ObjectMapper().writeValueAsString(rajo));
+		System.out.println("Returning all requests for employee #" +reqToApprove.getId() + ":");
+		for (Request r : list) {
+			System.out.println(r);
 		}
 	}
 }

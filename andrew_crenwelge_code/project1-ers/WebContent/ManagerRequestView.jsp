@@ -53,6 +53,11 @@
 	        <c:out value="${requestScope.errMsg}" />
 	      </div>
 	    </c:if>
+	    <c:if test="${not empty requestScope.successMsg}">
+		  <div class="alert alert-success" id="jsp-successdiv">
+	        <c:out value="${requestScope.successMsg}" />
+	      </div>
+	    </c:if>
 	    <div class="alert alert-danger hideme" id="errordiv"></div>
 	    <div class="alert alert-success hideme" id="successdiv"></div>
 	  	<p>
@@ -90,10 +95,10 @@
 				        <td><c:out value="${req.reqTitle}"></c:out></td>
 				        <td><c:out value="${req.description}"></c:out></td>
 				        <td><c:out value="${req.status}"></c:out></td>
-				        <td><c:out value="${req.amount}"></c:out></td>
-				        <td><c:out value="${req.empID}"></c:out></td>
-				        <td><c:out value="${req.dateSubmitted}"></c:out></td>
-				        <td><c:out value="${req.dateResolved}"></c:out></td>
+				        <td><c:out value="$ ${req.amount}"></c:out></td>
+				        <td><c:out value="${requestScope.mgrMap.get(req.empID)}"></c:out></td>
+				        <td><c:out value="${req.getDateSubmitted().toString().substring(0,19)}"></c:out></td>
+				        <td><c:out value="${req.getDateResolved().toString().substring(0,19)}"></c:out></td>
 				        <td><button class="btn btn-info">View Receipt</button></td>
 				        <td><c:if test="${req.getStatus()=='Pending'}">
 				          <button class="btn btn-success approve">Approve</button>&ensp;<button class="btn btn-danger deny">Deny</button>
@@ -108,14 +113,14 @@
 		    <div class="panel panel-default">
 			  <table class="table table-bordered table-striped table-hover">
 				  <thead><tr>
-				    <th>Reimbursement Request No.</th>
-				    <th>Name</th>
-				    <th>Description</th>
-				    <th>Amount</th>
-				    <th>Submitted By</th>
-				    <th>Date Submitted</th>
-				    <th>Receipt</th>
-				    <th>Action</th></tr>
+				    <th class="col-md-1">Reimbursement Request No.</th>
+				    <th class="col-md-1">Name</th>
+				    <th class="col-md-3">Description</th>
+				    <th class="col-md-1">Amount</th>
+				    <th class="col-md-2">Submitted By</th>
+				    <th class="col-md-1">Date Submitted</th>
+				    <th class="col-md-1">Receipt</th>
+				    <th class="col-md-2">Action</th></tr>
 				  </thead>
 				  <tbody>
 				    <c:forEach items="${requestScope.pendingRequests}" var="req">
@@ -123,9 +128,9 @@
 				        <td><c:out value="${req.reqID}"></c:out></td>
 				        <td><c:out value="${req.reqTitle}"></c:out></td>
 				        <td><c:out value="${req.description}"></c:out></td>
-				        <td><c:out value="${req.amount}"></c:out></td>
-				        <td><c:out value="${req.empID}"></c:out></td>
-				        <td><c:out value="${req.dateSubmitted}"></c:out></td>
+				        <td><c:out value="$ ${req.amount}"></c:out></td>
+				        <td><c:out value="${requestScope.mgrMap.get(req.empID)}"></c:out></td>
+				        <td><c:out value="${req.getDateSubmitted().toString().substring(0,19)}"></c:out></td>
 				        <td><button class="btn btn-info">View Receipt</button></td>
 				        <td><button class="btn btn-success approve">Approve</button>&ensp;<button class="btn btn-danger deny">Deny</button></td>
 				      </tr>
@@ -138,16 +143,16 @@
 		    <div class="panel panel-default">
 			  <table class="table table-bordered table-striped table-hover">
 				  <thead><tr>
-				    <th>Reimbursement Request No.</th>
-				    <th>Name</th>
-				    <th>Description</th>
-				    <th>Status</th>
-				    <th>Amount</th>
-				    <th>Submitted By</th>
-				    <th>Resolved By</th>
-				    <th>Date Submitted</th>
-				    <th>Date Resolved</th>
-				    <th>Receipt</th></tr>
+				    <th class="col-md-1">Reimbursement Request No.</th>
+				    <th class="col-md-1">Name</th>
+				    <th class="col-md-2">Description</th>
+				    <th class="col-md-1">Status</th>
+				    <th class="col-md-1">Amount</th>
+				    <th class="col-md-2">Submitted By</th>
+				    <th class="col-md-1">Resolved By</th>
+				    <th class="col-md-1">Date Submitted</th>
+				    <th class="col-md-1">Date Resolved</th>
+				    <th class="col-md-1">Receipt</th></tr>
 				  </thead>
 				  <tbody>
 				    <c:forEach items="${requestScope.resolvedRequests}" var="req">
@@ -156,11 +161,11 @@
 				        <td><c:out value="${req.reqTitle}"></c:out></td>
 				        <td><c:out value="${req.description}"></c:out></td>
 				        <td><c:out value="${req.status}"></c:out></td>
-				        <td><c:out value="${req.amount}"></c:out></td>
-				        <td><c:out value="${req.empID}"></c:out></td>
-				        <td><c:out value="${req.mgrID}"></c:out></td>
-				        <td><c:out value="${req.dateSubmitted}"></c:out></td>
-				        <td><c:out value="${req.dateResolved}"></c:out></td>
+				        <td><c:out value="$ ${req.amount}"></c:out></td>
+				        <td><c:out value="${requestScope.mgrMap.get(req.empID)}"></c:out></td>
+				        <td><c:out value="${requestScope.mgrMap.get(req.mgrID)}"></c:out></td>
+				        <td><c:out value="${req.getDateSubmitted().toString().substring(0,19)}"></c:out></td>
+				        <td><c:out value="${req.getDateResolved().toString().substring(0,19)}"></c:out></td>
 				        <td><button class="btn btn-info">View Receipt</button></td>
 				      </tr>
 				    </c:forEach>
@@ -197,7 +202,9 @@
 			        <label>Search Requests By Employee:</label>
 		  	        <select name="empName" id="employeeID">
 		  	          <c:forEach items="${requestScope.allEmployees}" var="employee">
-		  	            <option value="${employee.getId()}">${employee.getFirstname()} ${employee.getLastname()}</option>
+		  	          	<c:if test="${employee.getIsManager()==false}">
+		  	          	  <option value="${employee.getId()}">${employee.getFirstname()} ${employee.getLastname()}</option>
+		  	          	</c:if>
 		  	          </c:forEach>
 		  	        </select>
 			      </div>
@@ -206,15 +213,16 @@
 			  </div>
 			  <table class="table table-bordered table-striped table-hover">
 				  <thead><tr>
-				    <th>Reimbursement Request No.</th>
-				    <th>Title</th>
-				    <th>Status</th>
-				    <th>Amount</th>
-				    <th>Resolved By</th>
-				    <th>Date Submitted</th>
-				    <th>Date Resolved</th>
-				    <th>Receipt</th>
-				    <th>Approve/Deny</th></tr>
+				    <th class="col-md-1">Reimbursement Request No.</th>
+				    <th class="col-md-1">Title</th>
+				    <th class="col-md-2">Description</th>
+				    <th class="col-md-1">Status</th>
+				    <th class="col-md-1">Amount</th>
+				    <th class="col-md-1">Resolved By</th>
+				    <th class="col-md-2">Date Submitted</th>
+				    <th class="col-md-1">Date Resolved</th>
+				    <th class="col-md-1">Receipt</th>
+				    <th class="col-md-1">Approve/Deny</th></tr>
 				  </thead>
 				  <tbody></tbody>
 				</table>

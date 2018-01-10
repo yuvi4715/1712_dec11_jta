@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.ers.model.Employee;
 import com.ers.model.Request;
@@ -52,7 +54,7 @@ public class RequestDaoImpl implements RequestDao {
 	public List<Request> getAllRequests() {
 		List<Request> list = new ArrayList<>();
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM REQUESTS R JOIN STATUS S ON R.STATID=S.STATID";
+			String sql = "SELECT * FROM REQUESTS R JOIN STATUS S ON R.STATID=S.STATID ORDER BY r.reqid";
 			PreparedStatement p = conn.prepareStatement(sql);
 			ResultSet rs = p.executeQuery();
 			while (rs.next()) {
@@ -79,7 +81,7 @@ public class RequestDaoImpl implements RequestDao {
 	public List<Request> getAllResolvedRequests() {
 		List<Request> list = new ArrayList<>();
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM requests r JOIN status s ON r.statid=s.statid WHERE r.statid IN (2,3)";
+			String sql = "SELECT * FROM requests r JOIN status s ON r.statid=s.statid WHERE r.statid IN (2,3) ORDER BY r.reqid";
 			PreparedStatement p = conn.prepareStatement(sql);
 			ResultSet rs = p.executeQuery();
 			while (rs.next()) {
@@ -106,7 +108,7 @@ public class RequestDaoImpl implements RequestDao {
 	public List<Request> getAllPendingRequests() {
 		List<Request> list = new ArrayList<>();
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM requests r JOIN status s ON r.statid=s.statid WHERE r.statid=1";
+			String sql = "SELECT * FROM requests r JOIN status s ON r.statid=s.statid WHERE r.statid=1 ORDER BY r.reqid";
 			PreparedStatement p = conn.prepareStatement(sql);
 			ResultSet rs = p.executeQuery();
 			while (rs.next()) {
@@ -133,7 +135,7 @@ public class RequestDaoImpl implements RequestDao {
 	public List<Request> getResolvedRequestsByEmployee(int empID) {
 		List<Request> list = new ArrayList<>();
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM requests r JOIN status s ON r.statid=s.statid WHERE r.empid=? AND r.statid IN (2,3)";
+			String sql = "SELECT * FROM requests r JOIN status s ON r.statid=s.statid WHERE r.empid=? AND r.statid IN (2,3) ORDER BY r.reqid";
 			PreparedStatement p = conn.prepareStatement(sql);
 			p.setInt(1, empID);
 			ResultSet rs = p.executeQuery();
@@ -161,7 +163,7 @@ public class RequestDaoImpl implements RequestDao {
 	public List<Request> getPendingRequestsByEmployee(int empID) {
 		List<Request> list = new ArrayList<>();
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM requests r JOIN status s ON r.statid=s.statid WHERE r.empid=? AND r.statid=1";
+			String sql = "SELECT * FROM requests r JOIN status s ON r.statid=s.statid WHERE r.empid=? AND r.statid=1 ORDER BY r.reqid";
 			PreparedStatement p = conn.prepareStatement(sql);
 			p.setInt(1, empID);
 			ResultSet rs = p.executeQuery();
@@ -189,7 +191,7 @@ public class RequestDaoImpl implements RequestDao {
 	public List<Request> getRequestsByEmployee(int empID) {
 		List<Request> list = new ArrayList<>();
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM requests r JOIN status s ON r.statid=s.statid WHERE r.empid=?";
+			String sql = "SELECT * FROM requests r JOIN status s ON r.statid=s.statid WHERE r.empid=? ORDER BY r.reqid";
 			PreparedStatement p = conn.prepareStatement(sql);
 			p.setInt(1, empID);
 			ResultSet rs = p.executeQuery();
@@ -214,11 +216,12 @@ public class RequestDaoImpl implements RequestDao {
 	}
 
 	@Override
-	public boolean approveRequest(Request r) {
+	public boolean approveRequest(Request r, int mgrID) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "UPDATE requests SET statid=2 WHERE reqid=?";
+			String sql = "UPDATE requests SET statid=2, resolvedby=?, endtime=CURRENT_TIMESTAMP WHERE reqid=?; commit;";
 			PreparedStatement p = conn.prepareStatement(sql);
-			p.setInt(1, r.getReqID());
+			p.setInt(1, mgrID);
+			p.setInt(2, r.getReqID());
 			int rowsUpdated = p.executeUpdate();
 			if (rowsUpdated == 1) {
 				return true;
@@ -233,11 +236,12 @@ public class RequestDaoImpl implements RequestDao {
 	}
 
 	@Override
-	public boolean denyRequest(Request r) {
+	public boolean denyRequest(Request r, int mgrID) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "UPDATE requests SET statid=3 WHERE reqid=?";
+			String sql = "UPDATE requests SET statid=3, resolvedby=?, endtime=CURRENT_TIMESTAMP WHERE reqid=?; commit;";
 			PreparedStatement p = conn.prepareStatement(sql);
-			p.setInt(1, r.getReqID());
+			p.setInt(1, mgrID);
+			p.setInt(2, r.getReqID());
 			int rowsUpdated = p.executeUpdate();
 			if (rowsUpdated == 1) {
 				return true;
@@ -299,7 +303,7 @@ public class RequestDaoImpl implements RequestDao {
 	public List<Request> getRequestsByEmployeeName(String firstname, String lastname) {
 		List<Request> list = new ArrayList<>();
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM requests r JOIN status s ON r.statid=s.statid WHERE r.empid=(SELECT empid FROM employee WHERE fname=? AND lname=?);";
+			String sql = "SELECT * FROM requests r JOIN status s ON r.statid=s.statid WHERE r.empid=(SELECT empid FROM employee WHERE fname=? AND lname=?) ORDER BY r.reqid";
 			PreparedStatement p = conn.prepareStatement(sql);
 			p.setString(1, firstname);
 			p.setString(2, lastname);
@@ -322,5 +326,22 @@ public class RequestDaoImpl implements RequestDao {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public Map<Integer, String> getRequestMgrMap() {
+		Map<Integer,String> localmap = new HashMap<>();
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String sql = "SELECT empid,fname,lname FROM employee";
+			PreparedStatement p = conn.prepareStatement(sql);
+			ResultSet rs = p.executeQuery();
+			while (rs.next()) {
+				localmap.put(rs.getInt(1), rs.getString(2) +" "+ rs.getString(3));
+			}
+			return localmap;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return localmap;
 	}
 }

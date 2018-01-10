@@ -29,8 +29,6 @@ public class Login extends HttpServlet {
 			System.out.println("Successfully authenticated user " + uname);
 			// get user info and store in session
 			Employee e1 = edao.getEmployeeByUsername(uname);
-			// Employee e1 = new Employee();
-			// Employee e1 = new Employee(id, firstname, lastname, email, birthdate, phoneNum, address, city, state, country, zip, isManager)
 			User u1 = new User();
 			u1.setUsername(uname);
 			req.getSession().setAttribute("employee", e1);
