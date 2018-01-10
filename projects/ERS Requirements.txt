@@ -26,7 +26,7 @@ Expense Reimbursement System (ERS) - Presentation on first day of - Week 5
 
 Technologies:
 -Java 1.8
--JSPs (optional), JSTL(optional)
+-JSPs (optional), JSTL(optional), will use angular instead
 -Servlets
 -JDBC
 -SQL

@@ -14,7 +14,9 @@ public class JDBCSimpleExample {
 
 	public static void main(String[] args) {
 		loadDrivers(); // step 1
-		jdbcExample("jdbc:oracle:thin:@sdetjta.cvoui7q38caj.us-east-2.rds.amazonaws.com:1521:ORCL","jta1712", "jta1712");
+		//jdbcExample("jdbc:oracle:thin:@sdetjta.cvoui7q38caj.us-east-2.rds.amazonaws.com:1521:ORCL","jta1712", "jta1712");
+		jdbcExample("jdbc:oracle:thin:@reimbursementsystem.cpzoqntrfu8m.us-east-1.rds.amazonaws.com:1521:ORCL", "admin", "password");
+
 	}
 
 	// 1 - load drivers
@@ -33,7 +35,7 @@ public class JDBCSimpleExample {
 			conn = DriverManager.getConnection(url, user, password); //2
 			System.out.println("connection should be established, but i donno");
 			stmt = conn.createStatement();		//3
-			rs = stmt.executeQuery("select * from player");	//4, 5
+			rs = stmt.executeQuery("select * from users");	//4, 5
 			while (rs.next()) {
 				System.out.println(rs.getString(1) + " : " +  
 						rs.getString(2) + " : " + rs.getString(3));
