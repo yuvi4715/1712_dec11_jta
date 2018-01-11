@@ -15,8 +15,20 @@ public class ReimbClosedDAOImpl implements ReimbClosedDAO
 	@Override
 	public List<ReimbClosed> getAllClosedReimb() throws SQLException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		List<ReimbClosed> roList = new ArrayList<ReimbClosed>();
+		String sql = "select * from Reimburse_closed order by ridc";
+		PreparedStatement stmt = Connect.getConnection().prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		ReimbClosed ro = null;
+		
+		while (rs.next())
+		{
+			ro = new ReimbClosed(rs.getInt(1), rs.getInt(2), rs.getString(3), 
+					rs.getInt(4), rs.getInt(5));
+			roList.add(ro);
+		}
+		
+		return roList;
 	}
 
 	@Override
@@ -44,10 +56,16 @@ public class ReimbClosedDAOImpl implements ReimbClosedDAO
 	}
 
 	@Override
-	public void insertReimb(String amount, String eid) throws SQLException
+	public void insertReimb(int amount, int eid, int mid, String status) throws SQLException
 	{
-		// TODO Auto-generated method stub
-
+		String sql = "insert into Reimburse_closed values (r_closed_seq.nextval, ?, ?, ? , ?)";
+		PreparedStatement stmt = Connect.getConnection().prepareStatement(sql);
+		stmt.setInt(1, amount);
+		stmt.setString(2, status);
+		stmt.setInt(3, eid);
+		stmt.setInt(4, mid);
+		
+		stmt.executeUpdate();
 	}
 
 }

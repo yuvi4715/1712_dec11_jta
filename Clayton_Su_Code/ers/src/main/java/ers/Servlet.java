@@ -71,7 +71,14 @@ public class Servlet extends HttpServlet {
 			ServletContext isManager = getServletConfig().getServletContext();
 			isManager.setAttribute("isManager", a.getIsManager());
 			
-			response.sendRedirect("Employee.html");
+			if(a.getIsManager().equals("YES"))
+			{
+				response.sendRedirect("Manager.html");
+			}
+			else
+			{
+				response.sendRedirect("Employee.html");
+			}
 		}
 	}
 
