@@ -36,6 +36,7 @@ public class OpenReimbServlet extends HttpServlet {
 		String stringuserid = request.getParameter("eid");
 		String password = request.getParameter("pword");
 		String money = request.getParameter("amount");
+		String isManager = (String)  this.getServletConfig().getServletContext().getAttribute("isManager");
 		int userid = Integer.parseInt(stringuserid);
 		UserDAO u = null;
 		u = new UserDaoImpl(); ;
@@ -70,6 +71,15 @@ public class OpenReimbServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		
+		if(isManager.equals("YES"))
+		{
+			response.sendRedirect("Manager.html");
+		}
+		else
+		{
+			response.sendRedirect("Employee.html");
 		}
 	}
 

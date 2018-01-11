@@ -74,10 +74,21 @@ public class UserDaoImpl implements UserDAO
 		return user;
 	}
 
-	public void updateUser(User user)
+	public void updateUser(User user) throws SQLException
 	{
-		// TODO Auto-generated method stub
-
+		String pword = user.getPassword();
+		String fname = user.getFirstname();
+		String lname = user.getLastname();
+		String sql = "Update Employee set pass = ?, firstname = ?, lastname = ? where eid = ?";
+		String stringeid = Integer.toString(user.getEid());
+		PreparedStatement stmt = Connect.getConnection().prepareStatement(sql);
+		stmt.setString(1, pword);
+		stmt.setString(2, fname);
+		stmt.setString(3, lname);
+		stmt.setString(4, stringeid);
+		
+		
+		stmt.executeUpdate();		
 	}
 
 }

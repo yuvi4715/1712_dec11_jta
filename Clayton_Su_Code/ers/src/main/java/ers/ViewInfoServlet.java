@@ -3,8 +3,6 @@ package ers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,17 +14,15 @@ import dao.UserDAO;
 import dao.UserDaoImpl;
 
 /**
- * Servlet implementation class EmployeeServlet
+ * Servlet implementation class ViewInfoServlet
  */
-public class EmployeeServlet extends HttpServlet {
+public class ViewInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	
-	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmployeeServlet() {
+    public ViewInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,15 +32,15 @@ public class EmployeeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		//String someName = (String)request.getAttribute("username");
+		//response.getWriter().append("asdfasdf").append(request.getContextPath());
+		User a = null;
 		UserDAO u = null;
-		u = new UserDaoImpl(); ;
-		List<User> li = new ArrayList<User>();
-		
+		u = new UserDaoImpl();
+		String uname = (String) this.getServletConfig().getServletContext().getAttribute("SharedName");
+
 		try
 		{
-			li = u.getAllUsers();
+			a = u.getUser(uname);
 		} catch (SQLException e)
 		{
 			// TODO Auto-generated catch block
@@ -53,38 +49,17 @@ public class EmployeeServlet extends HttpServlet {
 		
 		response.setContentType("text/html");
 		PrintWriter pw = response.getWriter();
-		pw.println("<html> <body> <p>");
-		pw.println("<table>");
-		pw.println("<tr>");
-			pw.println("<th>IdNo.</th>");
-			pw.println("<th>Username</th>");
-			pw.println("<th>First Name</th>");
-			pw.println("<th>Last Name</th>");
-			pw.println("<th>Is Manager?</th>");
-			
-		pw.println("</tr>");
-		
-		if(li.isEmpty())
-		{
-			pw.println("Empty!");
-		}
-		
-		for(User i: li)
-		{	
-			pw.println("<tr>");
-			pw.println("<td>" + i.getEid() +"</td>");
-			pw.println("<td>" + i.getUsername() +"</td>");
-			pw.println("<td>" + i.getFirstname() +"</td>");
-			pw.println("<td>" + i.getLastname() +"</td>");
-			pw.println("<td>" + i.getIsManager() +"</td>");
-			
-			pw.println("</tr>");
-		}
-		pw.println("</table>");	
-		pw.println("</html> </body> </p>");
-
-		
-		
+		pw.println("<html> <body><h1>Your information</h1> <p>");
+		pw.println("<ul>");
+			pw.println("<li>EmployeeId: "); pw.println(a.getEid() + "</li>");
+			pw.println("<li>UserName: "); pw.println(a.getUsername() + "</li>");
+			pw.println("<li>Password: "); pw.println(a.getPassword() + "</li>");
+			pw.println("<li>Name: "); pw.println(a.getFirstname() + " " + a.getLastname() + "</li>");
+		pw.println("</ul>");
+		pw.println("<form action=\"UpdateInfo.html\">\r\n" + 
+				"			<input type=\"submit\" value=\"Update your information\" />\r\n" + 
+				"		</form>");
+		pw.println("</p></body></html>");
 	}
 
 	/**

@@ -15,8 +15,19 @@ public class ReimbOpenDAOImpl implements ReimbOpenDAO
 	@Override
 	public List<ReimbOpen> getAllOpenReimb() throws SQLException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		List<ReimbOpen> roList = new ArrayList<ReimbOpen>();
+		String sql = "select * from Reimburse_Open order by rido";
+		PreparedStatement stmt = Connect.getConnection().prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		ReimbOpen ro = null;
+		
+		while (rs.next())
+		{
+			ro = new ReimbOpen(rs.getInt(1), rs.getInt(2), rs.getInt(3));
+			roList.add(ro);
+		}
+		
+		return roList;
 	}
 
 	@Override
@@ -67,10 +78,15 @@ public class ReimbOpenDAOImpl implements ReimbOpenDAO
 	}
 
 	@Override
-	public void deleteReimb(int ridO)
+	public void deleteReimb(int ridO) throws SQLException
 	{
-		// TODO Auto-generated method stub
-
+		String sql = "delete from Reimburse_Open where rido = ?";
+		PreparedStatement stmt = Connect.getConnection().prepareStatement(sql);
+		stmt.setInt(1, ridO);
+		
+		
+		stmt.executeUpdate();
+		
 	}
 
 }

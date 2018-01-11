@@ -3,7 +3,6 @@ package ers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,22 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.User;
-import dao.UserDAO;
-import dao.UserDaoImpl;
+import beans.ReimbClosed;
+import dao.ReimbClosedDAO;
+import dao.ReimbClosedDAOImpl;
 
 /**
- * Servlet implementation class EmployeeServlet
+ * Servlet implementation class ClosedReimbsServlet
  */
-public class EmployeeServlet extends HttpServlet {
+public class ClosedReimbsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	
-	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmployeeServlet() {
+    public ClosedReimbsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,54 +34,44 @@ public class EmployeeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		//String someName = (String)request.getAttribute("username");
-		UserDAO u = null;
-		u = new UserDaoImpl(); ;
-		List<User> li = new ArrayList<User>();
+		List<ReimbClosed> ro = null;
+		ReimbClosedDAO rodao = new ReimbClosedDAOImpl();
+		
+		response.setContentType("text/html");
+		PrintWriter pw = response.getWriter();
 		
 		try
 		{
-			li = u.getAllUsers();
+			ro = rodao.getAllClosedReimb();
 		} catch (SQLException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		response.setContentType("text/html");
-		PrintWriter pw = response.getWriter();
 		pw.println("<html> <body> <p>");
+		
+		pw.println("<h1>Closed reimbursements</h1>");
 		pw.println("<table>");
 		pw.println("<tr>");
 			pw.println("<th>IdNo.</th>");
-			pw.println("<th>Username</th>");
-			pw.println("<th>First Name</th>");
-			pw.println("<th>Last Name</th>");
-			pw.println("<th>Is Manager?</th>");
-			
+			pw.println("<th>Amount</th>");
+			pw.println("<th>Status</th>");
+			pw.println("<th>ManagerId</th>");
 		pw.println("</tr>");
 		
-		if(li.isEmpty())
-		{
-			pw.println("Empty!");
-		}
-		
-		for(User i: li)
+		for(ReimbClosed i: ro)
 		{	
 			pw.println("<tr>");
-			pw.println("<td>" + i.getEid() +"</td>");
-			pw.println("<td>" + i.getUsername() +"</td>");
-			pw.println("<td>" + i.getFirstname() +"</td>");
-			pw.println("<td>" + i.getLastname() +"</td>");
-			pw.println("<td>" + i.getIsManager() +"</td>");
+			pw.println("<td>" + i.getRidC() +"</td>");
+			pw.println("<td>" + i.getAmount() +"</td>");
+			pw.println("<td>" + i.getStatus() +"</td>");
+			pw.println("<td>" + i.getMid() +"</td>");
 			
 			pw.println("</tr>");
 		}
 		pw.println("</table>");	
 		pw.println("</html> </body> </p>");
-
-		
-		
 	}
 
 	/**

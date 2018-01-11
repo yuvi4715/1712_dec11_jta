@@ -33,6 +33,48 @@
   	<description></description>
   	<servlet-class>ers.ViewClosedReimbsServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ViewInfoServlet</servlet-name>
+  	<display-name>ViewInfoServlet</display-name>
+  	<description></description>
+  	<servlet-class>ers.ViewInfoServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>UpdateInfoServlet</servlet-name>
+  	<display-name>UpdateInfoServlet</display-name>
+  	<description></description>
+  	<servlet-class>ers.UpdateInfoServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ApproveServlet</servlet-name>
+  	<display-name>ApproveServlet</display-name>
+  	<description></description>
+  	<servlet-class>ers.ApproveServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ViewAllReimbsServlet</servlet-name>
+  	<display-name>ViewAllReimbsServlet</display-name>
+  	<description></description>
+  	<servlet-class>ers.ViewAllReimbsServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ADReimbServlet</servlet-name>
+  	<display-name>ADReimbServlet</display-name>
+  	<description></description>
+  	<servlet-class>ers.ADReimbServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ADReimbServlet2</servlet-name>
+  	<display-name>ADReimbServlet2</display-name>
+  	<description></description>
+  	<servlet-class>ers.ADReimbServlet2</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ClosedReimbsServlet</servlet-name>
+  	<display-name>ClosedReimbsServlet</display-name>
+  	<description></description>
+  	<servlet-class>ers.ClosedReimbsServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>Servlet</servlet-name>
   	<url-pattern>/Servlet</url-pattern>
@@ -52,5 +94,33 @@
   <servlet-mapping>
   	<servlet-name>ViewClosedReimbsServlet</servlet-name>
   	<url-pattern>/ViewClosedReimbsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewInfoServlet</servlet-name>
+  	<url-pattern>/ViewInfoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UpdateInfoServlet</servlet-name>
+  	<url-pattern>/UpdateInfoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ApproveServlet</servlet-name>
+  	<url-pattern>/ApproveServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewAllReimbsServlet</servlet-name>
+  	<url-pattern>/ViewAllReimbsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ADReimbServlet</servlet-name>
+  	<url-pattern>/ADReimbServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ADReimbServlet2</servlet-name>
+  	<url-pattern>/ADReimbServlet2</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ClosedReimbsServlet</servlet-name>
+  	<url-pattern>/ClosedReimbsServlet</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -3,6 +3,7 @@ package ers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,8 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.ReimbClosed;
+import beans.ReimbOpen;
 import dao.ReimbClosedDAO;
 import dao.ReimbClosedDAOImpl;
+import dao.ReimbOpenDAO;
+import dao.ReimbOpenDAOImpl;
 
 /**
  * Servlet implementation class ViewClosedReimbsServlet
@@ -37,11 +41,35 @@ public class ViewClosedReimbsServlet extends HttpServlet {
 		String isManager = (String)  this.getServletConfig().getServletContext().getAttribute("isManager");
 		List<ReimbClosed> ro = null;
 		ReimbClosedDAO rodao = new ReimbClosedDAOImpl();
+		List<ReimbOpen> rop = new ArrayList<ReimbOpen>();
+		ReimbOpenDAO rodaop = new ReimbOpenDAOImpl();
 		String idstring = Integer.toString(id); //should be employee id
+		String givenid = "";
+		givenid = request.getParameter("givenId").toString();
+		response.setContentType("text/html");
+		PrintWriter pw = response.getWriter();
 		
 		try
 		{
-			ro = rodao.getAllClosedReimbById(idstring);
+			//first if statement is called for manager side "get reimbs by id"
+			//else managers 
+			
+			if(!givenid.equals(""))
+			{
+				rop = rodaop.getAllOpenReimbById(givenid);
+				ro = rodao.getAllClosedReimbById(givenid);
+			}
+			else if(isManager.equals("YES"))
+			{
+				ro = rodao.getAllClosedReimb();
+			}
+			else
+			{
+				ro = rodao.getAllClosedReimbById(idstring);
+			}
+			//ro = rodao.getAllClosedReimbById(idstring);
+
+			
 		} catch (SQLException e)
 		{
 			// TODO Auto-generated catch block
@@ -50,10 +78,35 @@ public class ViewClosedReimbsServlet extends HttpServlet {
 		//this.getServletConfig().getServletContext().getAttribute("SharedName")
 		
 		
-		response.setContentType("text/html");
-		PrintWriter pw = response.getWriter();
 		
 		pw.println("<html> <body> <p>");
+		if(ro.isEmpty())
+		{
+			pw.println("Empty!");
+		}
+		
+		if(!rop.isEmpty())
+		{
+			pw.println("<h1>Pending reimbursements</h1>");
+			pw.println("<table>");
+			pw.println("<tr>");
+				pw.println("<th>IdNo.</th>");
+				pw.println("<th>Amount</th>");				
+				pw.println("<th>Employee Id</th>");				
+			pw.println("</tr>");
+			
+			for(ReimbOpen i: rop)
+			{	
+				pw.println("<tr>");
+				pw.println("<td>" + i.getRidO() +"</td>");
+				pw.println("<td>" + i.getAmount() +"</td>");
+				pw.println("<td>" + i.getEid() +"</td>");
+				pw.println("</tr>");
+			}
+			pw.println("</table>");	
+		}
+		
+		pw.println("<h1>Closed reimbursements</h1>");
 		pw.println("<table>");
 		pw.println("<tr>");
 			pw.println("<th>IdNo.</th>");
@@ -65,11 +118,6 @@ public class ViewClosedReimbsServlet extends HttpServlet {
 
 			}
 		pw.println("</tr>");
-		
-		if(ro.isEmpty())
-		{
-			pw.println("wtf");
-		}
 		
 		for(ReimbClosed i: ro)
 		{	
