@@ -14,9 +14,7 @@ body {
 	<h1>Hello, this is the Employee Page</h1>
 	
 	<div>
-		<form action="OpenReimbursement.html">
-			<input type="submit" value="Open new reimbursement request" />
-		</form>
+		
 		<br>
 		<form action="ViewOwnRequestsServlet">
 			<input type="submit" value="View pending requests" />
@@ -34,13 +32,40 @@ body {
 			<input type="submit" value="Logout" />
 		</form>
 		<div id="demo">
-			<h2>The XMLHttpRequest Object</h2>
+			<h2>Update Info</h2>
 			<button type="button" onclick="loadDoc()">Change Content</button>
+		</div>
+		<div id="demo2">
+			<h2>Open Reimbursement</h2>
+			<button type="button" onclick="loadForm()">Change1 Content</button>
 		</div>
 	</div>
 	
 	<script>
-		
+	function loadDoc() {
+		  var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function() {
+		    if (this.readyState == 4 && this.status == 200) {
+		      document.getElementById("demo").innerHTML =
+		      this.responseText;
+		    }
+		  };
+		  xhttp.open("GET", "UpdateInfo.html", true);
+		  xhttp.send();
+		}
+	</script>
+	<script>
+	function loadForm() {
+		  var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function() {
+		    if (this.readyState == 4 && this.status == 200) {
+		      document.getElementById("demo2").innerHTML =
+		      this.responseText;
+		    }
+		  };
+		  xhttp.open("GET", "OpenReimbursement.html", true);
+		  xhttp.send();
+		}
 	</script>
 	
 </body>
