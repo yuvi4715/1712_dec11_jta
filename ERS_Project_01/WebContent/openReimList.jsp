@@ -31,9 +31,7 @@
 				<div class="page-header">
 					<div class = "form-group">	
 						<label for="emp_title">Employee IDs</label>
-						<select type="text" id="emp_title" name="emp_title" class="form-control" required>
-							<option value="EmployeeID">${item.createdBy}</option>
-						</select>
+						<input type="text" id="emp_title" name="emp_title" class="form-control" required>
 					</div>
 				</div>
 			</div>	

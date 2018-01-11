@@ -14,7 +14,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="page-header">
-						<h1 align="center">Employee Reimbursement System</h1>
+						<h1 align="center">Expense Reimbursement System</h1>
 						<h2 align="center">Login Page</h2>
 					</div>
 				</div>

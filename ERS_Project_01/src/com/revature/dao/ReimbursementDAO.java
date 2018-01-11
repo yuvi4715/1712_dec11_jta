@@ -21,7 +21,7 @@ public class ReimbursementDAO implements ReimbursementDAOInterface {
 		
 	}
 	
-	//Method to add a reimbursement to the Employee_Tbl
+	//Method to add a reimbursement
 	@Override
 	public void newReimbursement(Reimbursements reim, Connection con) throws Exception {
 		

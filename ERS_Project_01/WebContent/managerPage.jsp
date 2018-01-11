@@ -56,6 +56,7 @@
 				<a class="navbar-brand"></a>
 					<ul class="nav navbar-nav">
 						<li><a class="navbar-brand" href="Employee">View All Employees</a></li>
+						<li><a class="navbar-brand" href="register.jsp">Register An Employee</a></li>
 						<li><a class="navbar-brand" href="AllReimbursements">View All Reimbursements</a></li>
 						<li><a class="navbar-brand" href="NewReimbursements">Create Reimbursement</a></li>
 						<li><a class="navbar-brand" href="OpenReimbursements">Pending Reimbursements</a></li>

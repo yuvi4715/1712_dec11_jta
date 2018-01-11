@@ -23,8 +23,6 @@
 		request.setAttribute("user", (String)request.getSession().getAttribute("employeeUsername"));
 		request.setAttribute("role", (String)request.getSession().getAttribute("employeeRole"));
 		request.setAttribute("reportsTo", (Integer)request.getSession().getAttribute("employeeReportsTo"));
-		
-		out.println((String)request.getSession().getAttribute("employeeRole"));
 	</jsp:scriptlet>
 
 	<div class="container">
@@ -93,17 +91,6 @@
 				</div>
 			</div>
 		</div>
-		<input type="submit" value="RANDOM" class="btn btn-danger" id="random"/>
 	</div>
-	
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$(#'random').click(function(e){
-				$.ajax({
-					type:'GET'
-				})
-			});
-		});
-	</script>
 </body>
 </html>
