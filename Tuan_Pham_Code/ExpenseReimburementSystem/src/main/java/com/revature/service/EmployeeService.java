@@ -67,4 +67,10 @@ public class EmployeeService {
 	public List<Reimbursement> getPendingReq(Employee employee) {
 		return EmployeeDaoJdbc.getEmployeeDaoJdbc().getPending(employee);
 	}
+	public static List<Reimbursement> gettingPending(Employee employee) {
+		return EmployeeDaoJdbc.getEmployeeDaoJdbc().getPending(employee);
+	}
+	public static List<Reimbursement> gettingResolved(Employee employee) {
+		return EmployeeDaoJdbc.getEmployeeDaoJdbc().getResolved(employee);
+	}
 }

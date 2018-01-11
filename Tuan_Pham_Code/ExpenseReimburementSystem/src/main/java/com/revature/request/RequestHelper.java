@@ -24,8 +24,8 @@ public class RequestHelper {
 			return ManagerHomepageController.man(request);
 		case "/ExpenseReimburementSystem/registration.do":
 			return RegistrationController.registration(request);
-		case "/ExpenseReimburementSystem/pending.do":
-			return PendingController.emp(request);	
+//		case "/ExpenseReimburementSystem/pending.do":
+//			return PendingController.emp(request);	
 		case "/ExpenseReimburementSystem/signout.do":
 			return SignoutController.signout(request);
 		

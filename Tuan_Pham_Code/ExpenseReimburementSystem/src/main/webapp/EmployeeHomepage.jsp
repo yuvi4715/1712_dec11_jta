@@ -25,8 +25,9 @@ pageEncoding="ISO-8859-1"%>
 						class="glyphicon glyphicon-home" aria-hidden="true"> 
 						</span></a></li>
 
-				<li><a class="navbar-brand" href="/ExpenseReimburementSystem/pending.do">View Pending Reimbursements</a></li>
-				<li><a class="navbar-brand" href="#">View Resolved Reimbursements</a></li>
+	<!--  			<li><a class="navbar-brand" href="/ExpenseReimburementSystem/pending.do">View Pending Reimbursements</a></li> -->
+				<li><button id="pendingClick" class="navbar-brand">View Pending Reimbursements</button></li>
+				<li><button id="resolvedClick" class="navbar-brand">View Resolved Reimbursements</button></li>
 				<li><a class="navbar-brand" href="#">Submit Reimbursement Request</a></li>
 			</ul>
 		</div>
@@ -68,6 +69,11 @@ pageEncoding="ISO-8859-1"%>
 			</c:forEach>
 		</tbody>
 	</table>
+	
+	<h5 id="tickets"></h5>
+	<h5 id="ticketsResolved"></h5>
+	<script type="text/javascript" src="resources/js/getPendingTickets.js"></script>
+	<script type="text/javascript" src="resources/js/getResolvedTickets.js"></script>
 
 </body>
 </html>

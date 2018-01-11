@@ -257,7 +257,38 @@ public boolean checkUsername(Employee employee) {
 			PreparedStatement statement = connection.prepareStatement(command);
 			statement.setInt(++statementIndex , employee.getId());	
 			ResultSet result = statement.executeQuery();
-			
+			System.out.println("Employee Id : " + employee.getId());
+			List<Reimbursement> pending = new ArrayList<>();
+			while(result.next()) {
+				System.out.println("Entering loop...");
+				pending.add( new Reimbursement(
+						result.getInt("TICKETID"),
+						result.getInt("EMPLOYEEID"),
+						result.getString("STATUS"),
+						result.getInt("TOTAL"),
+						result.getString("SUBMITTIME"),
+						result.getString("CLOSEDTIME"),
+						result.getString("DESCRIPTION"),
+						result.getString("CATEGORY")));
+			}		
+			for (Reimbursement e : pending) {
+			System.out.println(e);
+			}
+		return pending;
+		} catch (SQLException e) {
+			e.getStackTrace();
+		} 
+		return new ArrayList<>();
+	}
+	
+	public List<Reimbursement> getResolved(Employee employee) {	
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			int statementIndex = 0;
+			String command = "SELECT * FROM REIMBURSEMENT WHERE STATUS != 'Pending' AND EMPLOYEEID = ?";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setInt(++statementIndex , employee.getId());	
+			ResultSet result = statement.executeQuery();
+			System.out.println("Employee Id : " + employee.getId());
 			List<Reimbursement> pending = new ArrayList<>();
 			while(result.next()) {
 				System.out.println("Entering loop...");
