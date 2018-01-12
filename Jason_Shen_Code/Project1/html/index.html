@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+</head>
+<body class="container">
+	<div class="navbar">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Sup dawg</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li class="active">
+				<a href="#">Home</a>
+			</li>
+			<li>
+				<a href="https://www.google.com">Google</a>
+			</li>
+			<li>
+				<a href="https://app.revature.com">Revature Pro</a>
+			</li>					
+		</ul>
+	</div>
+
+	<div style='max-width: 50%'>
+		<form class="form-group" method="POST" action="..\java\src\main\java\ersjava\Submit.java">
+			<label class="container"> First name:
+				<input class="form-control" type="text" name="firstname" placeholder="First Name">
+			</label>
+			<label class="container"> Last name:
+				<input class="form-control" type="text" name="lastname" placeholder="Last Name">
+			</label>
+			<label class="container"> Email:
+				<input class="form-control" type="email" name="email" placeholder="Email Address">
+				<!-- <input type="submit" value="Submit" name="B1"> -->
+			</label>				
+			<div class="container">
+				<input class="btn btn-default btn-primary" type="submit" value="Submit" Submit>	
+				<button class="btn btn-default btn-danger" type="submit">Reset</button>		
+			</div>	
+		</form>
+	</div>	
+</div>
+</body>
+</html>
