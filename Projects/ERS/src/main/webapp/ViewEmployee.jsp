@@ -20,10 +20,17 @@
 			<a class="navbar-brand" href="#">ERS System</a>
 		</div>
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="EmployeeHome.jsp">Home</a></li>
-			<li><a href="RequestReimbursement.jsp">Create Request</a></li>
-			<li><a href="EmployeeReimbursement.jsp">View Requests</a></li>
-			<li><a href="login.jsp" onclick="logout()">Logout</a></li>
+			<li class="active"><a href="ManagerHome.jsp">Home</a></li>
+			<li class="dropdown"><a class="dropdown-toggle"
+				data-toggle="dropdown" href="#">Reimbursements <span
+					class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="ManagerRequestReimbursement.jsp">Create
+							Request</a></li>
+					<li><a href="ManagerReimbursement.jsp">View Requests</a></li>
+				</ul></li>
+			<li><a href="#" onclick="loadEmployeeList()">View Employees</a></li>
+			<li><a href="#" onclick="logout()">Logout</a></li>
 		</ul>
 	</div>
 	</nav>
@@ -34,46 +41,33 @@
 	</p>
 	</header>
 	<section class="container">
-	
+
 	<div class="container">
 		<div class="row">
-			<div class="page-header">
-				<ul class="list-inline">
-				
-					<li><a onclick="allRequestsByEmployee()">All Requests</a></li>
-					<li><a onclick="allPendingRequestsByEmployee()">Pending Requests</a></li>
-					<li><a onclick="allResolvedRequestsByEmployee()">Resolved Requests</a></li>
-				</ul>
-			</div>
-
+			
 			<div class="row">
 				<table class="table">
 					<thead>
 						<tr>
-							<td>Reimbursement ID</td>
-							<td>Created By</td>
-							<td>Resolved By</td>
-							<td>Amount</td>
-							<td>Title</td>
-							<td>Description</td>
-							<td>Start Time</td>
-							<td>End Time</td>
+							<td>Employee ID</td>
+							<td>Username</td>
+							<td>Password</td>
+							<td>First Name</td>
+							<td>Last Name</td>
 							<td>Status</td>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${employeeReimbursement}" var="reimbursement">
+						<c:forEach items="${employeeList}" var="employee">
 							<tr>
-								<td>${reimbursement.reimbursementId}</td>
-								<td>${reimbursement.employeeId}</td>
-								<td>${reimbursement.managerId}</td>
-								<td>${reimbursement.amount}</td>
-								<td>${reimbursement.title}</td>
-								<td>${reimbursement.description}</td>
-								<td>${reimbursement.start}</td>
-								<td>${reimbursement.end}</td>
-								<td>${reimbursement.status}</td>
+								<td>${employee.employeeId}</td>
+								<td>${employee.username}</td>
+								<td>${employee.password}</td>
+								<td>${employee.firstName}</td>
+								<td>${employee.lastName}</td>
+								<td>${employee.status}</td>
 							</tr>
+
 						</c:forEach>
 					</tbody>
 				</table>

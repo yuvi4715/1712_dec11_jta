@@ -40,9 +40,9 @@ public class EmployeeDaoJdbc implements EmployeeDao {
 			PreparedStatement statement = connection.prepareStatement(command);
 
 			//Set attributes to be inserted
-			statement.setString(++statementIndex, employee.getFirstName().toUpperCase());
-			statement.setString(++statementIndex, employee.getLastName().toUpperCase());
-			statement.setString(++statementIndex, employee.getUsername().toLowerCase());
+			statement.setString(++statementIndex, employee.getFirstName());
+			statement.setString(++statementIndex, employee.getLastName());
+			statement.setString(++statementIndex, employee.getUsername());
 			statement.setString(++statementIndex, employee.getPassword());
 
 			if(statement.executeUpdate() > 0) {
@@ -194,18 +194,18 @@ public class EmployeeDaoJdbc implements EmployeeDao {
 	
 	@Override
 	public boolean authenticateEmployee(String username, String password) {
-		System.out.println("authenticateEmployee entered");
+		//System.out.println("authenticateEmployee entered");
 		try(Connection connection = ConnectionUtil.getConnection()){
-			System.out.println("try block entered");
+			//System.out.println("try block entered");
 			String command = "SELECT * FROM EMPLOYEE WHERE Username = ?";
 			PreparedStatement statement = connection.prepareStatement(command);
 			statement.setString(1, username);
 			ResultSet rs = statement.executeQuery();
 			
 			if (rs.next()){
-				System.out.println("rs.next() ENTERED");
+				//System.out.println("rs.next() ENTERED");
 				String account_password = rs.getString(3);
-				System.out.println("Get string 3 returns: " + rs.getString(3));
+				//System.out.println("Get string 3 returns: " + rs.getString(3));
 				if (password.equals(account_password)) {
 					LogUtil.logger.info("Password match");
 					return true;
@@ -217,15 +217,15 @@ public class EmployeeDaoJdbc implements EmployeeDao {
 			}
 			else {
 				LogUtil.logger.warn("Invalid username");
-				System.out.println("No resultset");
+				//System.out.println("No resultset");
 				return false;
 			}
 		}
 		catch (SQLException e) {
-			System.out.println("exception getting user account");
+			//System.out.println("exception getting user account");
 			LogUtil.logger.warn("Exception getting user account", e);
 		}
-		System.out.println("end of function, returning false");
+		//System.out.println("end of function, returning false");
 		return false;
 	}
 	
@@ -235,17 +235,17 @@ public class EmployeeDaoJdbc implements EmployeeDao {
 			int statementIndex = 0;
 			String command = "{CALL UPDATE_INFO(?,?,?,?,?,?)}";
 			CallableStatement statement = connection.prepareCall(command);
-			System.out.println("Logged in employee ID being used for UPDATE_INFO: " + employee.getId());
-			statement.setInt(++statementIndex, employee.getId());
+			//System.out.println("Logged in employee ID being used for UPDATE_INFO: " + employee.getEmployeeId());
+			statement.setInt(++statementIndex, employee.getEmployeeId());
 			statement.setString(++statementIndex, employee.getUsername());
 			statement.setString(++statementIndex, employee.getPassword());
 			statement.setString(++statementIndex, employee.getFirstName());
 			statement.setString(++statementIndex, employee.getLastName());
 			statement.setString(++statementIndex, employee.getEmail());
-			System.out.println(employee.getUsername() + "profile updated");
+			//System.out.println(employee.getUsername() + "profile updated");
 			
 			if(statement.executeUpdate() > 0) {
-				System.out.println("Updated info!");
+				//System.out.println("Updated info!");
 				return true;
 			}
 			

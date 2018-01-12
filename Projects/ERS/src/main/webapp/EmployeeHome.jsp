@@ -24,7 +24,7 @@
 					<li class="active"><a href="EmployeeHome.jsp">Home</a></li>
 					<li><a href="RequestReimbursement.jsp">Create Request</a></li>
 					<li><a href="EmployeeReimbursement.jsp">View Requests</a></li>
-					<li><a href="login.jsp" onclick="logout()">Logout</a></li>
+					<li><a href="#" type="submit" onclick="logout()">Logout</a></li>	
 				</ul>
 			</div>
 		</nav>
@@ -36,14 +36,15 @@
 
 		<script>
 			function emptyInfoForm() {
-				$(".form-control").val("Enter new info");
+				$(".form-control").val("");
 			}
+			
 		</script>
 
 	</header>
 	<section class="container">
-				
-			
+
+
 		<form class="form-horizontal no-bottom-margin" id="updateInfoForm"
 			action="UpdateInfo" method="POST">
 			<div class="form-group">
@@ -66,7 +67,7 @@
 						<c:out value="${sessionScope.loggedEmployee.password}"></c:out>
 					</p>
 					<input type="text" class="form-control" name="password"
-						value="Enter new info">
+						placeholder="Enter new info">
 
 				</div>
 			</div>
@@ -78,7 +79,7 @@
 						<c:out value="${sessionScope.loggedEmployee.firstName}"></c:out>
 					</p>
 					<input type="text" class="form-control" name="firstName"
-						value="Enter new info">
+						placeholder="Enter new info">
 
 				</div>
 			</div>
@@ -90,7 +91,7 @@
 						<c:out value="${sessionScope.loggedEmployee.lastName}"></c:out>
 					</p>
 					<input type="text" class="form-control" name="lastName"
-						value="Enter new info">
+						placeholder="Enter new info">
 
 				</div>
 			</div>
@@ -102,7 +103,7 @@
 						<c:out value="${sessionScope.loggedEmployee.email}"></c:out>
 					</p>
 					<input type="text" class="form-control" name="email"
-						value="Enter new info">
+						placeholder="Enter new info">
 
 				</div>
 			</div>

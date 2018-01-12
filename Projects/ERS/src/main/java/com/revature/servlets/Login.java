@@ -30,16 +30,16 @@ public class Login extends HttpServlet {
 		// TODO Auto-generated method stub
 		String user = request.getParameter("username");
 		String pass = request.getParameter("password");
-		System.out.println("Grabbing username: " + user);
-		System.out.println("Grabbing username: " + pass);
+		//System.out.println("Grabbing username: " + user);
+		//System.out.println("Grabbing username: " + pass);
 		EmployeeDaoJdbc instance = EmployeeDaoJdbc.getEmployeeDaoJdbc();
 		boolean success = instance.authenticateEmployee(user, pass);
 		if (success) {
-			System.out.println("Successfully authenticated employee " + user);
+			//System.out.println("Successfully authenticated employee " + user);
 			Employee loggedEmployee = instance.getEmployeeByUsername(user);
 			request.getSession().setAttribute("loggedEmployee", loggedEmployee);
-			System.out.println(loggedEmployee.getUsername() + " employee added to session attributes");
-			System.out.println("Position: " + loggedEmployee.getPosition());
+			//System.out.println(loggedEmployee.getUsername() + " employee added to session attributes");
+			//System.out.println("Position: " + loggedEmployee.getPosition());
 			if (loggedEmployee.getPosition().equals("employee")) {
 				request.getRequestDispatcher("EmployeeHome.jsp").forward(request, response);
 			}
@@ -51,7 +51,7 @@ public class Login extends HttpServlet {
 		else {
 			request.setAttribute("errorMessage", "Invalid username and/or password");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
-			System.out.println("Failed to authenticate employee " + user);
+			//System.out.println("Failed to authenticate employee " + user);
 		}
 	}
 

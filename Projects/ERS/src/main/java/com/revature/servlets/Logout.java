@@ -12,6 +12,8 @@ import com.revature.model.Employee;
 /**
  * Servlet implementation class Logout
  */
+
+
 public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -24,21 +26,23 @@ public class Logout extends HttpServlet {
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//System.out.println("Logout Servlet entered");
 		Employee loggedOut = (Employee) request.getSession().getAttribute("loggedEmployee");
-		System.out.println("Logging out " + loggedOut.getUsername());
+		//System.out.println("Logging out " + loggedOut.getUsername());
 		
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 		    session.invalidate();
-		    System.out.println("Session exists; clearing session");
+		    //System.out.println("Session exists; clearing session");
 		}
-		System.out.println("Done clearing session");
+		//System.out.println("Done clearing session");
+		
 		//Employee logOutCheck = (Employee) request.getSession().getAttribute("employee");
-		//System.out.println("Should be null: " + logOutCheck.getUsername());
+		////System.out.println("Should be null: " + logOutCheck.getUsername());
 		
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}

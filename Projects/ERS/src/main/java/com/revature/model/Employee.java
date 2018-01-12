@@ -57,11 +57,11 @@ public class Employee {
 		this.position = pos;
 	}
 	
-	public int getId() {
+	public int getEmployeeId() {
 		return employeeId;
 	}
 	
-	public void setId(int id) {
+	public void setEmployeeId(int id) {
 		this.employeeId = id;
 	}
 	
@@ -97,11 +97,11 @@ public class Employee {
 		this.lastName = lastName;
 	}
 
-	public String getLogStatus() {
+	public String getStatus() {
 		return logStatus;
 	}
 	
-	public void setLogStatus(String logStatus) {
+	public void setStatus(String logStatus) {
 		this.logStatus = logStatus;
 	}
 	

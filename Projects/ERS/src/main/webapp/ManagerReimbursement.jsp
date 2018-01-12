@@ -20,10 +20,17 @@
 			<a class="navbar-brand" href="#">ERS System</a>
 		</div>
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="EmployeeHome.jsp">Home</a></li>
-			<li><a href="RequestReimbursement.jsp">Create Request</a></li>
-			<li><a href="EmployeeReimbursement.jsp">View Requests</a></li>
-			<li><a href="login.jsp" onclick="logout()">Logout</a></li>
+			<li class="active"><a href="ManagerHome.jsp">Home</a></li>
+			<li class="dropdown"><a class="dropdown-toggle"
+				data-toggle="dropdown" href="#">Reimbursements <span
+					class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="ManagerRequestReimbursement.jsp">Create
+							Request</a></li>
+					<li><a href="ManagerReimbursement.jsp">View Requests</a></li>
+				</ul></li>
+			<li><a href="#" onclick="loadEmployeeList()">View Employees</a></li>
+			<li><a href="#" onclick="logout()">Logout</a></li>
 		</ul>
 	</div>
 	</nav>
@@ -34,18 +41,30 @@
 	</p>
 	</header>
 	<section class="container">
-	
+
 	<div class="container">
 		<div class="row">
 			<div class="page-header">
 				<ul class="list-inline">
-				
-					<li><a onclick="allRequestsByEmployee()">All Requests</a></li>
-					<li><a onclick="allPendingRequestsByEmployee()">Pending Requests</a></li>
-					<li><a onclick="allResolvedRequestsByEmployee()">Resolved Requests</a></li>
+
+					<li><a onclick="allPendingRequests()">All Pending Requests</a></li>
+					<li><a onclick="allResolvedRequests()">All Resolved
+							Requests</a></li>
+					<li><form id="employeeSearch" action="ViewAllByEmployee" method="POST">
+						<p><input type="number" name="searchInput" style="width: 250px;" placeholder="Search all requests by Employee ID">
+						<button id="searchButton" type="submit" class="btn btn-default">Search</button>
+					</form></li>
+					<!-- <input id="searchBar" type="number" name="searchInput" style="width: 250px;" placeholder="Search all requests by Employee ID">
+						<button id="searchButton" type="button" class="btn btn-default" onclick="filterRequestsByEmployee()">Search</button> -->
 				</ul>
 			</div>
 
+			<!-- <form id="employeeSearch" action="ViewAllByEmployee" method="POST">
+						<input type="int" name="searchInput">
+						<button id=searchButton " type="button" class="btn btn-default"
+							onclick="filterRequestsByEmployee()">Filter</button>
+					</form> 
+					-->
 			<div class="row">
 				<table class="table">
 					<thead>
@@ -59,6 +78,7 @@
 							<td>Start Time</td>
 							<td>End Time</td>
 							<td>Status</td>
+							<td>Action</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -72,8 +92,15 @@
 								<td>${reimbursement.description}</td>
 								<td>${reimbursement.start}</td>
 								<td>${reimbursement.end}</td>
-								<td>${reimbursement.status}</td>
+								<td id="status${reimbursement.reimbursementId}">${reimbursement.status}</td>
+								<td>
+									<button id="${reimbursement.reimbursementId}" type="button" class="btn btn-primary"
+										onclick="approve(this.id)">Approve</button>
+									<button id="${reimbursement.reimbursementId}" type="button"
+										class="btn btn-danger" onclick="deny(this.id)">Deny</button>
+								</td>
 							</tr>
+
 						</c:forEach>
 					</tbody>
 				</table>

@@ -15,18 +15,24 @@
 </head>
 <body>
 	<header> <nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="#">ERS System</a>
-		</div>
-		<ul class="nav navbar-nav">
-			<li class="active"><a href="EmployeeHome.jsp">Home</a></li>
-			<li><a href="RequestReimbursement.jsp">Create Request</a></li>
-			<li><a href="EmployeeReimbursement.jsp">View Requests</a></li>
-			<li><a href="login.jsp" onclick="logout()">Logout</a></li>
-		</ul>
-	</div>
-	</nav>
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">ERS System</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="ManagerHome.jsp">Home</a></li>
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Reimbursements <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="ManagerRequestReimbursement.jsp">Create Request</a></li>
+							<li><a href="ManagerReimbursement.jsp">View Requests</a></li>
+						</ul></li>
+					<li><a href="#" onclick="loadEmployeeList()">View Employees</a></li>
+					<li><a href="#" onclick="logout()">Logout</a></li>
+				</ul>
+			</div>
+		</nav>
 	<p>
 		You are signed on as
 		<c:out value="${sessionScope.loggedEmployee.username}"></c:out>
@@ -47,7 +53,7 @@
 				<strong>Amount: </strong>
 				<div>
 					<p class="form-control-static"></p>
-					<input type="number" class="form-control" name="amount" id="a" placeholder="Enter amount"
+					<input type="number" class="form-control" name="amount" id="a"
 						required>
 				</div>
 			</div>
@@ -55,7 +61,7 @@
 				<strong>Title: </strong>
 				<div>
 					<p class="form-control-static"></p>
-					<input type="text" class="form-control" name="title" id="t" placeholder="Enter title"
+					<input type="text" class="form-control" name="title" id="t"
 						required>
 				</div>
 			</div>
@@ -63,7 +69,7 @@
 				<strong>Description: </strong>
 				<div>
 					<p class="form-control-static"></p>
-					<input type="text" class="form-control" name="description" id="d" placeholder="Enter description">
+					<input type="text" class="form-control" name="description" id="d">
 				</div>
 			</div>
 

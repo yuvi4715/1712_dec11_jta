@@ -13,31 +13,39 @@ import com.revature.model.Employee;
 import com.revature.model.Reimbursement;
 
 /**
- * Servlet implementation class ViewPendingByEmployee
+ * Servlet implementation class ViewAllResolved
  */
-public class ViewPendingByEmployee extends HttpServlet {
+public class ViewAllResolved extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ViewPendingByEmployee() {
+    public ViewAllResolved() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
+    /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doPost(request, response);
+	}
+	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-    	//System.out.println("ViewPendingByEmployee Servlet Entered");
+    	//System.out.println("ViewAllResolved Servlet Entered");
 		
     	Employee loggedEmployee = (Employee) request.getSession().getAttribute("loggedEmployee");
 		
 		ReimbursementDaoJdbc instance = ReimbursementDaoJdbc.getReimbursementDaoJdbc();
 		
-		List<Reimbursement> employeeReimbursementList = instance.getPendingByEmployee(loggedEmployee.getEmployeeId());
+		List<Reimbursement> employeeReimbursementList = instance.selectResolved();
 		
 		//System.out.println("employeeReimbursementList: ");
 		for (Reimbursement r : employeeReimbursementList) {
@@ -46,7 +54,8 @@ public class ViewPendingByEmployee extends HttpServlet {
 		
 		request.getSession().setAttribute("employeeReimbursement", employeeReimbursementList);
 		
-		//request.getRequestDispatcher("RequestReimbursement.jsp").forward(request, response);
+		//request.getRequestDispatcher("ManagerReimbursement.jsp").forward(request, response);
 	
 	}
+
 }

@@ -28,28 +28,33 @@ public class UpdateInfo extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("UpdateInfo doPost entered");
+		//System.out.println("UpdateInfo doPost entered");
 		// get the employee data
 		Employee loggedEmployee = (Employee) request.getSession().getAttribute("loggedEmployee");
 		Employee updated = new Employee();
 		
-		updated.setId(loggedEmployee.getId());
-		System.out.println("getID: " + loggedEmployee.getId());
+		updated.setEmployeeId(loggedEmployee.getEmployeeId());
+		//System.out.println("getID: " + loggedEmployee.getEmployeeId());
 		updated.setUsername(loggedEmployee.getUsername());
-		System.out.println("getUsername: " + loggedEmployee.getUsername());
+		//System.out.println("getUsername: " + loggedEmployee.getUsername());
 		
-		if (!(request.getParameter("password").equals("Enter new info")))
-			updated.setPassword(request.getParameter("password"));
-		if (!(request.getParameter("firstName").equals("Enter new info")))
-			updated.setFirstName(request.getParameter("firstName"));
-		if (!(request.getParameter("lastName").equals("Enter new info")))
-			updated.setLastName(request.getParameter("lastName"));
-		if (!(request.getParameter("email").equals("Enter new info")))
-			updated.setEmail(request.getParameter("email"));
+		updated.setPassword(loggedEmployee.getPassword());
+		updated.setFirstName(loggedEmployee.getFirstName());
+		updated.setLastName(loggedEmployee.getLastName());
+		updated.setEmail(loggedEmployee.getEmail());
+		
+		if (!(request.getParameter("password").equals("")))
+			updated.setPassword(request.getParameter(""));
+		if (!(request.getParameter("firstName").equals("")))
+			updated.setFirstName(request.getParameter(""));
+		if (!(request.getParameter("lastName").equals("")))
+			updated.setLastName(request.getParameter(""));
+		if (!(request.getParameter("email").equals("")))
+			updated.setEmail(request.getParameter(""));
 		
 		updated.setPosition(loggedEmployee.getPosition());
 		
-		System.out.println("Employee info to update: " + updated);
+		//System.out.println("Employee info to update: " + updated);
 		EmployeeDaoJdbc instance = EmployeeDaoJdbc.getEmployeeDaoJdbc();
 		// update the employee in the database
 		boolean success = instance.updateInfo(updated);

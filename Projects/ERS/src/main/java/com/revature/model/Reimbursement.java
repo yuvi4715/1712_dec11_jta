@@ -29,6 +29,7 @@ public class Reimbursement {
 
 	public Reimbursement(int reimbursementId, int employeeId, int managerId, double amount, String title, String description,
 			Timestamp submitDate, Timestamp resolveDate, String status) {
+		this.reimbursementId = reimbursementId;
 		this.employeeId = employeeId;
 		this.managerId = managerId;
 		this.amount = amount;
@@ -91,11 +92,11 @@ public class Reimbursement {
 		this.description = description;
 	}
 	
-	public Timestamp getStartDate() {
+	public Timestamp getStart() {
 		return start;
 	}
 
-	public void setStartDate(Timestamp start) {
+	public void setStart(Timestamp start) {
 		this.start = start;
 	}
 
@@ -103,11 +104,11 @@ public class Reimbursement {
 		return status;
 	}
 
-	public Timestamp getEndDate() {
+	public Timestamp getEnd() {
 		return end;
 	}
 
-	public void setEndDate(Timestamp end) {
+	public void setEnd(Timestamp end) {
 		this.end = end;
 	}
 	

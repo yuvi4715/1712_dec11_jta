@@ -61,6 +61,62 @@
   	<servlet-name>ViewPendingByEmployee</servlet-name>
   	<servlet-class>com.revature.servlets.ViewPendingByEmployee</servlet-class>
   </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>ViewResolvedByEmployee</display-name>
+  	<servlet-name>ViewResolvedByEmployee</servlet-name>
+  	<servlet-class>com.revature.servlets.ViewResolvedByEmployee</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>ViewAllByEmployeeSearch</display-name>
+  	<servlet-name>ViewAllByEmployeeSearch</servlet-name>
+  	<servlet-class>com.revature.servlets.ViewAllByEmployeeSearch</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>ViewAllPending</display-name>
+  	<servlet-name>ViewAllPending</servlet-name>
+  	<servlet-class>com.revature.servlets.ViewAllPending</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>ViewAllResolved</display-name>
+  	<servlet-name>ViewAllResolved</servlet-name>
+  	<servlet-class>com.revature.servlets.ViewAllResolved</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>ViewAllEmployees</display-name>
+  	<servlet-name>ViewAllEmployees</servlet-name>
+  	<servlet-class>com.revature.servlets.ViewAllEmployees</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>ApproveReimbursement</display-name>
+  	<servlet-name>ApproveReimbursement</servlet-name>
+  	<servlet-class>com.revature.servlets.ApproveReimbursement</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>asdf</display-name>
+  	<servlet-name>asdf</servlet-name>
+  	<servlet-class>com.revature.servlets.asdf</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>DenyReimbursement</display-name>
+  	<servlet-name>DenyReimbursement</servlet-name>
+  	<servlet-class>com.revature.servlets.DenyReimbursement</servlet-class>
+  </servlet>
   
   <servlet-mapping>
   	<servlet-name>AjaxServlet</servlet-name>
@@ -89,5 +145,37 @@
   <servlet-mapping>
   	<servlet-name>ViewPendingByEmployee</servlet-name>
   	<url-pattern>/ViewPendingByEmployee</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewResolvedByEmployee</servlet-name>
+  	<url-pattern>/ViewResolvedByEmployee</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewAllByEmployeeSearch</servlet-name>
+  	<url-pattern>/ViewAllByEmployeeSearch</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewAllPending</servlet-name>
+  	<url-pattern>/ViewAllPending</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewAllResolved</servlet-name>
+  	<url-pattern>/ViewAllResolved</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewAllEmployees</servlet-name>
+  	<url-pattern>/ViewAllEmployees</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ApproveReimbursement</servlet-name>
+  	<url-pattern>/ApproveReimbursement</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>asdf</servlet-name>
+  	<url-pattern>/asdf</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DenyReimbursement</servlet-name>
+  	<url-pattern>/DenyReimbursement</url-pattern>
   </servlet-mapping>
 </web-app>

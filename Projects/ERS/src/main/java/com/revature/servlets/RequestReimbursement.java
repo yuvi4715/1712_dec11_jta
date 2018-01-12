@@ -40,12 +40,12 @@ public class RequestReimbursement extends HttpServlet {
 		// get the request data
 		Reimbursement reimbursement = new Reimbursement(); // make a new request
 		// reqId will be set on db via sequence
-		reimbursement.setEmployeeId(loggedEmployee.getId()); // set empid to be the id of the current employee who is
+		reimbursement.setEmployeeId(loggedEmployee.getEmployeeId()); // set empid to be the id of the current employee who is
 																// logged in
 		reimbursement.setStatus("pending"); // all initial requests are pending
 		reimbursement.setTitle(request.getParameter("title"));
 		reimbursement.setAmount(Double.parseDouble(request.getParameter("amount"))); // get amount from form submission
-		reimbursement.setStartDate(new Timestamp(System.currentTimeMillis())); // timestamp the request
+		reimbursement.setStart(new Timestamp(System.currentTimeMillis())); // timestamp the request
 		reimbursement.setDescription(request.getParameter("description")); // get the description from the form
 		ReimbursementDaoJdbc instance = ReimbursementDaoJdbc.getReimbursementDaoJdbc();
 		boolean success = instance.insertProcedure(reimbursement);
@@ -54,8 +54,13 @@ public class RequestReimbursement extends HttpServlet {
 		} else {
 			request.setAttribute("errorMessage", "An error occurred: The request was not submitted");
 		}
-		List<Reimbursement> employeeReimbursementList = instance.getAllByEmployee(loggedEmployee.getId());
+		List<Reimbursement> employeeReimbursementList = instance.getAllByEmployee(loggedEmployee.getEmployeeId());
 		request.getSession().setAttribute("employeeReimbursement", employeeReimbursementList);
-		request.getRequestDispatcher("RequestReimbursement.jsp").forward(request, response);
+		
+		if (loggedEmployee.getPosition().equals("employee"))
+			request.getRequestDispatcher("RequestReimbursement.jsp").forward(request, response);
+		else 
+			request.getRequestDispatcher("ManagerRequestReimbursement.jsp").forward(request, response);
+		
 	}
 }
