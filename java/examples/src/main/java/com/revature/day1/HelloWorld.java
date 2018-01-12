@@ -11,6 +11,9 @@ public class HelloWorld {
 		System.out.println("value of x " + x);
 	}
 
+	public static void main(int[] args) {
+		//overloaded main method
+	}	
 	
 	// - line comment
 	/*
