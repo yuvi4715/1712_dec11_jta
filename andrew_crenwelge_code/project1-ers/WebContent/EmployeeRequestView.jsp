@@ -124,7 +124,6 @@
 				    <th class="col-md-2">Date Resolved</th>
 				  </thead>
 				  <tbody>
-				    <tr>
 				      <c:forEach items="${requestScope.allRequests}" var="req">
 				        <tr>
 				        <td><c:out value="${req.getReqID()}"></c:out></td>
@@ -137,7 +136,6 @@
 				        <td><c:out value="${req.getDateResolved().toString().substring(0,19)}"></c:out></td>
 				        </tr>
 				      </c:forEach>
-				    </tr>
 				  </tbody>
 			  </table>
 		  	</div>
