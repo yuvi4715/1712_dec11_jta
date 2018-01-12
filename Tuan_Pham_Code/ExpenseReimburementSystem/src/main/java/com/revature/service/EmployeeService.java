@@ -1,11 +1,9 @@
 package com.revature.service;
 
 import java.util.List;
-
 import com.revature.dao.EmployeeDaoJdbc;
 import com.revature.model.Employee;
 import com.revature.model.Reimbursement;
-import com.revature.util.FinalUtil;
 
 /* Class that executes business logic related to employees */
 public class EmployeeService {
@@ -14,14 +12,12 @@ public class EmployeeService {
 	private static EmployeeService employeeService;
 	
 	private EmployeeService() {
-		
 	}
 	
 	public static EmployeeService getEmployeeService() {
 		if(employeeService == null) {
 			employeeService = new EmployeeService();
 		}
-		
 		return employeeService;
 	}
 	
@@ -47,7 +43,6 @@ public class EmployeeService {
 		if(loggedEmployee.getPassword().equals(employee.getPassword())) {
 			return loggedEmployee;
 		}
-		
 		return new Employee();
 	}
 	
@@ -67,10 +62,27 @@ public class EmployeeService {
 	public List<Reimbursement> getPendingReq(Employee employee) {
 		return EmployeeDaoJdbc.getEmployeeDaoJdbc().getPending(employee);
 	}
+	
 	public static List<Reimbursement> gettingPending(Employee employee) {
 		return EmployeeDaoJdbc.getEmployeeDaoJdbc().getPending(employee);
 	}
+	
 	public static List<Reimbursement> gettingResolved(Employee employee) {
 		return EmployeeDaoJdbc.getEmployeeDaoJdbc().getResolved(employee);
+	}
+	
+	public static List<Reimbursement> gettingAllPending() {
+		return EmployeeDaoJdbc.getEmployeeDaoJdbc().getAllPending();
+	}
+	
+	public static List<Reimbursement> gettingAllResolved() {
+		return EmployeeDaoJdbc.getEmployeeDaoJdbc().getAllResolved();
+	}
+	
+	public void updateEmployee(Employee employee) {
+		EmployeeDaoJdbc.getEmployeeDaoJdbc().update(employee);
+	}
+	public void submitRequest(Reimbursement ticket) {
+		EmployeeDaoJdbc.getEmployeeDaoJdbc().submitTicket(ticket);
 	}
 }

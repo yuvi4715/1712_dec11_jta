@@ -1,4 +1,3 @@
-// Ajax function to display all pending tickets
 function getPenTickets(){
 
 	var xhttp = new XMLHttpRequest();
@@ -13,7 +12,7 @@ function getPenTickets(){
 //			setValues(ajaxObject)
 	        
 			// Generate the html for table and concatenate values from ajax object
-			var txt = "<br></br>"+"<h3 align=\"center\"> Pending Reimbursements </h3>" +
+			var txt = "<br></br>"+"<h3 align=\"center\"> All Pending Reimbursements </h3>" +
 					"<table class='table table-striped' border='1' style='padding: 50px'> " +
 	        		"<thead>" +
 		        		"<tr>" +
@@ -42,11 +41,11 @@ function getPenTickets(){
 	            txt += "</tbody></table>" 
 	            
 	            // Populate the empty div 
-	            document.getElementById("tickets").innerHTML = txt;
+	            document.getElementById("alltickets").innerHTML = txt;
 		 }
 		};
 	  //Opening connection for endpoint
-	  xhttp.open("POST", "http://localhost:8080/ExpenseReimburementSystem/getPending.ajax", true);
+	  xhttp.open("POST", "http://localhost:8080/ExpenseReimburementSystem/getAllPending.ajax", true);
 	  
 	  //Sending request to endpoint
 	  xhttp.send();
@@ -67,11 +66,12 @@ function getResTickets(){
 //			setValues(ajaxObject)
 	        
 			// Generate the html for table and concatenate values from ajax object
-			var txt = "<br></br>"+"<h3 align=\"center\"> Resolved Reimbursements </h3>" +
+			var txt = "<br></br>"+"<h3 align=\"center\"> All Resolved Reimbursements </h3>" +
 					"<table class='table table-striped' border='1' style='padding: 50px'> " +
 	        		"<thead>" +
 		        		"<tr>" +
 			        		"<th>Ticket ID</th>" +
+			        		"<th>Employee ID</th>" +
 			        		"<th>Status</th>" +
 			        		"<th>Total</th>" +
 			        		"<th>Submit Time</th>" +
@@ -84,6 +84,7 @@ function getResTickets(){
 			        "<tbody>"    		
 	            for (x in ajaxObject) {
 	                txt += ("<tr><td>" + ajaxObject[x].ticketId + "</td>" + 
+	    	        "<td>" + ajaxObject[x].employeeId + "</td>" +
 	                "<td>" + ajaxObject[x].status + "</td>" +
 	                "<td>" + "$"+ ajaxObject[x].total + "</td>" + 
 	                "<td>" + ajaxObject[x].submitTime + "</td>" +
@@ -98,14 +99,13 @@ function getResTickets(){
 	            txt += "</tbody></table>" 
 	            
 	            // Populate the empty div 
-	            document.getElementById("tickets").innerHTML = txt;
+	            document.getElementById("alltickets").innerHTML = txt;
 		 }
 		};
 	  //Opening connection for endpoint
-	  xhttp.open("POST", "http://localhost:8080/ExpenseReimburementSystem/getResolved.ajax", true);
+	  xhttp.open("POST", "http://localhost:8080/ExpenseReimburementSystem/getAllResolved.ajax", true);
 	  
 	  //Sending request to endpoint
 	  xhttp.send();
 
 }
-

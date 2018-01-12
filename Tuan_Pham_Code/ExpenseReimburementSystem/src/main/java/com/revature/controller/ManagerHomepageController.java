@@ -11,8 +11,8 @@ public class ManagerHomepageController {
 
 	public static String man(HttpServletRequest request) {
 		// Print all employees on manager homepage
-		List<Employee> empList = EmployeeService.getEmployeeService().listAllUsers();
-		request.setAttribute("displayEmp", empList);	
+		List<Employee> empList2 = EmployeeService.getEmployeeService().listAllUsers();
+		request.setAttribute("displayEmp2", empList2);
 		return "ManagerHomepage.jsp";
 	}
 }

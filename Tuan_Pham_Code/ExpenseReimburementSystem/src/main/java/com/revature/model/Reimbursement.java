@@ -15,6 +15,7 @@ public class Reimbursement {
 	private String closedTime;
 	private String description;
 	private String category;
+	private String resolvedBy;
 	DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 	
 	public Reimbursement() {
@@ -26,10 +27,18 @@ public class Reimbursement {
 		closedTime = "";
 		description = "";
 		category = "";
+		resolvedBy ="";
+		
+	}
+	public Reimbursement(int empId, String category, int total, String description ) {
+		this.employeeId = employeeId;
+		this.category = category;
+		this.total = total;
+		this.description = description;
 	}
 	
 	public Reimbursement(int ticketId, int employeeId, String status, int total, String submitTime, String closedTime,
-			String description, String category) {
+			String description, String category, String resolvedBy) {
 		super();
 		this.ticketId = ticketId;
 		this.employeeId = employeeId;
@@ -39,6 +48,7 @@ public class Reimbursement {
 		this.closedTime = closedTime;
 		this.description = description;
 		this.category = category;
+		this.resolvedBy = resolvedBy;
 	}
 
 	public int getTicketId() {
@@ -82,7 +92,8 @@ public class Reimbursement {
 
 
 	public String getSubmitTime() {
-		return submitTime;
+		Date time = new Date();
+		return df.format(time);
 	}
 
 
@@ -122,6 +133,13 @@ public class Reimbursement {
 		this.category = category;
 	}
 
+	public String getresolvedBy() {
+		return resolvedBy;
+	}
+	
+	public void setresolvedBy(String resolvedBy) {
+		this.resolvedBy = resolvedBy;
+	}
 
 	@Override
 	public String toString() {

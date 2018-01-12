@@ -30,14 +30,11 @@ public class LoginController {
 			
 			
 			if (EmployeeService.getEmployeeService().isManager(loggedEmployee)) {
-				//return "ManagerHomepage.jsp";
 				// grab the employee session and forward it through the servlet again to retain the session
 				return "/managerhomepage.do";
 			}
 			else {
-				//Forward user to hit another controller
 				// grab the employee session and forward it through the servlet again to retain the session
-				//return "/EmployeeHomepage.jsp";
 				return "/employeehomepage.do";
 			}
 		}

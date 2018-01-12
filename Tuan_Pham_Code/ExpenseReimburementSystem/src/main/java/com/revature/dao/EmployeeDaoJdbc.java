@@ -8,12 +8,13 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.revature.model.Employee;
 import com.revature.model.Reimbursement;
 import com.revature.util.ConnectionUtil;
-//import com.revature.util.LogUtil;
+import com.revature.util.LogUtil;
 
 /* JDBC implementation for DAO contract for Employee data access */
 public class EmployeeDaoJdbc implements EmployeeDao {
@@ -94,7 +95,7 @@ public class EmployeeDaoJdbc implements EmployeeDao {
 				return true;
 			}
 		} catch (SQLException e) {
-			e.getStackTrace();
+			LogUtil.logger.warn("Exception inerting procedure", e);
 		}
 		return false;
 	}
@@ -127,7 +128,7 @@ public class EmployeeDaoJdbc implements EmployeeDao {
 						
 			}
 		} catch (SQLException e) {
-			e.getStackTrace();
+			LogUtil.logger.warn("Exception selecting", e);
 		}
 		return new Employee();
 	}
@@ -146,7 +147,7 @@ public class EmployeeDaoJdbc implements EmployeeDao {
 				}
 			}
 		} catch (SQLException e) {
-			e.getStackTrace();
+			LogUtil.logger.warn("Exception getting checking manager", e);
 		}
 		return false;
 	}
@@ -177,7 +178,7 @@ public class EmployeeDaoJdbc implements EmployeeDao {
 
 			return employeeList;
 		} catch (SQLException e) {
-			e.getStackTrace();
+			LogUtil.logger.warn("Exception selecting all", e);
 		} 
 		return new ArrayList<>();
 	}
@@ -215,7 +216,7 @@ public boolean checkUsername(Employee employee) {
 				return result.getString("HASH");
 			}
 		} catch (SQLException e) {
-			e.getStackTrace();
+			LogUtil.logger.warn("Exception getting customer hash", e);
 		} 
 		return new String();
 	}
@@ -245,7 +246,7 @@ public boolean checkUsername(Employee employee) {
 			}
 		return employeeList;
 		} catch (SQLException e) {
-			e.getStackTrace();
+			LogUtil.logger.warn("Exception getting info", e);
 		} 
 		return new ArrayList<>();
 	}
@@ -269,14 +270,43 @@ public boolean checkUsername(Employee employee) {
 						result.getString("SUBMITTIME"),
 						result.getString("CLOSEDTIME"),
 						result.getString("DESCRIPTION"),
-						result.getString("CATEGORY")));
+						result.getString("CATEGORY"),
+						result.getString("RESOLVEDBY")));
 			}		
 			for (Reimbursement e : pending) {
 			System.out.println(e);
 			}
 		return pending;
 		} catch (SQLException e) {
-			e.getStackTrace();
+			LogUtil.logger.warn("Exception getting pending", e);
+		} 
+		return new ArrayList<>();
+	}
+	
+	public List<Reimbursement> getAllPending() {	
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			String command = "SELECT * FROM REIMBURSEMENT WHERE STATUS = 'Pending'";
+			PreparedStatement statement = connection.prepareStatement(command);	
+			ResultSet result = statement.executeQuery();
+			List<Reimbursement> pending = new ArrayList<>();
+			while(result.next()) {
+				pending.add( new Reimbursement(
+						result.getInt("TICKETID"),
+						result.getInt("EMPLOYEEID"),
+						result.getString("STATUS"),
+						result.getInt("TOTAL"),
+						result.getString("SUBMITTIME"),
+						result.getString("CLOSEDTIME"),
+						result.getString("DESCRIPTION"),
+						result.getString("CATEGORY"),
+						result.getString("RESOLVEDBY")));
+			}		
+//			for (Reimbursement e : pending) {
+//			System.out.println(e);
+//			}
+		return pending;
+		} catch (SQLException e) {
+			LogUtil.logger.warn("Exception getting all pending", e);
 		} 
 		return new ArrayList<>();
 	}
@@ -288,10 +318,10 @@ public boolean checkUsername(Employee employee) {
 			PreparedStatement statement = connection.prepareStatement(command);
 			statement.setInt(++statementIndex , employee.getId());	
 			ResultSet result = statement.executeQuery();
-			System.out.println("Employee Id : " + employee.getId());
+			//System.out.println("Employee Id : " + employee.getId());
 			List<Reimbursement> pending = new ArrayList<>();
 			while(result.next()) {
-				System.out.println("Entering loop...");
+				//System.out.println("Entering loop...");
 				pending.add( new Reimbursement(
 						result.getInt("TICKETID"),
 						result.getInt("EMPLOYEEID"),
@@ -300,16 +330,95 @@ public boolean checkUsername(Employee employee) {
 						result.getString("SUBMITTIME"),
 						result.getString("CLOSEDTIME"),
 						result.getString("DESCRIPTION"),
-						result.getString("CATEGORY")));
+						result.getString("CATEGORY"),
+						result.getString("RESOLVEDBY")));
 			}		
-			for (Reimbursement e : pending) {
-			System.out.println(e);
-			}
+//			for (Reimbursement e : pending) {
+//			System.out.println(e);
+//			}
 		return pending;
 		} catch (SQLException e) {
-			e.getStackTrace();
+			LogUtil.logger.warn("Exception getting resolved", e);
 		} 
 		return new ArrayList<>();
+	}
+	public List<Reimbursement> getAllResolved() {	
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			String command = "SELECT * FROM REIMBURSEMENT WHERE STATUS != 'Pending'";
+			PreparedStatement statement = connection.prepareStatement(command);	
+			ResultSet result = statement.executeQuery();
+			List<Reimbursement> pending = new ArrayList<>();
+			while(result.next()) {
+				pending.add( new Reimbursement(
+						result.getInt("TICKETID"),
+						result.getInt("EMPLOYEEID"),
+						result.getString("STATUS"),
+						result.getInt("TOTAL"),
+						result.getString("SUBMITTIME"),
+						result.getString("CLOSEDTIME"),
+						result.getString("DESCRIPTION"),
+						result.getString("CATEGORY"),
+						result.getString("RESOLVEDBY")));
+			}		
+//			for (Reimbursement e : pending) {
+//			System.out.println(e);
+//			}
+		return pending;
+		} catch (SQLException e) {
+			LogUtil.logger.warn("Exception getting all resolved", e);
+		} 
+		return new ArrayList<>();
+	}
+	
+	public void update(Employee employee) {
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			int statementIndex = 0;
+			String command = "UPDATE EMPLOYEE SET EMPLOYEEID = ?, FIRSTNAME = ?, LASTNAME = ?, EMAILADDRESS = ?, ADDRESS = ?, CITY = ?, STATE = ?, ZIP = ?, PHONE = ?, USERNAME = ?,  PASSWORD = ? WHERE EMPLOYEEID = ?";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setInt(++statementIndex , employee.getId());	
+			statement.setString(++statementIndex , employee.getFirstName());	
+			statement.setString(++statementIndex , employee.getLastName());	
+			statement.setString(++statementIndex , employee.getEmail());	
+			statement.setString(++statementIndex , employee.getAddress());	
+			statement.setString(++statementIndex , employee.getCity());	
+			statement.setString(++statementIndex , employee.getState());	
+			statement.setString(++statementIndex , employee.getZip());	
+			statement.setString(++statementIndex , employee.getPhone());	
+			statement.setString(++statementIndex , employee.getUsername());	
+			statement.setString(++statementIndex , employee.getPassword());	
+			statement.setInt(++statementIndex , employee.getId());	
+			statement.executeQuery();
+
+		} catch (SQLException e) {
+			LogUtil.logger.warn("Exception updating", e);
+		} 
+	}
+	
+	public boolean submitTicket(Reimbursement ticket) {
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			int statementIndex = 0;
+			Date time = new Date();
+			//Pay attention to this syntax
+			String command = "{CALL INSERT_REIMBURSEMENT(?, ?, ?, ?, ?)}";
+			
+			//Notice the CallableStatement
+			CallableStatement statement = connection.prepareCall(command);
+			
+			//Set attributes to be inserted
+			statement.setInt(++statementIndex, ticket.getEmployeeId());
+			statement.setInt(++statementIndex, ticket.getTotal());
+			statement.setString(++statementIndex, ticket.getSubmitTime());
+			statement.setString(++statementIndex, ticket.getDescription());
+			statement.setString(++statementIndex, ticket.getCategory());
+			statement.executeQuery();
+			
+			if(statement.executeUpdate() > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			LogUtil.logger.warn("Exception submitting ticket", e);
+		}
+		return false;
 	}
 	
 }

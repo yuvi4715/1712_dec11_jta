@@ -26,9 +26,10 @@ pageEncoding="ISO-8859-1"%>
 						</span></a></li>
 
 	<!--  			<li><a class="navbar-brand" href="/ExpenseReimburementSystem/pending.do">View Pending Reimbursements</a></li> -->
-				<li><button id="pendingClick" class="navbar-brand">View Pending Reimbursements</button></li>
-				<li><button id="resolvedClick" class="navbar-brand">View Resolved Reimbursements</button></li>
-				<li><a class="navbar-brand" href="#">Submit Reimbursement Request</a></li>
+				<li><a id="pendingClick" class="navbar-brand" onclick="return getPenTickets()">View Pending Reimbursements</a></li>
+				<li><a id="pendingClick" class="navbar-brand" onclick="return getResTickets()">View Resolved Reimbursements</a></li>
+			  	<li><a href='UpdateEmployee.jsp' class="navbar-brand">Update Information</a></li>
+				<li><a href='submitTicket.jsp' class="navbar-brand">Submit Reimbursement Request</a></li>
 			</ul>
 		</div>
 	</div>
@@ -71,9 +72,9 @@ pageEncoding="ISO-8859-1"%>
 	</table>
 	
 	<h5 id="tickets"></h5>
-	<h5 id="ticketsResolved"></h5>
+
+
 	<script type="text/javascript" src="resources/js/getPendingTickets.js"></script>
-	<script type="text/javascript" src="resources/js/getResolvedTickets.js"></script>
 
 </body>
 </html>

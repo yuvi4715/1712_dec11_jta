@@ -9,13 +9,11 @@ import com.revature.service.EmployeeService;
 public class EmployeeHomepageController {
 
 	public static String emp(HttpServletRequest request) {
-		Employee loggedEmployee = EmployeeService.getEmployeeService().login(
-				new Employee(request.getParameter("username"),request.getParameter("password")));
-		
+
+		Employee loggedEmployee = (Employee) request.getSession().getAttribute("loggedEmployee");
 		List<Employee> empList = EmployeeService.getEmployeeService().getEmployeeInfo(loggedEmployee);
 		
 		request.setAttribute("displayEmp", empList);
 		return "EmployeeHomepage.jsp";
 	}
-	
 }

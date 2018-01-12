@@ -25,9 +25,9 @@ pageEncoding="ISO-8859-1"%>
 						class="glyphicon glyphicon-home" aria-hidden="true"> 
 						</span></a></li>
 
-				<li><a class="navbar-brand" href="#">Careers</a></li>
-				<li><a class="navbar-brand" href="#">About Us</a></li>
-				<li><a class="navbar-brand" href="#">Contact Us</a></li>
+		<li><a id="pendingClick" class="navbar-brand" onclick="return getPenTickets()">View All Pending Reimbursements</a></li>
+				<li><a id="pendingClick" class="navbar-brand" onclick="return getResTickets()">View All Resolved Reimbursements</a></li>
+
 			</ul>
 		</div>
 	</div>
@@ -53,7 +53,7 @@ pageEncoding="ISO-8859-1"%>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${requestScope.displayEmp}" var="emp">
+			<c:forEach items="${requestScope.displayEmp2}" var="emp">
 				<tr>
 					<td> <c:out value="${emp.getId()}"></c:out></td>
 					<td> <c:out value="${emp.getFirstName()}"></c:out></td>
@@ -68,6 +68,9 @@ pageEncoding="ISO-8859-1"%>
 			</c:forEach>
 		</tbody>
 	</table>
+	<h5 id="alltickets"></h5>
 
+
+	<script type="text/javascript" src="resources/js/getAllTickets.js"></script>
 </body>
 </html>
