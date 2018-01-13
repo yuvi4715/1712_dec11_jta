@@ -2,6 +2,8 @@ package com.revature.ajax;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.revature.controller.ApproveController;
 import com.revature.controller.PendingController;
 import com.revature.controller.ResolvedController;
 import com.revature.util.FinalUtil;
@@ -19,6 +21,8 @@ public class RequestHelper {
 			return PendingController.getAllPending(request, response);
 		case "/ExpenseReimburementSystem/getAllResolved.ajax":
 			return ResolvedController.getAllResolved(request, response);
+		case "/ExpenseReimburementSystem/approve.ajax":
+			return ApproveController.approve(request, response);
 		default:
 			return new AjaxMessage(FinalUtil.NOT_IMPLEMENTED);
 		}

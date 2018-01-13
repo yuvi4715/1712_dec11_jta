@@ -1,5 +1,6 @@
 package com.revature.model;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,33 +12,24 @@ public class Reimbursement {
 	private int employeeId;
 	private String status;
 	private int total;
-	private String submitTime;
-	private String closedTime;
+	private Timestamp submitTime;
+	private Timestamp closedTime;
 	private String description;
 	private String category;
 	private String resolvedBy;
 	DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 	
 	public Reimbursement() {
-		ticketId = 0;
-		employeeId = 0;
-		status = "";
-		total = 0;
-		submitTime = "";
-		closedTime = "";
-		description = "";
-		category = "";
-		resolvedBy ="";
 		
 	}
 	public Reimbursement(int empId, String category, int total, String description ) {
-		this.employeeId = employeeId;
+		this.employeeId = empId;
 		this.category = category;
 		this.total = total;
 		this.description = description;
 	}
 	
-	public Reimbursement(int ticketId, int employeeId, String status, int total, String submitTime, String closedTime,
+	public Reimbursement(int ticketId, int employeeId, String status, int total, Timestamp submitTime, Timestamp closedTime,
 			String description, String category, String resolvedBy) {
 		super();
 		this.ticketId = ticketId;
@@ -97,20 +89,20 @@ public class Reimbursement {
 	}
 
 
-	public void setSubmitTime() {
+	public void setSubmitTime(Timestamp submit) {
 		Date time = new Date();
-		this.submitTime = df.format(time);
+		this.submitTime = submit;
 	}
 
 
-	public String getClosedTime() {
+	public Timestamp getClosedTime() {
 		return closedTime;
 	}
 
 
-	public void setClosedTime(Date closedTime) {
+	public void setClosedTime(Timestamp closedTime) {
 		Date time = new Date();
-		this.closedTime = df.format(time);
+		this.closedTime = closedTime;
 	}
 
 

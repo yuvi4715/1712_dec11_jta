@@ -36,7 +36,7 @@ pageEncoding="ISO-8859-1"%>
 	
 	<div>
 		
-		<p>${loggedEmployee.id}</p>
+
 			<div class="form-group" >
 				<label for="id"><input type="hidden" name="id" value="${loggedEmployee.id}" class="form-control" />
 				</label> 

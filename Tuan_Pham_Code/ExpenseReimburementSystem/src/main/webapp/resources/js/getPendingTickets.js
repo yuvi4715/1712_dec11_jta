@@ -34,7 +34,7 @@ function getPenTickets(){
 	                "<td>" + "$"+ ajaxObject[x].total + "</td>" + 
 	                "<td>" + ajaxObject[x].submitTime + "</td>" +
 	                "<td>" + ajaxObject[x].description + "</td>" + 
-	                "<td>" + ajaxObject[x].category + "</td>" + 
+	                "<td>" + ajaxObject[x].category + "</td>" +
 	                "</td></tr>")
 	                		
 	            }
@@ -108,4 +108,3 @@ function getResTickets(){
 	  xhttp.send();
 
 }
-

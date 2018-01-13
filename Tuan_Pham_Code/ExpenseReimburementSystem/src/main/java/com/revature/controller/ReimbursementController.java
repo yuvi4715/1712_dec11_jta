@@ -23,6 +23,7 @@ public class ReimbursementController {
 				request.getParameter("description"));
 		
 		EmployeeService.getEmployeeService().submitRequest(ticket);
+		
 		request.getSession().setAttribute("loggedEmployee", EmployeeDaoJdbc.getEmployeeDaoJdbc().select(loggedEmployee));
 		return "EmployeeHomepage.jsp";
 	}

@@ -68,6 +68,38 @@ pageEncoding="ISO-8859-1"%>
 			</c:forEach>
 		</tbody>
 	</table>
+	
+	<h2>Pending Reimbursements</h2>
+		<table class="table table-striped">
+		<thead>
+			<tr>
+				<th> Ticket ID </th>
+				<th> Employee ID </th>
+				<th>Status </th>
+				<th> Total </th>
+				<th> Submit Time </th>
+				<th> Description </th>
+				<th> Category </th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${requestScope.displayReimbursement}" var="r">
+				<tr>
+					<td> <c:out value="${r.getTicketId()}"></c:out></td>
+					<td> <c:out value="${r.getEmployeeId()}"></c:out></td>
+					<td> <c:out value="${r.getStatus()}"></c:out></td>
+					<td> <c:out value="${r.getTotal()}"></c:out></td>
+					<td> <c:out value="${r.getSubmitTime()}"></c:out></td>
+					<td> <c:out value="${r.getDescription()}"></c:out></td>
+					<td> <c:out value="${r.getCategory()}"></c:out></td>
+					<td><button id="${r.getTicketId()}" type="button" onclick="approve(this.id)"> Approve</button>
+						<button id="${r.getTicketId()}" type="button">Deny</button></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+
+	
 	<h5 id="alltickets"></h5>
 
 

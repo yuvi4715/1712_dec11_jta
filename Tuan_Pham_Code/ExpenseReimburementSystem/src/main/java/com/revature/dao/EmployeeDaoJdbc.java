@@ -267,8 +267,8 @@ public boolean checkUsername(Employee employee) {
 						result.getInt("EMPLOYEEID"),
 						result.getString("STATUS"),
 						result.getInt("TOTAL"),
-						result.getString("SUBMITTIME"),
-						result.getString("CLOSEDTIME"),
+						result.getTimestamp("SUBMITTIME"),
+						result.getTimestamp("CLOSEDTIME"),
 						result.getString("DESCRIPTION"),
 						result.getString("CATEGORY"),
 						result.getString("RESOLVEDBY")));
@@ -295,8 +295,8 @@ public boolean checkUsername(Employee employee) {
 						result.getInt("EMPLOYEEID"),
 						result.getString("STATUS"),
 						result.getInt("TOTAL"),
-						result.getString("SUBMITTIME"),
-						result.getString("CLOSEDTIME"),
+						result.getTimestamp("SUBMITTIME"),
+						result.getTimestamp("CLOSEDTIME"),
 						result.getString("DESCRIPTION"),
 						result.getString("CATEGORY"),
 						result.getString("RESOLVEDBY")));
@@ -327,8 +327,8 @@ public boolean checkUsername(Employee employee) {
 						result.getInt("EMPLOYEEID"),
 						result.getString("STATUS"),
 						result.getInt("TOTAL"),
-						result.getString("SUBMITTIME"),
-						result.getString("CLOSEDTIME"),
+						result.getTimestamp("SUBMITTIME"),
+						result.getTimestamp("CLOSEDTIME"),
 						result.getString("DESCRIPTION"),
 						result.getString("CATEGORY"),
 						result.getString("RESOLVEDBY")));
@@ -354,8 +354,8 @@ public boolean checkUsername(Employee employee) {
 						result.getInt("EMPLOYEEID"),
 						result.getString("STATUS"),
 						result.getInt("TOTAL"),
-						result.getString("SUBMITTIME"),
-						result.getString("CLOSEDTIME"),
+						result.getTimestamp("SUBMITTIME"),
+						result.getTimestamp("CLOSEDTIME"),
 						result.getString("DESCRIPTION"),
 						result.getString("CATEGORY"),
 						result.getString("RESOLVEDBY")));
@@ -394,12 +394,11 @@ public boolean checkUsername(Employee employee) {
 		} 
 	}
 	
-	public boolean submitTicket(Reimbursement ticket) {
+	public void submitTicket(Reimbursement ticket) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			int statementIndex = 0;
-			Date time = new Date();
 			//Pay attention to this syntax
-			String command = "{CALL INSERT_REIMBURSEMENT(?, ?, ?, ?, ?)}";
+			String command = "{CALL INSERT_REIMBURSEMENT(?, ?, ?, ?)}";
 			
 			//Notice the CallableStatement
 			CallableStatement statement = connection.prepareCall(command);
@@ -407,18 +406,15 @@ public boolean checkUsername(Employee employee) {
 			//Set attributes to be inserted
 			statement.setInt(++statementIndex, ticket.getEmployeeId());
 			statement.setInt(++statementIndex, ticket.getTotal());
-			statement.setString(++statementIndex, ticket.getSubmitTime());
 			statement.setString(++statementIndex, ticket.getDescription());
 			statement.setString(++statementIndex, ticket.getCategory());
 			statement.executeQuery();
 			
-			if(statement.executeUpdate() > 0) {
-				return true;
-			}
+
 		} catch (SQLException e) {
 			LogUtil.logger.warn("Exception submitting ticket", e);
 		}
-		return false;
+
 	}
 	
 }

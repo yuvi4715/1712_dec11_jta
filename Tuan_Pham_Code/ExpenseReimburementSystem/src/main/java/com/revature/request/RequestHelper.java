@@ -26,8 +26,7 @@ public class RequestHelper {
 		case "/ExpenseReimburementSystem/update.do":
 			return UpdateController.updateEmployee(request);
 		case "/ExpenseReimburementSystem/submit.do":
-			return ReimbursementController.submit(request);
-		
+			return ReimbursementController.submit(request);	
 		default:
 			return "404.jsp";
 		}
