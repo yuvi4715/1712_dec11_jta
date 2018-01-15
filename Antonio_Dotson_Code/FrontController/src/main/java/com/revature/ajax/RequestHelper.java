@@ -13,7 +13,7 @@ public class RequestHelper {
 		switch(request.getRequestURI()) {
 		case "/FrontController/checkUsername.ajax":
 			return CheckUsernameController.checkUsername(request, response);
-		case "/FrontController/viewpending.ajax":
+		case "/FrontController/viewallpending.ajax":
 			return CheckUsernameController.returnPending(request, response);
 		default:
 			return new AjaxMessage(FinalUtil.NOT_IMPLEMENTED);

@@ -36,7 +36,7 @@ padding-bottom= "300px";}
 					<h4 class="text-capitalize text-center">APP-O-LIS</h4>
 				</div>
 				<div class="col-sm-4">
-				<span class="pull-right"><a href="updatemanager.jsp">${ loggedCustomer.firstName } - Employee Page </a></span>
+				<span class="pull-right"><a href="updateemployee.jsp">${ loggedCustomer.firstName } - Employee Page </a></span>
 				
                 
 					</div>

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.revature.controller.InsertNewController;
+
 /* Servlet that maps every single request that the client makes */
 public class MasterServlet extends HttpServlet {
 
@@ -15,10 +17,16 @@ public class MasterServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher(RequestHelper.process(request)).forward(request, response);
+		System.out.println(request.getServletPath());
+		if ((request.getServletPath().equals(InsertNewController.updateEmpl(request)))) {
+			response.sendRedirect("manager.jsp"); 	
+	  }
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher(RequestHelper.process(request)).forward(request, response);
+		
+	  }
 	}
-}
+

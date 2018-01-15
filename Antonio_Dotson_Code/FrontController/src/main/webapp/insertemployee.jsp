@@ -42,14 +42,11 @@
 		</div>
     <div class="container">
       <header class="header clearfix">
-        <nav>
+         <nav>
           <ul class="nav nav-pills float-right">
             <li class="nav-item">
               <a class="nav-link active" href="manager.jsp">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pendingrequest.do">Pending Request</a>
-              <li>
               <li class="nav-link">
               <a class="nav-link" href="allrequest.do">All Request</a>
               </li>

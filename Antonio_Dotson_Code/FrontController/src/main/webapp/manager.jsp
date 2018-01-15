@@ -33,7 +33,7 @@ padding-bottom= "300px";}
 				<span class="pull-left"><i class="fa fa-instagram"></i></span>
 			   </div>
 				<div class="col-sm-4">
-					<h4 class="text-capitalize text-center">APP-O-LIS</h4>
+					<h4 class="text-capitalize text-center">APP-O-LIS <a href="search.jsp"><i class="fa fa-search"></i></a></h4>
 				</div>
 				<div class="col-sm-4">
 				<span class="pull-right"><a href="updatemanager.jsp">${ loggedCustomer.firstName } - Manager Page </a></span>
@@ -76,11 +76,10 @@ padding-bottom= "300px";}
           <p>All new request will show as pending</p><p> Please click on the buttons below to get started</p>
           
         </div>
-        
+        <div id="results">
         <div class="row">
           <a href="updatestates.do" id="updateME" class="btn btn-primary">Review Pending Request</a>
           </div>
-          <div id="results">
            <table class="table table-striped">
        <thead>
        <tr>
@@ -100,15 +99,15 @@ padding-bottom= "300px";}
        <td> <c:out value="${seq.getManagerid()}"></c:out></td>
        <td> <c:out value="${seq.getTimedate()}"></c:out></td>
        <td> <c:out value="${seq.getResolved_date()}"></c:out></td>
-       <td> <a href='updateassucess.do?success=${seq.getRid()}'>Approved</a></td>
-       <td> <a href='updateadeny.do?deny=${seq.getRid()}'>Deny</a></td>
+       <td> <a class='btn btn-success' href='updateassucess.do?success=${seq.getRid()}'>Approved</a></td>
+       <td> <a class='btn btn-danger' href= 'updateadeny.do?deny=${seq.getRid()}'>Deny</a></td>
          </tr>
        </c:forEach>
        </tbody>
         </table>
-          </div>
+     </div>
           <div class="p300">
-          &nbsp;
+          <p> &nbsp;</p>
           </div>
            
             </div>
@@ -122,14 +121,16 @@ padding-bottom= "300px";}
       </div>
     </div>
     <script>
-  $document.ready(function(){
-   $(thead).hide();
-   $("#updateME").click(function(){
-   $(thead).show();
+    <script>
+    $( document ).ready(function() {
+   $("#results").hide();
+   $("#updateME").click(function() {
+   $("#results").toggle();
    });
    });
    </script>
 
+   
     </footer>
 	<script>
 	

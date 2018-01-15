@@ -50,9 +50,8 @@ public class InsertNewController {
     	  
 		
 			request.getSession().setAttribute("loggedCustomer", loggedCustomer);
-			
-		   
-			return "http://localhost:8080/FrontController/updatemanager.do";
+		
+			return "updatemanager.do";
       
 	}
 	   
@@ -77,11 +76,9 @@ public class InsertNewController {
 	        					Integer.parseInt(request.getParameter("eid"))
 	        					));
 	        	
-	        	 HttpSession session=request.getSession();  
-	             session.invalidate(); 
-	        	
+	        	 
 				request.getSession().setAttribute("loggedCustomer", loggedCustomer);
-                 return "updateemployee";
+                 return "updateemployee.do";
 	            }	 
 	        }     	 
 	        	 

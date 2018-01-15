@@ -13,10 +13,13 @@
 	<script src="https://use.fontawesome.com/d2f3608800.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>App-o-lis Manager Page</title>
+    <title>App-o-lis Employee Page</title>
 
     <!-- Bootstrap core CSS -->
-
+<style>
+.p300 {
+padding-bottom= "300px";}
+</style>
   </head>
 	<body class="home page-template-default page page-id-143 front menu-closed">
 	<!--The entire page is in the container tag-->
@@ -33,16 +36,36 @@
 					<h4 class="text-capitalize text-center">APP-O-LIS</h4>
 				</div>
 				<div class="col-sm-4">
-				<span class="pull-right"><a href="upemployee.do">${ loggedCustomer.firstName } - Manager Page </a></span>
+				<span class="pull-right"><a href="updateemployee.jsp">${ loggedCustomer.firstName } - Employee Page </a></span>
 				
                 
 					</div>
 					
                 </div>
 		</div>
-
-      <main role="main">
-
+    <div class="container">
+      <header class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills float-right">
+            <li class="nav-item">
+              <a class="nav-link active" href="home.jsp">Home <span class="sr-only">(current)</span></a>
+            </li>
+              <li class="nav-link">
+              <a class="nav-link" href="insertreimbursement.jsp">Apply for Request</a>
+              </li>
+            <li class="nav-item">
+             <a class="nav-link" href="view_approve.do?">All approved request</a>
+            </li>
+            <li class="nav-item">
+             <a class="nav-link" href="denied.do">All denied request</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="logout.do">Logout</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      
         <div class="jumbotron">
           <h1 class="display-3">Update Your Information</h1>
         </div>
@@ -77,22 +100,11 @@
     <input type="email" class="form-control" value="${loggedCustomer.email}" name="email">
     <input type="hidden" value ="${loggedCustomer.eid}" name ="eid" />
   <br/>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" onclick="setTimeout(myFunction, 3000)" class="btn btn-primary">Submit</button>
 </form>
         
         </div>
 
-      <script>
-      $(document).ready(function(){
-      var s ='${getServices}';
-      if (s == true) {
-      $("#results").html("<div class='alert alert-success'>Update was Successful!!</div>");
-      $(form).clear();
-       } else if (s == false) {
-      $("#results").html("<div class='alert alert-danger'>Update was Failed!!</div>"); 
-       }
-      });
-      </script> 
 </main>
 </div>
  <footer>
@@ -104,7 +116,13 @@
     </div>
 
     </footer>
-			
+	<script>
+
+function myFunction() {
+	
+    location.reload();
+}
+</script>
 	<script src="resources/js/core.min.js"></script>
 	<script src="resources/js/style.js"></script>
 		

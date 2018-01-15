@@ -287,6 +287,40 @@ public class EmployeeDaoJdbc implements EmployeeDao {
 		return new ArrayList<>();
 	}
 	
+	public List<Employee> searchEmployee(int eid) {
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			int statementIndex = 0;
+			String command = "SELECT * FROM Employee where eid = ?";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setInt(++statementIndex,eid);
+			ResultSet result = statement.executeQuery();
+
+			List<Employee> customerList = new ArrayList<>();
+			while(result.next()) {
+				customerList.add(new Employee(
+						result.getInt("id"),
+						result.getInt("eid"),
+						result.getString("lastname"),
+						result.getString("firstname"),
+						result.getString("title"),
+						result.getInt("managerid"),
+						result.getString("birthdate"),
+						result.getString("address"),
+						result.getString("city"),
+						result.getString("state"),
+						result.getString("phone"),
+						result.getString("email")
+						
+						));
+			}
+
+			return customerList;
+		} catch (SQLException e) {  
+			LogUtil.logger.warn("Exception selecting one employees", e);
+		} 
+		return new ArrayList<>();
+	}
+	
 	
 
 	public List<Reimburse> selectReimburseApproved() {
@@ -493,7 +527,7 @@ public class EmployeeDaoJdbc implements EmployeeDao {
 	public boolean statusApproved(int rid) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			int statementIndex = 0;
-			String command = "update status_table set approved =1, disapproved = 0, pending = 0, where rid = ?";
+			String command = "update status_table set approved =1, disapproved = 0, pending = 0, resolved_date = sysdate where rid = ?";
 			PreparedStatement statement = connection.prepareStatement(command);
 			statement.setInt(++statementIndex, rid);
 
@@ -510,7 +544,7 @@ public class EmployeeDaoJdbc implements EmployeeDao {
 	public boolean statusDisapproved(int rid) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			int statementIndex = 0;
-			String command = "update status_table set approved =0, disapproved = 1, pending = 0 where rid = ?";
+			String command = "update status_table set approved =0, disapproved = 1, pending = 0, resolved_date = sysdate where rid = ?";
 			PreparedStatement statement = connection.prepareStatement(command);
 			statement.setInt(++statementIndex, rid);
 

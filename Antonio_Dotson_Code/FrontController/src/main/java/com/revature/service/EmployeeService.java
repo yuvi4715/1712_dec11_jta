@@ -101,6 +101,9 @@ public class EmployeeService {
     	 return EmployeeDaoJdbc.getEmployeeDaoJdbc().selectEmployeeReimbursePending(employee);
      }
      
+     public List<Employee> Search(int eid) {
+    	 return EmployeeDaoJdbc.getEmployeeDaoJdbc().searchEmployee(eid);
+     }
      
      public boolean sApproved(int rid) {
     	 return EmployeeDaoJdbc.getEmployeeDaoJdbc().statusApproved(rid);

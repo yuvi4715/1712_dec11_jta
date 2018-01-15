@@ -9,6 +9,7 @@ import com.revature.controller.LogOutController;
 import com.revature.controller.LoginController;
 import com.revature.controller.ManagerController;
 import com.revature.controller.ReimbursementController;
+import com.revature.controller.SearchController;
 import com.revature.controller.getPendingController;
 
 /* Class that helps the MasterServlet with mappings to specific controllers */
@@ -52,6 +53,8 @@ public class RequestHelper {
 			return GetStatusContent.returnApprov(request);
 		case"/FrontController/updateadeny.do":
 			return GetStatusContent.returnDisapprove(request);
+		case"/FrontController/getSearch.do":
+			return SearchController.returnSearch(request);
 		default:  
 			return "404.jsp";
 		}

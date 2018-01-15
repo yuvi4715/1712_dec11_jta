@@ -13,7 +13,7 @@
 	<script src="https://use.fontawesome.com/d2f3608800.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>App-o-lis Employee Page</title>
+    <title>App-o-lis Manager Page</title>
 
     <!-- Bootstrap core CSS -->
 <style>
@@ -33,31 +33,31 @@ padding-bottom= "300px";}
 				<span class="pull-left"><i class="fa fa-instagram"></i></span>
 			   </div>
 				<div class="col-sm-4">
-					<h4 class="text-capitalize text-center">APP-O-LIS</h4>
+					<h4 class="text-capitalize text-center">APP-O-LIS <a href="search.jsp"><i class="fa fa-search"></i></a></h4>
 				</div>
 				<div class="col-sm-4">
-				<span class="pull-right"><a href="updateemployee.jsp">${ loggedCustomer.firstName } - Employee Page </a></span>
+				<span class="pull-right"><a href="updatemanager.jsp">${ loggedCustomer.firstName } - Manager Page </a></span>
 				
                 
 					</div>
 					
                 </div>
 		</div>
-<div class="container">
+    <div class="container">
       <header class="header clearfix">
         <nav>
           <ul class="nav nav-pills float-right">
             <li class="nav-item">
-              <a class="nav-link active" href="home.jsp">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" href="manager.jsp">Home <span class="sr-only">(current)</span></a>
             </li>
               <li class="nav-link">
-              <a class="nav-link" href="insertreimbursement.jsp">Apply for Request</a>
+              <a class="nav-link" href="allrequest.do">All Request</a>
               </li>
             <li class="nav-item">
-             <a class="nav-link" href="view_approve.do?">All approved request</a>
+              <a class="nav-link" href="employee.do">View All Employee</a>
             </li>
             <li class="nav-item">
-             <a class="nav-link" href="denied.do">All denied request</a>
+              <a class="nav-link" href="insertemployee.do">Add Employee</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="logout.do">Logout</a>
@@ -67,53 +67,71 @@ padding-bottom= "300px";}
       </header>
       
       <main role="main">
-
+      <div class="p_150">
+          &nbsp;
+          </div>
         <div class="jumbotron">
-          <h1 class="display-3">Reimbursement Application</h1>
-          <p class="lead">This application allows you to view your reimbursement request. You will be able submit new request.</p>
-         <p> Please click on the buttons below to get started</p>
+          <h1 class="display-3">Search</h1>
+          <p class="lead">Search by employee id to view employee information</p>
           
         </div>
-       <table class="table table-striped">
+        <div id="results">
+        <form method="post" action="getSearch.do">
+        <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+    <label for="formGroupSearchInput">Search</label>
+    <input type="number" name="eid" class="form-control" id="formGroupSearch" pattern="[0-9]{4}">
+  </div>
+  </div>
+  <div class="col-md-4">
+  <label for="mySearch"></label>
+  <input type="submit" class="btn btn-success" value="search" />
+  </div>
+  </div>
+  </form>
+          <table class="table table-striped">
        <thead>
        <tr>
-	       <th>First</th><th>Last</th><th>Title</th><th>Record id</th><th>Description</th>
-	       <th>Amount</th><th>Time</th><th>Manager-Id</th><th>Time date</th><th>Resolved_date</th>
+	       <th>First</th><th>Last</th><th>Title</th><th>ManagerID</th><th>Birthday</th>
+	       <th>Address</th><th>City</th><th>State</th><th>Phone</th><th>Email</th>
        </thead>
        <tbody>
-        <c:forEach items="${requestScope.esa}" var="name">
+       <c:forEach items="${requestScope.EmployeeValue}" var="name">
        <tr>
-       <td> <c:out value="${name.getLastname()}"></c:out></td>
-       <td> <c:out value="${name.getFirstname()}"></c:out></td>
+       <td> <c:out value="${name.getLastName()}"></c:out></td>
+       <td> <c:out value="${name.getFirstName()}"></c:out></td>
        <td> <c:out value="${name.getTitle()}"></c:out></td>
-       <td> <c:out value="${name.getRid()}"></c:out></td>
-       <td> <c:out value="${name.getDescription()}"></c:out></td>
-       <td> <c:out value="${name.getAmount()}"></c:out></td>
-       <td> <c:out value="${name.getTime()}"></c:out></td>
        <td> <c:out value="${name.getManagerid()}"></c:out></td>
-       <td> <c:out value="${name.getTimedate()}"></c:out></td>
-       <td> <c:out value="${name.getResolved_date()}"></c:out></td>
+       <td> <c:out value="${name.getBirthdate()}"></c:out></td>
+       <td> <c:out value="${name.getAddress()}"></c:out></td>
+       <td> <c:out value="${name.getCity()}"></c:out></td>
+       <td> <c:out value="${name.getState()}"></c:out></td>
+       <td> <c:out value="${name.getPhone()}"></c:out></td>
+       <td> <c:out value="${name.getEmail()}"></c:out></td>
        </tr>
        </c:forEach>
        </tbody>
-        </table>				
+        </table>
+     </div>
+          <div class="p300">
+          <p> &nbsp;</p>
+          </div>
+           
+            </div>
+      </div>
 </main>
-</div>
- <footer>
-	
+ <footer>          
     <div class="bot2_wrapper">
       <div class="container">
         &copy; 2017 APP-O-LIS All Rights Reserved.
       </div>
     </div>
-
     </footer>
-			
 	<script src="resources/js/core.min.js"></script>
 	<script src="resources/js/style.js"></script>
-			
-			</body>
-
+		
+  </body>
 </html>
 	
 	
