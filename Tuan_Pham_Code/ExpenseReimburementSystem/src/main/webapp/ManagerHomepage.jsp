@@ -69,7 +69,7 @@ pageEncoding="ISO-8859-1"%>
 		</tbody>
 	</table>
 	
-	<h2>Pending Reimbursements</h2>
+	<h2 align="center">Pending Reimbursements</h2>
 		<table class="table table-striped">
 		<thead>
 			<tr>
@@ -92,8 +92,8 @@ pageEncoding="ISO-8859-1"%>
 					<td> <c:out value="${r.getSubmitTime()}"></c:out></td>
 					<td> <c:out value="${r.getDescription()}"></c:out></td>
 					<td> <c:out value="${r.getCategory()}"></c:out></td>
-					<td><button id="${r.getTicketId()}" type="button" onclick="approve(this.id)"> Approve</button>
-						<button id="${r.getTicketId()}" type="button">Deny</button></td>
+					<td><button id="${r.getTicketId()}" type="button" onclick="approve(this.id); window.location.reload();"> Approve</button>
+						<button id="${r.getTicketId()}" type="button" onclick="deny(this.id); window.location.reload();"> Deny</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>

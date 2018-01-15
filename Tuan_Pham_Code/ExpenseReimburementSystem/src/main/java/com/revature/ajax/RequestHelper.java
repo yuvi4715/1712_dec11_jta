@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.revature.controller.ApproveController;
+import com.revature.controller.DenyController;
 import com.revature.controller.PendingController;
 import com.revature.controller.ResolvedController;
 import com.revature.util.FinalUtil;
@@ -23,6 +24,8 @@ public class RequestHelper {
 			return ResolvedController.getAllResolved(request, response);
 		case "/ExpenseReimburementSystem/approve.ajax":
 			return ApproveController.approve(request, response);
+		case "/ExpenseReimburementSystem/deny.ajax":
+			return DenyController.deny(request, response);
 		default:
 			return new AjaxMessage(FinalUtil.NOT_IMPLEMENTED);
 		}

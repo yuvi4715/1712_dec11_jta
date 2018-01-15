@@ -19,4 +19,8 @@ private static ManagerService managerService;
 	public void approve(int id, int managerID) {
 		ManagerDaoJdbc.getManagerDaoJdbc().approve(id, managerID);
 	}
+	
+	public void deny(int id, int managerID) {
+		ManagerDaoJdbc.getManagerDaoJdbc().deny(id, managerID);
+	}
 }
