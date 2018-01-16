@@ -8,6 +8,7 @@ import java.util.List;
 import com.revature.model.Ticket;
 import com.revature.model.TicketLine;
 import com.revature.util.ConnectionUtil;
+import com.revature.util.LogUtil;
 
 public class TicketLineDaoJDBC implements TicketLineDao {
 
@@ -42,6 +43,7 @@ public class TicketLineDaoJDBC implements TicketLineDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return false;
 	}
@@ -97,6 +99,7 @@ public class TicketLineDaoJDBC implements TicketLineDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return false;		
 	}

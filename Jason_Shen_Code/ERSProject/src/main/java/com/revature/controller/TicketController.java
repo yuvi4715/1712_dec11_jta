@@ -58,7 +58,8 @@ public class TicketController {
 
 				int newestTicketId = newestTicket.getTicketId();
 				// Create new line 
-				TicketLine newTicketLine = new TicketLine(newestTicketId, descriptions[i], Double.valueOf(amounts[i]), categories[i]);
+				System.out.println(categories[i].toUpperCase());
+				TicketLine newTicketLine = new TicketLine(newestTicketId, descriptions[i], Double.valueOf(amounts[i]), categories[i].toUpperCase());
 				
 				// Link line to ticket
 				TicketLineService.getTicketLineService().attach(newTicketLine, newestTicket);

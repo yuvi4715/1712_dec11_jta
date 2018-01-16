@@ -31,6 +31,8 @@ public class AjaxRequestHelper {
 			return ManagerPortalController.approve(request, response);
 		case "/ERSProject/deny.ajax":
 			return ManagerPortalController.deny(request, response);
+		case "/ERSProject/viewTicketInfo.ajax":
+			return ViewReimbursementsController.viewTicketInfo(request, response);
 		default:
 			return new AjaxMessage("");
 		}

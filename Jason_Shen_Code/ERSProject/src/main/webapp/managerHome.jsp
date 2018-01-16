@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
   
 </head>
-<body class="container">
+<body class="container" onload="getTickets('pending')")>
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
   <a class="navbar-brand" href="home.do">Home<span class="sr-only">(current)</span></a>
   <div class=" navbar" id="navbarNavAltMarkup">
@@ -47,9 +47,10 @@
 
 
 <div class="container text-center">
-	<input type="button" class="btn btn-primary" onclick="return getTickets('')" value="View All My Tickets" id="alltickets">
+	
 	<input type="button" class="btn btn-primary" onclick="return getTickets('pending')" value="View My Pending" id="pendingtickets">
 	<input type="button" class="btn btn-primary" onclick="return getTickets('resolved')" value="View My Resolved" id="resolvedtickets">
+	<input type="button" class="btn btn-primary" onclick="return getTickets('')" value="View All My Tickets" id="alltickets">
 </div>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
 <script src=js/viewTickets.js></script>

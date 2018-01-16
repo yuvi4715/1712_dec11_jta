@@ -40,9 +40,9 @@
 						<option>Relocation</option>
 						<option>Materials</option>
 						<option>Other</option>						
-					</select>				
+					</select>
 				</div>
-				
+
 				<div class="col-sm-4">
 					<label> Amount: </label>
 					<div class="input-group mb-3">

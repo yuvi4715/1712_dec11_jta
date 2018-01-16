@@ -6,6 +6,7 @@ public class TicketLine {
 	private String desc;
 	private double amount;
 	private int categoryId;
+	private String categoryDesc;
 	
 	// Used to create a ticketline object when the form is submitted
 	public TicketLine(int ticketId, String desc, double amount, String category) {
@@ -13,16 +14,22 @@ public class TicketLine {
 		this.ticketId = ticketId;
 		this.desc = desc;
 		this.amount = amount;
-		
-		switch (category.toUpperCase()) {
-		case "TRAVEL":
-			this.categoryId = 1;
-		case "RELOCATION":
-			this.categoryId = 2;
-		case "MATERIALS":
-			this.categoryId = 3;
-		case "OTHER":
-			this.categoryId = 4;			
+		this.categoryDesc = category;
+		switch (category) {
+			case "TRAVEL":
+				this.categoryId = 1;
+				break;
+			case "RELOCATION":
+				this.categoryId = 2;
+				break;
+			case "MATERIALS":
+				this.categoryId = 3;
+				break;
+			case "OTHER":
+				this.categoryId = 4;
+				break;
+			default:
+				this.categoryId = 1;
 		}
 	}
 	
@@ -37,6 +44,17 @@ public class TicketLine {
 		this.categoryId = categoryId;
 	}
 
+
+
+	public TicketLine(int lineId, int ticketId, String categoryDesc, double amount, String itemDesc) {
+		// TODO Auto-generated constructor stub
+		super();
+		this.lineId = lineId;
+		this.ticketId = ticketId;
+		this.categoryDesc = categoryDesc;
+		this.amount = amount;
+		this.desc = itemDesc;
+	}
 
 
 	public int getLineId() {
@@ -68,5 +86,15 @@ public class TicketLine {
 	}
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
+	}
+
+
+	public String getCategoryDesc() {
+		return categoryDesc;
+	}
+
+
+	public void setCategoryDesc(String categoryDesc) {
+		this.categoryDesc = categoryDesc;
 	}
 }

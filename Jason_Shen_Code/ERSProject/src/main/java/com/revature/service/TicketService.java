@@ -5,6 +5,7 @@ import java.util.List;
 import com.revature.dao.TicketDaoJDBC;
 import com.revature.model.Employee;
 import com.revature.model.Ticket;
+import com.revature.model.TicketLine;
 
 public class TicketService {
 	// Singleton Stuff
@@ -42,5 +43,8 @@ public class TicketService {
 	}
 	public Object getAllResolved(Employee employee) {
 		return TicketDaoJDBC.getTicketDaoJDBC().selectResolved(employee);
+	}
+	public List<TicketLine> getTicketInfo(int ticketid) {
+		return TicketDaoJDBC.getTicketDaoJDBC().selectTicketLines(ticketid);
 	}
 }

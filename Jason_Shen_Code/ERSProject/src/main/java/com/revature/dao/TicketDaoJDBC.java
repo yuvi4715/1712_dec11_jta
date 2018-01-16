@@ -9,8 +9,10 @@ import java.util.List;
 
 import com.revature.model.Employee;
 import com.revature.model.Ticket;
+import com.revature.model.TicketLine;
 import com.revature.service.EmployeeService;
 import com.revature.util.ConnectionUtil;
+import com.revature.util.LogUtil;
 
 public class TicketDaoJDBC implements TicketDao {
 
@@ -46,6 +48,7 @@ public class TicketDaoJDBC implements TicketDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return false;
 	}
@@ -67,6 +70,7 @@ public class TicketDaoJDBC implements TicketDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return 0;
 	}
@@ -93,6 +97,7 @@ public class TicketDaoJDBC implements TicketDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return new Ticket();
 	}
@@ -114,6 +119,7 @@ public class TicketDaoJDBC implements TicketDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return false;
 	}
@@ -128,7 +134,7 @@ public class TicketDaoJDBC implements TicketDao {
 						+ "ON REIMBURSEMENT.RESOLUTIONID = RESOLUTION.RESOLUTIONID) "
 					+ "INNER JOIN STATUS "
 						+ "ON REIMBURSEMENT.STATUSID = STATUS.STATUSID) "
-					+ "WHERE EMPLOYEEID = ?";
+					+ "WHERE EMPLOYEEID = ? ORDER BY TICKETID DESC";
 			PreparedStatement statement = connection.prepareStatement(command);
 			statement.setInt(++statementIndex, employee.getId());
 			ResultSet result = statement.executeQuery();
@@ -149,6 +155,7 @@ public class TicketDaoJDBC implements TicketDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return new ArrayList<>();
 	}
@@ -167,7 +174,7 @@ public class TicketDaoJDBC implements TicketDao {
 						+ "ON REIMBURSEMENT.RESOLUTIONID = RESOLUTION.RESOLUTIONID) "
 					+ "INNER JOIN STATUS "
 						+ "ON REIMBURSEMENT.STATUSID = STATUS.STATUSID) "
-					+ "WHERE RESOLUTIONDESC = 'PENDING' AND EMPLOYEEID = ?";
+					+ "WHERE RESOLUTIONDESC = 'PENDING' AND EMPLOYEEID = ? ORDER BY TICKETID DESC";
 			PreparedStatement statement = connection.prepareStatement(command);
 			statement.setInt(++statementIndex, employee.getId());
 			ResultSet result = statement.executeQuery();
@@ -188,6 +195,7 @@ public class TicketDaoJDBC implements TicketDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return new ArrayList<>();
 	}
@@ -200,7 +208,7 @@ public class TicketDaoJDBC implements TicketDao {
 						+ "ON REIMBURSEMENT.RESOLUTIONID = RESOLUTION.RESOLUTIONID) "
 					+ "LEFT JOIN STATUS "
 						+ "ON REIMBURSEMENT.STATUSID = STATUS.STATUSID) "
-					+ "WHERE STATUSDESC = 'CLOSED' AND EMPLOYEEID = ?";
+					+ "WHERE STATUSDESC = 'CLOSED' AND EMPLOYEEID = ? ORDER BY TICKETID DESC";
 			
 			PreparedStatement statement = connection.prepareStatement(command);
 			statement.setInt(++statementIndex, employee.getId());
@@ -222,6 +230,7 @@ public class TicketDaoJDBC implements TicketDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return new ArrayList<>();
 	}
@@ -232,7 +241,7 @@ public class TicketDaoJDBC implements TicketDao {
 						+ "ON REIMBURSEMENT.RESOLUTIONID = RESOLUTION.RESOLUTIONID "
 					+ " LEFT JOIN STATUS "
 						+ "ON REIMBURSEMENT.STATUSID = STATUS.STATUSID "
-					+ "WHERE RESOLVEDBY IS NOT NULL";
+					+ "WHERE RESOLVEDBY IS NOT NULL ORDER BY TICKETID DESC";
 			
 			PreparedStatement statement = connection.prepareStatement(command);
 			ResultSet result = statement.executeQuery();
@@ -254,6 +263,7 @@ public class TicketDaoJDBC implements TicketDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return new ArrayList<>();
 	}
@@ -264,7 +274,7 @@ public class TicketDaoJDBC implements TicketDao {
 						+ "ON REIMBURSEMENT.RESOLUTIONID = RESOLUTION.RESOLUTIONID "
 					+ " LEFT JOIN STATUS "
 						+ "ON REIMBURSEMENT.STATUSID = STATUS.STATUSID "
-					+ "WHERE RESOLVEDBY IS NULL";
+					+ "WHERE RESOLVEDBY IS NULL ORDER BY TICKETID DESC";
 			
 			PreparedStatement statement = connection.prepareStatement(command);
 			ResultSet result = statement.executeQuery();
@@ -285,6 +295,7 @@ public class TicketDaoJDBC implements TicketDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return new ArrayList<>();
 	}
@@ -302,6 +313,7 @@ public class TicketDaoJDBC implements TicketDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return "";
 	}
@@ -319,8 +331,40 @@ public class TicketDaoJDBC implements TicketDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return "";
+	}
+	public List<TicketLine> selectTicketLines(int ticketid) {
+		try(Connection connection = ConnectionUtil.getConnection()) {			
+			String command = "SELECT * FROM REIMBURSEMENTLINE "
+					+ "LEFT JOIN ITEMCATEGORY ON "
+						+ "REIMBURSEMENTLINE.CATEGORYID = ITEMCATEGORY.CATEGORYID "
+					+ "WHERE REIMBURSEMENTID = ? ORDER BY LINEID ASC";
+			
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setInt(1,  ticketid);
+			ResultSet result = statement.executeQuery();
+			
+			List<TicketLine> ticketline_list = new ArrayList<>();
+			
+			while(result.next()) {
+				
+				ticketline_list.add(new TicketLine(
+						result.getInt("LINEID"),
+						result.getInt("REIMBURSEMENTID"),
+						result.getString("CATEGORYDESC"),
+						result.getDouble("AMOUNT"),
+						result.getString("ITEMDESC")
+				));
+			}
+			return ticketline_list;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			LogUtil.logger.warn(e);
+		}
+		return new ArrayList<>();
 	}
 
 }

@@ -10,9 +10,9 @@
 %>
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-  
+  <link rel="stylesheet" type="text/css" href="css/mytables.css">
 </head>
-<body class="container">
+<body class="container" onload="getTickets('pending')">
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
   <a class="navbar-brand" href="home.do">Home<span class="sr-only">(current)</span></a>
   <div class=" navbar" id="navbarNavAltMarkup">
@@ -30,9 +30,12 @@
 	<div class='text-center'>
 		<label>Employee Home Page</label>
 	</div>
-	<input type="button" class="btn btn-primary" onclick="location.href='newTicket.do'" value="Create New Ticket">
-	<input type="button" class="btn btn-primary" onclick="location.href='updateInfo.do'" value="Edit Account Info"> 
- 
+	<div class='text-center'>
+		<input type="button" class="btn btn-primary"
+			onclick="location.href='newTicket.do'" value="Create New Ticket">
+		<input type="button" class="btn btn-primary" onclick="location.href='updateInfo.do'" value="Edit Account Info"> 
+	</div>
+	
 </div>
 
 <div class="container text-center">
@@ -43,9 +46,9 @@
 
 
 <div class="container text-center">
-	<input type="button" class="btn btn-primary" onclick="return getTickets('')" value="View All Tickets" id="alltickets">
 	<input type="button" class="btn btn-primary" onclick="return getTickets('pending')" value="View Pending" id="pendingtickets">
 	<input type="button" class="btn btn-primary" onclick="return getTickets('resolved')" value="View Resolved" id="resolvedtickets">
+	<input type="button" class="btn btn-primary" onclick="return getTickets('')" value="View All Tickets" id="alltickets">
 </div>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
 <script src=js/viewTickets.js></script>

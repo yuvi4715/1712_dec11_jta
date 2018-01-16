@@ -1,4 +1,4 @@
-<%@ page import = "java.io.*,java.util.*" %>
+<%@ page import="java.io.*,java.util.*"%>
 <% 
 	// Checks if there is a user logged in
 	// Non-logged in users shouldn't be able to reach this page.
@@ -10,9 +10,11 @@
 %>
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/mytables.css">
+  
   
 </head>
-<body class="container">
+<body class="container" onload="getAllPending()">
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
   <a class="navbar-brand" href="home.do">Home<span class="sr-only">(current)</span></a>
   <div class=" navbar" id="navbarNavAltMarkup">
@@ -46,7 +48,9 @@
 
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+<script src="js/viewTickets.js"></script>
 <script src="js/manager.js"></script>
+
 
 </body>
 </html>

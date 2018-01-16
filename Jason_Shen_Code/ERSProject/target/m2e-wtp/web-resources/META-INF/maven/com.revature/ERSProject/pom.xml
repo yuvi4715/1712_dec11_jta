@@ -33,12 +33,24 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.8.9</version>
 		</dependency>
+		<!-- log4J Central Maven Repository -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>		
+		
 <dependency>
   <groupId>com.google.code.gson</groupId>
   <artifactId>gson</artifactId>
   <version>2.8.2</version>
 </dependency>		
   </dependencies>
+  
+<properties>
+   <maven.compiler.source>1.8</maven.compiler.source>
+   <maven.compiler.target>1.8</maven.compiler.target>
+</properties>  
   <build>
     <finalName>ERSProject</finalName>
   </build>

@@ -1,4 +1,38 @@
-window.onload = getTickets();
+function getTicketInfo(ticketid) {
+	console.log(ticketid);
+	console.log(String(ticketid));
+	console.log(typeof String(ticketid));
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function () {
+		if (xhttp.readyState == 4 && xhttp.status == 200) {
+			var ajaxObject = JSON.parse(xhttp.responseText);
+			
+			var txt = "<table class='table table-striped' border='1' style='padding: 50px'> " +
+    		"<thead>" +
+        		"<tr>" +
+        			"<th>Line ID No.</th>" +
+	        		"<th>Category</th>" +
+	        		"<th>Amount</th>" +
+	        		"<th>Description</th>" +	
+        		"</tr>"+
+	        "</thead>" +
+	        "<tbody>"    		
+	        for (x in ajaxObject) {	      
+	            txt += ("<tr><td>" + ajaxObject[x].lineId + "</td>" + 
+	            "<td>" + ajaxObject[x].categoryDesc + "</td>" +
+	            "<td>" + ajaxObject[x].amount + "</td>" + 
+	            "<td>" + ajaxObject[x].desc + "</td>" +
+	            "</td></tr>")
+	            		
+	        }	
+			txt += "</tbody></table>";
+			document.getElementById("tablelabel").innerHTML = "Items for Ticket No. " + ticketid;
+			document.getElementById("ticketlist").innerHTML = txt;
+		}
+	}
+	xhttp.open("POST", "http://localhost:8080/ERSProject/viewTicketInfo.ajax", true);
+	xhttp.send(String(ticketid));
+}
 
 function getTickets(option){
 
@@ -14,7 +48,7 @@ function getTickets(option){
 //			setValues(ajaxObject)
 	        
 			// Generate the html for table and concatenate values from ajax object
-			var txt = "<table class='table table-striped' border='1' style='padding: 50px'> " +
+			var txt = "<table class='table table-striped table-hover' border='1' style='padding: 50px'> " +
 	        		"<thead>" +
 		        		"<tr>" +
 			        		"<th>Ticket Id No.</th>" +
@@ -25,7 +59,7 @@ function getTickets(option){
 			        "</thead>" +
 			        "<tbody>"    		
 	            for (x in ajaxObject) {
-	                txt += ("<tr><td>" + ajaxObject[x].ticketId + "</td>" + 
+	                txt += ("<tr class='tablerow' onclick='return getTicketInfo(" + ajaxObject[x].ticketId + ")'><td>" + ajaxObject[x].ticketId + "</td>" + 
 	                "<td>" + ajaxObject[x].status + "</td>" +
 	                "<td>" + ajaxObject[x].resolution + "</td>" + 
 	                "<td>$" + ajaxObject[x].total + "</td></tr>")

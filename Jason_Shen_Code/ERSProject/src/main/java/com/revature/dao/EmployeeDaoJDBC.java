@@ -11,6 +11,7 @@ import com.revature.model.Employee;
 import com.revature.model.RoleType;
 import com.revature.model.Ticket;
 import com.revature.util.ConnectionUtil;
+import com.revature.util.LogUtil;
 
 public class EmployeeDaoJDBC implements EmployeeDao {
 	private static EmployeeDaoJDBC employeeDaoJDBC;
@@ -56,6 +57,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return false;
 	}
@@ -94,6 +96,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return false;
 	}
@@ -120,6 +123,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return new ArrayList<>();
 	}
@@ -144,6 +148,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return new Employee();
 	}
@@ -168,6 +173,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return new Employee();
 	}
@@ -186,6 +192,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		} 
 		return new String();
 	}
@@ -218,6 +225,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return;
 	}
@@ -240,6 +248,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return;
 	}
@@ -260,6 +269,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return;
 	}
@@ -272,7 +282,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 					+ "LEFT JOIN EMPLOYEEROLE "
 						+ "ON EMPLOYEE.EMPLOYEEID = EMPLOYEEROLE.EMPLOYEEID "
 					+ "LEFT JOIN ROLETYPE "
-						+ "ON EMPLOYEEROLE.ROLETYPEID = ROLETYPE.ROLETYPEID ";
+						+ "ON EMPLOYEEROLE.ROLETYPEID = ROLETYPE.ROLETYPEID ORDER BY EMPLOYEE.EMPLOYEEID ASC";
 			PreparedStatement statement = connection.prepareStatement(command);
 			ResultSet result = statement.executeQuery();
 			
@@ -293,6 +303,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			LogUtil.logger.warn(e);
 		}
 		return new ArrayList<>();
 	}
