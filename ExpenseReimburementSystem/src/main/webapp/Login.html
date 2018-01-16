@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" type="text/css" href="resources/css/LoginStyle.css" />
+<title>Expense Reimbursement System</title>
+</head>
+<body>
+
+	<div class="content">
+		<div class="form-container ">
+			<div class="user-image-login" id="user-image" style="">
+				<span class="helper"></span><img
+					src="IMAGE/logo.png"
+					alt="BlogIn" id="userimg">
+			</div>
+			<div class="form-title">Login</div>
+			<div class="form-fields">
+
+				<form id="login" name="login" method="POST" action="login.do">
+
+					<div
+						style="border-bottom: solid 1px #ddd; position: relative; top: 24px; margin: 0 5px;"></div>
+					<div class="form-title form-title-tiny"
+						style="margin-bottom: 10px; margin-top: 15px; background-color: white; display: inline-block; padding: 0 10px;"></div>
+
+					<div class="field_caption">Enter your username</div>
+					<div class="input-field">
+						<img class="input-icon"
+							src="IMAGE/user.png">										
+						<input type="text" name="username" placeholder="Username"
+							id="email" class="basic">
+					</div>
+
+					<div class="field_caption">Your password</div>
+					<div class="input-field">
+						<img class="input-icon"
+							src="IMAGE/lock.png">
+						<input type="password" name="password" placeholder="Password"
+							id="password" class="basic">
+					</div>
+
+					<input type="submit" id="formsub" value="Log in"> <input
+						name="login" type="hidden" id="login" value="login_root">
+				</form>
+
+			</div>
+		<div>
+			<div class="form-bottom-tagline">
+				<a href="forgot-password.php">Forgot Password?</a>
+			</div>
+			<div class="form-bottom-tagline">
+				Don't have an account? <a href='/ExpenseReimburementSystem/registration.do'>Sign up</a>
+
+			</div>
+	</div>
+		</div>
+	</div>
+
+	<div style="clear: both;"></div>
+
+
+	<section class="cbp-so-section footer">
+		<p>
+			<a href="">Home</a> &middot; <a
+				href="">About</a> &middot; <a
+				href="">Pricing</a> &middot; <a
+				href="">Sign Up</a> &middot; <a
+				href="">Blog</a> &middot; <a
+				href="">Contact</a> &middot; <a
+				class="facebook"
+				href=""
+				target="_blank">Facebook</a> &middot; <a class="twitter"
+				href="" target="_blank">Twitter</a>
+			&middot; <a class="linkedin"
+				href=""
+				target="_blank">LinkedIn</a>
+		</p>
+		<p class="copyright">
+			<a href="">Terms and
+				Conditions</a> &middot; <a href="">Privacy
+				Policy</a>
+		</p>
+		<div class="footer_signature">
+			Tuan Pham | 1712 Batch (VA 20190 USA) <br />Web Page design credit goes to BlogIn
+		</div>
+	</section>
+
+</body>
+</html>
