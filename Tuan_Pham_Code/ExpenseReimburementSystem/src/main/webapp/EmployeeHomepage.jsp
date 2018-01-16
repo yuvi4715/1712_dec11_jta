@@ -13,9 +13,9 @@ pageEncoding="ISO-8859-1"%>
 </head>
 <body>
 	<h1 align="center">Employee HomePage</h1>
-	<div class="container">
+	<div class="container-fluid">
 		<p>Welcome to the Expense Reimbursement System  ${ loggedEmployee.firstName }</p>
-	</div>
+
 
 	<div class="navbar" class="navbar navbar-light" style="background-color: #e3f2fd;">
 		<div class="navbar-header">
@@ -28,7 +28,6 @@ pageEncoding="ISO-8859-1"%>
 	<!--  			<li><a class="navbar-brand" href="/ExpenseReimburementSystem/pending.do">View Pending Reimbursements</a></li> -->
 				<li><a id="pendingClick" class="navbar-brand" onclick="return getPenTickets()">View Pending Reimbursements</a></li>
 				<li><a id="pendingClick" class="navbar-brand" onclick="return getResTickets()">View Resolved Reimbursements</a></li>
-			  	<li><a href='UpdateEmployee.jsp' class="navbar-brand">Update Information</a></li>
 				<li><a href='submitTicket.jsp' class="navbar-brand">Submit Reimbursement Request</a></li>
 			</ul>
 		</div>
@@ -38,43 +37,28 @@ pageEncoding="ISO-8859-1"%>
 			<li><a href='/ExpenseReimburementSystem/signout.do'>Sign Out</a></li>
 		</ol>
 </div>
+<div class="card">
+<div class="card-body">
+<h4 class="card-title">Employee Information</h4>
+<p class="card-text">
+<b>Employee ID:</b> ${loggedEmployee.id}<br />
+<b>First Name:</b> ${loggedEmployee.firstName} <br />
+<b>Last Name:</b> ${loggedEmployee.lastName} <br />
+<b>Email:</b> ${loggedEmployee.email} <br />
+<b>Address:</b> ${loggedEmployee.address} <br />
+<b>City:</b> ${loggedEmployee.city} <br />
+<b>State:</b> ${loggedEmployee.state} <br />
+<b>Zip:</b> ${loggedEmployee.zip} <br />
+<b>Phone:</b> ${loggedEmployee.phone} 
+</p>
+<a href='UpdateEmployee.jsp' class="btn btn-primary">Update Information</a>
+</div>
+</div>
 
-
-	<table class="table table-reflow">
-		<thead>
-			<tr>
-				<th> Employee ID </th>
-				<th> First Name </th>
-				<th> Last Name </th>
-				<th> Email </th>
-				<th> Address </th>
-				<th> City </th>
-				<th> State </th>
-				<th> Zip </th>
-				<th> Phone </th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${requestScope.displayEmp}" var="emp">
-				<tr>
-					<td> <c:out value="${emp.getId()}"></c:out></td>
-					<td> <c:out value="${emp.getFirstName()}"></c:out></td>
-					<td> <c:out value="${emp.getLastName()}"></c:out></td>
-					<td> <c:out value="${emp.getEmail()}"></c:out></td>
-					<td> <c:out value="${emp.getAddress()}"></c:out></td>
-					<td> <c:out value="${emp.getCity()}"></c:out></td>
-					<td> <c:out value="${emp.getState()}"></c:out></td>
-					<td> <c:out value="${emp.getZip()}"></c:out></td>
-					<td> <c:out value="${emp.getPhone()}"></c:out></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
 	
-	<h5 id="tickets"></h5>
-
+<h5 id="tickets"></h5>
 
 	<script type="text/javascript" src="resources/js/getPendingTickets.js"></script>
-
+	</div>
 </body>
 </html>

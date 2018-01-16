@@ -85,4 +85,8 @@ public class EmployeeService {
 	public void submitRequest(Reimbursement ticket) {
 		EmployeeDaoJdbc.getEmployeeDaoJdbc().submitTicket(ticket);
 	}
+	
+	public static List<Reimbursement> gettingEmployeeTickets(String id) {
+		return EmployeeDaoJdbc.getEmployeeDaoJdbc().getEmployeeTickets(id);
+	}
 }

@@ -83,9 +83,10 @@ public class Reimbursement {
 	}
 
 
-	public String getSubmitTime() {
-		Date time = new Date();
-		return df.format(time);
+	public Timestamp getSubmitTime() {
+		//Date time = new Date();
+		//return df.format(time);
+		return submitTime;
 	}
 
 

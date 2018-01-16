@@ -21,7 +21,7 @@ function getPenTickets(){
 			        		"<th>Employee ID</th>" +
 			        		"<th>Status</th>" +
 			        		"<th>Total</th>" +
-			        		"<th>Submit Time</th>" +
+			        		//"<th>Submit Time</th>" +
 			        		"<th>Description</th>" +
 			        		"<th>Category</th>"
 		        		"</tr>"+
@@ -32,7 +32,7 @@ function getPenTickets(){
 	                "<td>" + ajaxObject[x].employeeId + "</td>" + 
 	                "<td>" + ajaxObject[x].status + "</td>" +
 	                "<td>" + "$"+ ajaxObject[x].total + "</td>" + 
-	                "<td>" + ajaxObject[x].submitTime + "</td>" +
+	               // "<td>" + ajaxObject[x].submitTime + "</td>" +
 	                "<td>" + ajaxObject[x].description + "</td>" + 
 	                "<td>" + ajaxObject[x].category + "</td>" +
 	                "</td></tr>")
@@ -74,8 +74,8 @@ function getResTickets(){
 			        		"<th>Ticket ID</th>" +
 			        		"<th>Status</th>" +
 			        		"<th>Total</th>" +
-			        		"<th>Submit Time</th>" +
-			        		"<th>Closed Time</th>" +
+			        		//"<th>Submit Time</th>" +
+			        		//"<th>Closed Time</th>" +
 			        		"<th>Description</th>" +
 			        		"<th>Category</th>" +
 			        		"<th>Resolved By</th>"
@@ -86,8 +86,8 @@ function getResTickets(){
 	                txt += ("<tr><td>" + ajaxObject[x].ticketId + "</td>" + 
 	                "<td>" + ajaxObject[x].status + "</td>" +
 	                "<td>" + "$"+ ajaxObject[x].total + "</td>" + 
-	                "<td>" + ajaxObject[x].submitTime + "</td>" +
-	                "<td>" + ajaxObject[x].closedTime + "</td>" + 
+	                //"<td>" + ajaxObject[x].submitTime + "</td>" +
+	                //"<td>" + ajaxObject[x].closedTime + "</td>" + 
 	                "<td>" + ajaxObject[x].description + "</td>" + 
 	                "<td>" + ajaxObject[x].category + "</td>" + 
 	                "<td>" + ajaxObject[x].resolvedBy + "</td>" +

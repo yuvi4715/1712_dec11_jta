@@ -320,9 +320,10 @@ public boolean checkUsername(Employee employee) {
 			ResultSet result = statement.executeQuery();
 			//System.out.println("Employee Id : " + employee.getId());
 			List<Reimbursement> pending = new ArrayList<>();
+			//System.out.println("BEFORE QUERY "+result.getTimestamp("SUBMITTIME"));
 			while(result.next()) {
 				//System.out.println("Entering loop...");
-				pending.add( new Reimbursement(
+				Reimbursement r= new Reimbursement(
 						result.getInt("TICKETID"),
 						result.getInt("EMPLOYEEID"),
 						result.getString("STATUS"),
@@ -331,7 +332,8 @@ public boolean checkUsername(Employee employee) {
 						result.getTimestamp("CLOSEDTIME"),
 						result.getString("DESCRIPTION"),
 						result.getString("CATEGORY"),
-						result.getString("RESOLVEDBY")));
+						result.getString("RESOLVEDBY"));
+				pending.add(r);
 			}		
 //			for (Reimbursement e : pending) {
 //			System.out.println(e);
@@ -415,6 +417,37 @@ public boolean checkUsername(Employee employee) {
 			LogUtil.logger.warn("Exception submitting ticket", e);
 		}
 
+	}
+	
+	public List<Reimbursement> getEmployeeTickets(String id) {
+		int tid = Integer.parseInt(id);
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			int statementIndex = 0;
+			String command = "SELECT * FROM REIMBURSEMENT WHERE EMPLOYEEID = ?";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setInt(++statementIndex , tid);	
+			ResultSet result = statement.executeQuery();
+			List<Reimbursement> pending = new ArrayList<>();
+			while(result.next()) {
+				pending.add( new Reimbursement(
+						result.getInt("TICKETID"),
+						result.getInt("EMPLOYEEID"),
+						result.getString("STATUS"),
+						result.getInt("TOTAL"),
+						result.getTimestamp("SUBMITTIME"),
+						result.getTimestamp("CLOSEDTIME"),
+						result.getString("DESCRIPTION"),
+						result.getString("CATEGORY"),
+						result.getString("RESOLVEDBY")));
+			}		
+			for (Reimbursement e : pending) {
+			System.out.println(e);
+			}
+		return pending;
+		} catch (SQLException e) {
+			LogUtil.logger.warn("Exception getting employee tickets", e);
+		} 
+		return new ArrayList<>();
 	}
 	
 }
