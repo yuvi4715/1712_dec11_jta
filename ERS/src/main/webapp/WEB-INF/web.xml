@@ -1,0 +1,39 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  
+  <display-name>Archetype Created Web Application</display-name>
+  
+  <servlet>
+  	<servlet-name>TransferServlet</servlet-name>
+  	<display-name>Main!</display-name>
+  	<description></description>
+  	<servlet-class>com.revature.servlet.TransferServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>AJAXServlet</servlet-name>
+  	<display-name>notMain!</display-name>
+  	<description></description>
+  	<servlet-class>com.revature.servlet.AJAXServlet</servlet-class>
+  </servlet>
+  
+
+  
+  <servlet-mapping>
+	  <servlet-name>TransferServlet</servlet-name>
+	  <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  	
+  <servlet-mapping>
+	  <servlet-name>AJAXServlet</servlet-name>
+	  <url-pattern>*.AJAX</url-pattern>
+  </servlet-mapping>
+  
+  <welcome-file-list>
+  <welcome-file>html/index.html</welcome-file>
+  </welcome-file-list>
+  
+</web-app>

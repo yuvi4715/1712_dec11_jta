@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Reimbursement</title>
+</head>
+<body>
+	<div>
+		<p>Welcome to the manager reimbursement page!</p>
+	</div>
+	<div>
+		<a href="http://localhost:8080/ERS/html/managerhome.html">Home</a>
+		<br>
+		<a href="http://localhost:8080/ERS/html/manageraccount.html">Settings</a>		
+	</div>
+	<div>
+		<div>
+			<select id="employee">
+			
+			</select>
+		</div>
+		<div>
+		
+			<select id="type">
+				<option value="all">Both Reimbursements</option>
+				<option value="pending">Pending Reimbursements</option>
+				<option value="resolved">Resolved Reimbursements</option>
+			</select>
+			<button id="reimburseBtn">Select</button>
+		</div>
+		<div>
+			<table id="list">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Date/Time</th>
+						<th>Amount</th>
+						<th>Resolving Manager</th>
+						<th>Reason</th>
+					</tr>
+				<tbody id="listbody">
+				</tbody>
+			</table>
+		</div>
+	</div>
+		<script type="text/javascript" src="../js/reimburse.js"></script>
+	
+</body>
+</html>
