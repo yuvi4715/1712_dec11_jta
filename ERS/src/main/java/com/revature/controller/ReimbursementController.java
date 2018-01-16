@@ -91,6 +91,22 @@ public class ReimbursementController {
 		return null;
 	}
 	
+	public static ArrayList<Reimbursement> getReimbursementsByEmployeeUsername(HttpServletRequest request){
+		String type = null;
+		String username = null;
+		for(Cookie c : request.getCookies())
+			if(c.getName() == "username")
+				username = c.getValue();
+		
+		try {
+			type = request.getReader().readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error(e);
+		}
+		return DAOFactory.getInstance().getEmployeeReimbursements(username, type);
+	}
+	
 	public static boolean resolve(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			//TODO check this after completing cookies

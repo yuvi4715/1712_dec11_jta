@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<meta charset="UTF-8">
+<title>Manager Account</title>
 </head>
-<body>
+<body class="container">
 	<div>
 		<p>Welcome to the manager accounts!</p>
 	</div>
 	<div>
 		<a href="http://localhost:8080/ERS/html/managerhome.html">Home</a>
 		<br>
-		<a href="http://localhost:8080/ERS/html/managerreimburse.html">Reimbursements</a>		
+		<a href="http://localhost:8080/ERS/html/managerreimburse.html">Reimbursements</a>
+		<br>
+		<form method="post" action="/ERS/html/logout.do"><input id = "logout" value="Log Out" type="submit"></input></form>
 	</div>
 	<div>
 		<label id="info"></label><br>

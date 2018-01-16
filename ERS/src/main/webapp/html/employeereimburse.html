@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<meta charset="UTF-8">
 <title>Reimbursement</title>
 </head>
-<body>
+<body class="container">
 	<div>
 		<p>Welcome to the employee reimbursements!</p>
 	</div>
@@ -12,25 +17,33 @@
 		<a href="http://localhost:8080/ERS/html/employeehome.html">Home</a>
 		<br>
 		<a href="http://localhost:8080/ERS/html/employeeaccount.html">Settings</a>
-		
+		<br>
+		<form method="post" action="/ERS/html/logout.do"><input id = "logout" value="Log Out" type="submit"></input></form>
 			
+	</div>
+	<div>
+	<form class="form">
+		<label id="labelAmount">Amount: </label> <input id="inputAmount"/> <label id="labelReason">Reason: </label> <input id="inputReason"/>
+		<input id="insertReimbursement" type="button" value="Submit"/>
+	</form>
 	</div>
 	<div>
 		<div>
 		
-			<select id="type">
+			<select id="reimburseType">
 				<option value="pending">Pending Reimbursements</option>
 				<option value="resolved">Resolved Reimbursements</option>
 			</select>
 			<button id="reimburseBtn">Select</button>
 		</div>
 		<div>
-			<table id="list">
+			<table id="list" class="table">
 				<thead>
 					<tr>
+						<th>ID</th>
 						<th>Name</th>
-						<th>Date/Time</th>
 						<th>Amount</th>
+						<th>Resolving Manager</th>
 						<th>Reason</th>
 					</tr>
 				<tbody id="listbody">

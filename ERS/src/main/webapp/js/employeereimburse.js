@@ -1,17 +1,13 @@
 
 
 
-window.onload = getNames();
-document.getElementById("reimburseBtn").addEventListener("click", getReimbursement);
+
+//document.getElementById("insertReimbursement").addEventListener("click",insertPending);
+document.getElementById("reimburseBtn").addEventListener("click",getReimbursements);
 var e;
 const approve = "APPROVED";
 const deny = "DENIED";
 var employeeJSON = null;
-document.getElementById("employee").addEventListener("click",
-		function (){
-	e = document.getElementById("employee");
-	e = e.options[e.selectedIndex].value;
-});
 
 function getReimbursement(){
 	if(e !== 0){
@@ -37,23 +33,33 @@ function getReimbursement(){
 		
 	}
 }
-function getNames(){
-	
-	var jhttp = new XMLHttpRequest();
-	var employeeName = document.getElementById("employee").value;
-	
-	document.getElementById("listbody").innerHTML = "";
-	
-	jhttp.onreadystatechange = function() {
-		if(this.readyState == 4 && this.status == 200){
-			employeeJSON = JSON.parse(this.responseText);
-			createNames(employeeJSON);
-			getAllReimbursements()
+function getReimbursements(){
+	var jttp = new XMLHttpRequest();
+	//var getType = document.getElementById("");
+	if(reimburseType == "all" || reimburseType == undefined){
+		jhttp.onreadystatechange = function() {
+			if(this.readyState == 4 && this.status == 200){
+				var reimburseJSON = JSON.parse(this.responseText);
+				createTable(reimburseJSON);
+				
+			}
 		}
+		jhttp.open("POST","http://localhost:8080/ERS/html/reimburseAllEmployee.AJAX",true);
+		jhttp.send(JSON.stringify(getType));
 	}
-	jhttp.open("POST","http://localhost:8080/ERS/html/names.AJAX",true);
-	jhttp.send();
+	else{
+		jhttp.onreadystatechange = function() {
+			if(this.readyState == 4 && this.status == 200){
+				var reimburseJSON = JSON.parse(this.responseText);
+				createTable(reimburseJSON);
+				
+			}
+		}
+		jhttp.open("POST","http://localhost:8080/ERS/html/employeeGetReimbursements.AJAX",true);
+		jhttp.send(JSON.stringify(getType));
+	}
 }
+
 function createNames(names){
 	var employee = document.getElementById("employee");
 	var generic = document.createElement("option");
@@ -85,24 +91,16 @@ function getAllReimbursements(){
 function createTable(reimburse){
 	for(var i = 0; i < reimburse.length; i++){
 		var rows = document.createElement("tr");
+		var id = rows.appendChild(document.createElement("td"));
+		id.innerHTML = reimburse[i].id;
 		var name = rows.appendChild(document.createElement("td"));
 		name.textContent = reimburse[i].firstname + " " + reimburse[i].lastname;
-		var time = rows.appendChild(document.createElement("td"));
-		time.innerHTML = reimburse[i].time;
 		var amount = rows.appendChild(document.createElement("td"));
 		amount.innerHTML = reimburse[i].amount;
 		var manager = rows.appendChild(document.createElement("td"));
 		amount.innerHTML = reimburse[i].manager;
 		var reason = rows.appendChild(document.createElement("td"));
 		reason.innerHTML = reimburse[i].reason;
-		var buttons = rows.appendChild(document.createElement("td"));
-		if(reimburse[i].status == null){
-			let button1 = buttons.appendChild(document.createElement("button"));
-			let button2 = buttons.appendChild(document.createElement("button"));
-			button1.innerHTML= "APPOVE";
-			button2.innerHTML = "DENY";
-		}
-		//write button logic if this is unresolved
 		document.getElementById("listbody").appendChild(rows);
 	}
 }

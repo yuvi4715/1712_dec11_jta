@@ -30,18 +30,6 @@ function changePassword(){
 	
 }
 
-function populateNames(){
-	var jhttp;
-	jhttp.onreadystatechange = function (){
-		if(this.readyState == 4 && this.status == 200) {
-			var names = JSON.parse(responseText.innerHTML);
-		}
-	}
-	jhttp.open("POST","http://localhost:8080/ERS/html/names.do");
-	jhttp.send()
-}
-
-
 function employeeInfo(){
 	var ehttp = new XMLHttpRequest();
 	ehttp.onreadystatechange = function() {

@@ -108,7 +108,7 @@ function getAllReimbursements(){
 	jttp.send();
 }
 //Creates a table of reimbursements
-function createTable(reimburse){
+function createTable1(reimburse){
 	for(var i = 0; i < reimburse.length; i++){
 		var rows = document.createElement("tr");
 		var name = rows.appendChild(document.createElement("td"));
@@ -155,6 +155,88 @@ function setStatus(buttonStatus) {
 	}
 }
 
+function statusApprove(row) {
+	var rowInTable = row.target.parentNode.parentNode;
+	var decision = window.confirm("Are you sure you want to APPROVE this request?");
+	if (decision == true) {
+		var resolvedRequest = new Object();
+		resolvedRequest.id = rowInTable.firstChild.textContent;
+		resolvedRequest.status = approve;
+		var jttp = new XMLHttpRequest();
+		jttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status) {
+					getReimbursement();
+			}
+		}
+		jttp.open("POST", "http://localhost:8080/ERS/html/setStatus.AJAX");
+		jttp.send(JSON.stringify(resolvedRequest));
+	}
+}
+
+function statusDeny(row) {
+	var rowInTable = row.target.parentNode.parentNode;
+	var decision = window.confirm("Are you sure you want to DENY this request?");
+	if (decision == true) {
+		var resolvedRequest = new Object();
+		resolvedRequest.id = rowInTable.firstChild.textContent;
+		resolvedRequest.status = deny;
+		var jttp = new XMLHttpRequest();
+		jttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status) {	
+			}
+		}
+		jttp.open("POST", "http://localhost:8080/ERS/html/setStatus.AJAX");
+		jttp.send(JSON.stringify(resolvedRequest));
+	}
+
+}
+
+function createTable(ajaxObject) {
+
+	for (var i = 0; i < ajaxObject.length; i++) {
+		var tr = document.createElement("tr");
+		var tdRequestId = document.createElement("td");
+		var tdName = document.createElement("td");
+		var tdRequestAmount = document.createElement("td");
+		var tdRequestReason = document.createElement("td");
+		var tdTimeCreated = document.createElement("td");
+		var tdManagerName = document.createElement("td");
+		var tdApprove = document.createElement("td");
+		var tdDeny = document.createElement("td");
+		if(ajaxObject[i].status == null){
+			var approveButton = document.createElement("input");
+			approveButton.setAttribute("type", "button");
+			approveButton.setAttribute("class", "btn btn-success");
+			approveButton.setAttribute("value", "APPROVE");
+			approveButton.addEventListener("click", statusApprove);
+			tdApprove.appendChild(approveButton);
+			var denyButton = document.createElement("input");
+			denyButton.setAttribute("type", "button");
+			denyButton.setAttribute("class", "btn btn-danger");
+			denyButton.setAttribute("value", "DENY");
+			denyButton.addEventListener("click", statusDeny);
+			tdDeny.appendChild(denyButton);
+		}
+		tdRequestId.textContent = ajaxObject[i].id;
+		tdName.textContent = ajaxObject[i].firstname + " " + ajaxObject[i].lastname;
+		tdRequestAmount.textContent = ajaxObject[i].amount;
+		tdRequestReason.textContent = ajaxObject[i].reason;
+		tdTimeCreated.textContent = ajaxObject[i].time;
+		tdManagerName.textContent = ajaxObject[i].managerfirstname + " " + ajaxObject[i].managerlastname;
+		tr.appendChild(tdRequestId);
+		tr.appendChild(tdName);
+		tr.appendChild(tdRequestAmount);
+		tr.appendChild(tdManagerName);
+		tr.appendChild(tdRequestReason);
+		if(ajaxObject[i].status == null){
+			tr.appendChild(tdApprove);
+			tr.appendChild(tdDeny);
+		}
+		document.getElementById("listbody").appendChild(tr);
+
+	}
+
+}
 
 
 function createTable2(reimburse) {

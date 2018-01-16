@@ -29,6 +29,8 @@ public class Dispatcher {
 				//for now, this stub..
 				return CredentialController.changePassword(request, response);
 				//return "";
+			case "/ERS/html/employeeGetReimbursements.AJAX":
+				return ReimbursementController.getReimbursementsByEmployeeUsername(request);
 			case "/ERS/html/setStatus.AJAX":
 				return ReimbursementController.setStatus(request, response);
 			case "/ERS/html/reimburseAllEmployee.AJAX":
