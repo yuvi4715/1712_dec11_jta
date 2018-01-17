@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.revature.model.Employee">
+        <id name="empId" type="int">
+            <column name="EMP_ID" not-null="true" precision="5"></column>
+            <generator class="assigned"></generator>
+        </id>
+        <property name="empName" type="string">
+            <column name="EMP_NAME" length="40"></column>
+        </property>
+                <property name="createdBy" type="string">
+            <column name="CREATEDBY" length="30"></column>
+        </property>
+                <property name="createdDate" type="date">
+            <column name="CREATEDDATE" length="15"></column>
+        </property>
+    </class>
+</hibernate-mapping>
