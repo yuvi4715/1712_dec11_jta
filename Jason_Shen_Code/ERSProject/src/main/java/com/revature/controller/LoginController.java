@@ -5,10 +5,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.revature.model.Employee;
 import com.revature.service.EmployeeService;
+import com.revature.util.LogUtil;
 
 public class LoginController {
 	
 	public static String login(HttpServletRequest request) {
+		
+		if (LogUtil.logger.isDebugEnabled() ) {
+			LogUtil.logger.debug("this is debug");
+		}
 		
 		//If it's a GET we just return the view.
 		if(request.getMethod().equals("GET")) {

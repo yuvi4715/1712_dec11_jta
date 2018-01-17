@@ -1,5 +1,6 @@
 package com.revature.main;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,8 +12,9 @@ public class JDBCSimpleExample {
 	static Connection conn = null;
 	static Statement stmt = null;
 	static ResultSet rs = null;
-
-	public static void main(String[] args) {
+	
+	
+	public static void main(String[] args){
 		loadDrivers(); // step 1
 		jdbcExample("jdbc:oracle:thin:@sdetjta.cvoui7q38caj.us-east-2.rds.amazonaws.com:1521:ORCL","jta1712", "jta1712");
 	}
