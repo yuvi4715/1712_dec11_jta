@@ -8,12 +8,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class MercuryTours {
-
 	static WebDriver wd = null;
 	public static void main(String[] args) {
 		openApp();
 		login();
-		//closeApp();
+		findFlights();
+		selectFlight();
+		logout();
+		closeApp();
 	}
 	
 	static void openApp() {
@@ -29,7 +31,26 @@ public class MercuryTours {
 		wd.findElement(By.name("login")).submit();
 		//wd.findElement(By.id("lst-ib")).sendKeys(Keys.RETURN);
 	}
+	
+	static void findFlights() {
+		wd.findElement(By.xpath("//select[@name=\"toPort\"]")).sendKeys("Frankfurt");
+		wd.findElement(By.name("findFlights")).submit();
+	}
+	
+	static void selectFlight() {
+		wd.findElement(By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[5]/td/form/p/input")).submit();
+	}
+	
+	static void logout() {
+		wd.findElement(By.xpath("//a[@href=\"mercurysignoff.php\"]")).click();
+	}
+	
 	static void closeApp(){
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		wd.quit();		
 	}
 
