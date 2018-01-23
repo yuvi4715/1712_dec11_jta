@@ -1,0 +1,49 @@
+@Entity
+@Table(name="table_name")
+
+@Id
+@Column(name="col_name", nullable=false)
+
+@GenerateValue(Strategy, name)			//this one is the one that actually attachs the sequence to the column, can create auto-incrementers
+@SequenceGenerator(name, sequence_name)
+
+@NamedQueries 					//for using native SQL statemetns
+@NamedQuery
+@NamedStoredProcedureQueries
+@NamedStoredProcedureQuery
+
+@Cache 					//hibernate
+@Cacheable				//JPA (javax.persistence)
+
+
+
+@OnetoOne
+@OnetoMany
+@ManytoMany
+@JoinColumns
+
+parameter in the one-to-one/many relationships
+(Fetech-Fetchtype.lazy)		//default
+	fetch when needed
+(Fetech-Fetchtype.eager)
+	fetch immdeiately
+(Cascade=CascadeType." ")
+    CascadeType.PERSIST 	means that save() or persist() operations cascade to related entities.
+    CascadeType.MERGE 		means that related entities are merged when the owning entity is merged.
+    CascadeType.REFRESH 	does the same thing for the refresh() operation.
+    CascadeType.REMOVE 		removes all related entities association with this setting when owning entity is deleted
+    CascadeType.DETACH 		detaches all related entities if a “manual detach” occurs.
+    CascadeType.ALL 		all of the above cascade operations
+
+mappedBy
+    The mappedBy attribute is only necessary for a bidirectional relationship, this element can be omitted on the annotation. It is used on the source entity to point back to a field on the target entity that defines the relationship (contains @JoinColumn)
+
+org.hibernate
+@Entity (dynamic-insert, dynamic-update)
+	dynamie-insert=false default
+		false - will include all cols in insert statement whether null or not
+		true - wiil ignore the null cols in insert statement
+	dynamic-update
+		false - includes modified properties in the update statement
+		true - will exlude unmodified properties in update statement
+	done for performance

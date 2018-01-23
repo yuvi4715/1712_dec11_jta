@@ -1,14 +1,17 @@
 # Caching in Hibernate
-
+    so queries dont have to be run again
+    
 # Level 1 (L1) Caching
 * Scope: Session
-* Objects are cached within sessions
+* Objects are cached within sessions, objects detached when Session is closed
 * Always on
 
 # Level 2 (L2) Caching
 * Scope: SessionFactory
 * Objects can be cached across sessions
-* Must configure
+* Must configure in hibernate.cfg.xml
+    use_second_level_cache  true/false
+    factory_class           cache provider
 
 # 3rd Party Caching Providers
 * EHCache
@@ -20,7 +23,6 @@
 * Named because it's a palindrome and it depends on a double linked list, which can be traversed forwards and backwards
 
 # Hibernate Caching Configuration
-
 `hibernate.cfg.xml`
 
 ```
