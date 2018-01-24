@@ -30,6 +30,13 @@ public class TestClass {
 		LoginPage.user(wd).sendKeys("yuvi1");
 		LoginPage.password(wd).sendKeys("yuvi1");
 		LoginPage.signin(wd).submit();
+		
+		FlightFinder.tripType(wd).click();
+		FlightFinder.departFrom(wd).sendKeys("Paris");
+		FlightFinder.arriveTo(wd).sendKeys("Frankfurt");
+		FlightFinder.airline(wd).sendKeys("No Preference");
+		FlightFinder.findFlightsButton(wd).click();
+		Logout.signoff(wd).click();
+		wd.quit();
 	}
-
 }
