@@ -8,24 +8,24 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class MercuryTours {
 	static WebDriver wd = null;
 	public static void main(String[] args) {
-		openApp();
-		login();
-		findFlights();
-		selectFlight();
-		logout();
-		closeApp();
+//		openApp();
+//		login(null, null);
+//		findFlights();
+//		selectFlight();
+//		logout();
+//		closeApp();
 	}
 	
-	static void openApp() {
+	public static void openApp(String url) {
 		File f1 = new File("src/main/resources/chromedriver.exe");
 		System.setProperty("webdriver.chrome.driver", f1.getAbsolutePath());
 		wd = new ChromeDriver();
-		wd.get("http://newtours.demoaut.com");
+		wd.get(url);
 	}
 	
-	static void login() {
-		wd.findElement(By.name("userName")).sendKeys("yuvi1");
-		wd.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys("yuvi1");
+	public static void login(String user, String pass) {
+		wd.findElement(By.name("userName")).sendKeys(user);
+		wd.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(pass);
 		wd.findElement(By.name("login")).submit();
 		//wd.findElement(By.id("lst-ib")).sendKeys(Keys.RETURN);
 	}
