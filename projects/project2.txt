@@ -1,0 +1,31 @@
+integrate testng with cucumber
+cucumber set definitions will call testng stuff
+
+
+running webdriver on linux
+	windows server pipeline
+	
+1. Tests have to be executed from SPA using Angular 4
+2. Test results should be visible in angular 4 app
+3. There is no need for login
+4. Test data should be coming from RDS using hibernate or property file or xml file or all of them
+5. Build a working pipeline for the project
+6. Optional requirement - TestNG with POM or Page factory
+7. Build automation framework using following tools/frameworks
+    - Java
+        - WebDriver (Selenium)
+        - Cucumber 
+        - TestNG
+    JavaScript
+        - Jasmine
+        - Protractor
+        - Karma
+    
+The test Salesforce credentials are either as VP or trainer role: 
+
+test.trainer@revature.com.int1
+p@$$w0rd2
+test.vpoftech@revature.com.int1
+p@$$w0rd1
+
+the instance URL is https://dev.assignforce.revaturelabs.com
