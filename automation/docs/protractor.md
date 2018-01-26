@@ -15,8 +15,9 @@
 * Natural fit for your application's architecture: Everything is JavaScript.
 
 ---
-## FAQs
-* [protractor](https://github.com/angular/protractor/blob/master/docs/faq.md)
+## Protractor
+* [protractor FAQs](https://github.com/angular/protractor/blob/master/docs/faq.md)
 * [API](http://www.protractortest.org/#/api)
 * [Installation steps](http://www.protractortest.org/#/protractor-setup)
 * [Tutorial](http://www.protractortest.org/#/tutorial)
+* [StackOverFlow Top 15 issues](https://stackoverflow.com/search?q=protractor)
