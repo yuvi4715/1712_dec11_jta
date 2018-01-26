@@ -7,7 +7,7 @@
 
 ---
 
-### Why do we Protractor?
+### Why do we need Protractor?
 
 * Built on top of WebDriverJS (built on top of WebDriver and Jasmine).
 * Integrates into your build pipeline (e.g. grunt, gulp).
@@ -15,6 +15,8 @@
 * Natural fit for your application's architecture: Everything is JavaScript.
 
 ---
-# FAQs
+## FAQs
 * [protractor](https://github.com/angular/protractor/blob/master/docs/faq.md)
-* [protractor API] (http://www.protractortest.org/#/api)
+* [API] (http://www.protractortest.org/#/api)
+* [Installation steps] (http://www.protractortest.org/#/protractor-setup)
+* [Tutorial] (http://www.protractortest.org/#/tutorial)
