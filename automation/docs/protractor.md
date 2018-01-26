@@ -17,6 +17,6 @@
 ---
 ## FAQs
 * [protractor](https://github.com/angular/protractor/blob/master/docs/faq.md)
-* [API] (http://www.protractortest.org/#/api)
-* [Installation steps] (http://www.protractortest.org/#/protractor-setup)
-* [Tutorial] (http://www.protractortest.org/#/tutorial)
+* [API](http://www.protractortest.org/#/api)
+* [Installation steps](http://www.protractortest.org/#/protractor-setup)
+* [Tutorial](http://www.protractortest.org/#/tutorial)
