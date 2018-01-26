@@ -1,0 +1,20 @@
+##  What Is Protractor?
+
+* An end-to-end test tool.
+* Based on Selenium WebDriver.
+* Aimed at testing Angular applications.
+* Find more information at http://angular.github.io/protractor
+
+---
+
+### Why do we Protractor?
+
+* Built on top of WebDriverJS (built on top of WebDriver and Jasmine).
+* Integrates into your build pipeline (e.g. grunt, gulp).
+* Tailored to testing *Angular* applications.
+* Natural fit for your application's architecture: Everything is JavaScript.
+
+---
+# FAQs
+* [protractor](https://github.com/angular/protractor/blob/master/docs/faq.md)
+* [protractor API] (http://www.protractortest.org/#/api)
