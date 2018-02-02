@@ -1,39 +1,21 @@
-package com.revature.model;
+package com.revature;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Activity {
 
-	private String id;
 	private String description;
 	private String duration;
-	private User user;
+	private String id;
 	
-	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Activity() {
-	}
-	
-	public Activity(String id, String description, String duration) {
+	public Activity(String description, String duration, String id) {
 		super();
-		this.id = id;
 		this.description = description;
 		this.duration = duration;
-	}
-	
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
 		this.id = id;
+	}
+	public Activity() {
 	}
 	public String getDescription() {
 		return description;
@@ -46,6 +28,12 @@ public class Activity {
 	}
 	public void setDuration(String duration) {
 		this.duration = duration;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	@Override
 	public int hashCode() {
@@ -81,6 +69,10 @@ public class Activity {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	@Override
+	public String toString() {
+		return "Activity [description=" + description + ", duration=" + duration + ", id=" + id + "]";
 	}
 	
 	

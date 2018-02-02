@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.model.Activity;
+import com.revature.model.User;
 
 public class ActivityRepoImplementation implements ActivityRepo {
 	public List<Activity> findAllActivities(){
@@ -25,8 +26,8 @@ public class ActivityRepoImplementation implements ActivityRepo {
 		return activities;
 	}
 	
-	public String createActivity(String activityid){
-		return null;
+	public void createActivity(Activity activity) {
+		System.out.println("create activity is called by ");
 	}
 	
 	public Activity findActivity(String activityid){
@@ -34,6 +35,12 @@ public class ActivityRepoImplementation implements ActivityRepo {
 		activity1.setDescription("Swimming");
 		activity1.setDuration("50");
 		activity1.setId("1234");
+		
+		User u1 = new User();
+		u1.setId(10);
+		u1.setName("Tom");
+		
+		activity1.setUser(u1);
 		return activity1;
 	}
 }

@@ -8,7 +8,7 @@ public interface ActivityRepo {
 
 	List<Activity> findAllActivities();
 
-	String createActivity(String activityid);
+	public void createActivity(Activity activity);
 
 	Activity findActivity(String activityid);
 
