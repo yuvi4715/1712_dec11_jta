@@ -1,6 +1,79 @@
-integrate testng with cucumber
-cucumber set definitions will call testng stuff
+http://localhost:8080/project2/dist/index.html
 
+//*[@id="view"]/md-card/md-content[2]/div/md-table-container/table/tbody/tr[5]/td[11]/button[3]
+//*[@id="view"]/md-card/md-content[2]/div/md-table-container/table/tbody/tr[7]/td[11]/button[3]
+
+
+document.getElementsByTagName("md-select-menu")[11]).getElementsByTagName("md-content")[15].getElementsByTagName("md-option")
+document.getElementsByTagName("md-select")
+document.getElementsByTagName("md-select-menu")
+document.getElementsByTagName("input")
+protractor on click buttons eg bCtrl.edit(batch)
+
+
+xpath with span use getText
+
+
+at min
+    start/end date
+    name
+    location
+    
+test statistics
+pros/cons
+what did i learn, what was hard
+    testung
+    website is pretty brokean
+    
+public static WebElement waitForLoad(WebDriver driver, String xpath) {
+        int times = 0;
+        WebElement element = null;
+        while(element == null) {
+            try {
+                element = driver.findElement(By.xpath(xpath));
+            } catch(NoSuchElementException e) {
+                if(times < 20) {
+                    try {
+                        times++;
+                        Thread.sleep(200);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+                else {
+                    e.printStackTrace();
+                    throw new NoSuchElementException("Element did not load in time", e);
+                }
+            }
+        }
+        return element;
+    }
+
+batch page
+	all batches
+		check each batch
+			delete one of them
+
+		create/clone/edit a batch
+			cancel
+		one row 
+			edit
+			clone
+			delete
+			synchronize
+	batch timeline, reset after each
+		start date
+		end date
+		curriculum
+		focus
+		location
+		building
+		hide concluded batches
+		hide batchless trainers
+
+		trainers per page
+			0 - 99
+			change pages 
 
 running webdriver on linux
 	windows server pipeline
